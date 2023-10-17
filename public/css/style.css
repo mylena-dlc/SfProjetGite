@@ -1,0 +1,130 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* Déclaration des variables */
+
+:root {
+    /* Couleur */
+    --color1: #504f4b;
+    --color2: #a9b4a4;
+    --color3: #b58869;
+    --color4: #fcf7f1;
+
+    /* Couleur de fond */
+
+    /* Police */
+    --font1: "Catamaran";
+    --font2: "Corinthia";
+
+    /* Taille de police */
+    --size1: 1rem;
+    --size2: 1.5rem;
+
+    /* Largeur de police */
+    --fontWeight1: 400;
+    --fontWeight2: 500 ;
+    --fontWeight3: ;
+    --fontWeight4: ;
+
+}
+
+
+/* ********************************************** GÉNÉRAL ********************************************** */
+
+.title {
+   position: relative;
+   display: inline-block;
+   margin: 50px;
+}
+
+/* Ligne sous le titre */
+.title::after {
+    content: "";
+    position: absolute;
+    width: 60%; 
+    height: 1px; 
+    background-color: var(--color1); 
+    bottom: -4px; 
+    left: 20%; 
+}
+
+h1 {
+    color: var(--color1);
+    text-transform: uppercase;
+    font-family: var(--font1);
+    font-weight: var(--fontWeight2);
+    letter-spacing: 3px;
+    
+}
+ 
+section {
+    margin: 80px 40px;
+}
+
+p {
+    color: var(--color1);
+    font-family: var(--font1);
+    font-size: 15px;
+}
+
+
+
+/* ********************************************** NAVBAR PAGE D'ACCUEIL ********************************************** */
+
+header {
+    background-color: var(--color1);
+    
+}
+.nav-items {
+    list-style: none;
+    display: flex;
+    
+
+}
+
+.nav-item {
+    text-transform: uppercase;
+    padding: 20px;
+    
+}
+
+.nav-item a {
+    color: var(--color4);
+    text-decoration: none;
+    font-family: var(--font1);
+}
+
+
+/* ********************************************** SECTION GÎTE ********************************************** */
+
+
+.gite-contain {
+    height: 80vh;
+    background-color: var(--color4);
+    position: relative;
+}
+
+.gite-background {
+    height: 80vh;
+    width: 33%;
+    background-image: url("../img/fond.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top right;
+    opacity: 0.5;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+   
+    
+}
+
+.banner {
+    background-color: var(--color2);
+    height: 200px;
+    width: 100%;
+}

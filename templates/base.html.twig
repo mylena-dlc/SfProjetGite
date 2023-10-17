@@ -2,15 +2,45 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Bienvenue{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
 
-        {% block javascripts %}
-        {% endblock %}
+        
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <header>
+            <nav class="navbar">
+                <a class="link-home" href="">
+                    <figure>
+                        <img src="" alt="">
+                    </figure>
+                </a>
+
+                {# boutton menu burger #}
+                {# <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button> #}
+
+                <ul class="nav-items">
+                    <li class="nav-item"><a href="">le gîte</a></li>
+                    <li class="nav-item"><a href="">galerie</a></li>
+                    <li class="nav-item"><a href="">aux alentours</a></li>
+                    <li class="nav-item"><a href="">avis</a></li>
+                    <li class="nav-item"><a href="">contact</a></li>
+                    <li class="nav-item"><a href="">réservation</a></li>
+                </ul>
+            </nav>
+
+        </header>
+
+        <main class="container">
+            {% block body %}{% endblock %}
+        </main>
+
+       {% block javascripts %}
+        {% endblock %}
     </body>
 </html>
