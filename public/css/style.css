@@ -51,15 +51,24 @@
     left: 20%; 
 }
 
-h1 {
+h1, h2 {
     color: var(--color1);
     text-transform: uppercase;
     font-family: var(--font1);
     font-weight: var(--fontWeight2);
     letter-spacing: 3px;
-    
 }
  
+
+h3 {
+    color: var(--color1);
+    letter-spacing: 2px;
+    font-family: var(--font1);
+    font-weight: var(--fontWeight1);
+    margin: 80px 40px;
+    font-size: 25px;
+}
+
 section {
     margin: 80px 40px;
 }
@@ -127,4 +136,49 @@ header {
     background-color: var(--color2);
     height: 200px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icons {
+    display: flex;
+    justify-content: center;
+}
+
+.icon {
+    margin: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.banner-icon i, .banner-p {
+    color: var(--color4);
+    font-size: 22px;
+}
+
+.caracteristique {
+    height: 50vh;
+}
+
+.banner2 {
+    background-color: var(--color1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.banner2-p {
+    color: white;
+    font-size: 20px;
+    width: 50%;
+    text-align: center;
+}
+
+/* ********************************************** SECTION GALERIE ********************************************** */
+
+#galerie {
+    height: 60vh;
 }

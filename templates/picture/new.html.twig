@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une photo{% endblock %}
+
+{% block body %}
+
+
+    <h1>Ajouter une photo</h1>
+
+     {{ form_start(form) }}
+    {{ form_row(form.file) }}
+
+        {{ form_row(form.description) }} 
+
+    {# empêche l'apparition d'une légende "categorie", si la collection est vide (en cas de création d'une nouvelle session) #}
+    {% do form.categories.setRendered %}
+ {{ form_row(form.valider) }}
+{{ form_end(form) }}
+
+{% endblock %}

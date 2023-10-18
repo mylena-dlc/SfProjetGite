@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PictureController!{% endblock %}
+
+{% block body %}
+
+    <h1>Les photos</h1>
+            <p><a href="{{ path ('new_picture', {'id': category.id}) }}" class="btn add">Ajouter une photo</a></p>
+
+    {% for picture in pictures %}
+        
+        {{ picture }}
+                <p><a href="{{ path ('edit_picture', {'id': picture.id}) }}" class="btn edit">Modifier une photo</a></p>
+            <p><a href="{{ path ('delete_picture', {'id': picture.id}) }}" class="btn delete">Supprimer une photo</a></p>
+    {% endfor %}
+
+
+
+{% endblock %}

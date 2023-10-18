@@ -5,6 +5,7 @@
         <title>{% block title %}Bienvenue{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
 
@@ -25,14 +26,26 @@
                 </button> #}
 
                 <ul class="nav-items">
-                    <li class="nav-item"><a href="">le gîte</a></li>
-                    <li class="nav-item"><a href="">galerie</a></li>
-                    <li class="nav-item"><a href="">aux alentours</a></li>
-                    <li class="nav-item"><a href="">avis</a></li>
+                    <li class="nav-item"><a href="#gite">le gîte</a></li>
+                    <li class="nav-item"><a href="#galerie">galerie</a></li>
+                    <li class="nav-item"><a href="#alentours">aux alentours</a></li>
+                    <li class="nav-item"><a href="#avis">avis</a></li>
                     <li class="nav-item"><a href="">contact</a></li>
                     <li class="nav-item"><a href="">réservation</a></li>
+
+                    {% if app.user %} {# Si je suis connecté: #}
+                    <li class="nav-item"><a aria-current="page" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                    {# <li class="nav-item"><a aria-current="page" href="{{ path('app_profile', {'id': app.user.id}) }}">Mon profil</a></li> #}
+                {% else %}
+                    <li class="nav-item"><a aria-current="page" href="{{ path('app_login') }}"><i class="fa-solid fa-circle-user"></i></a></li>
+
+                    <li class="nav-item"><a aria-current="page" href="{{ path('app_login') }}">Se connecter</a></li>
+                    <li class="nav-item"><a aria-current="page" href="{{ path('app_register') }}">S'inscrire</a></li>
+
+                {% endif %}   
                 </ul>
             </nav>
+
 
         </header>
 

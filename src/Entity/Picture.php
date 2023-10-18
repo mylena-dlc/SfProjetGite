@@ -16,6 +16,14 @@ class Picture
     #[ORM\Column(length: 50)]
     private ?string $description = null;
 
+    #[ORM\ManyToOne(inversedBy: 'pictures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
+    #[ORM\ManyToOne(inversedBy: 'pictures')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Gite $gite = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -31,5 +39,34 @@ class Picture
         $this->description = $description;
 
         return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getGite(): ?Gite
+    {
+        return $this->gite;
+    }
+
+    public function setGite(?Gite $gite): static
+    {
+        $this->gite = $gite;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getId();
     }
 }
