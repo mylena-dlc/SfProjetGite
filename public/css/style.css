@@ -29,6 +29,9 @@
     --fontWeight3: ;
     --fontWeight4: ;
 
+    /* Bord */
+    --borderRadius1: 20px;
+
 }
 
 
@@ -79,7 +82,23 @@ p {
     font-size: 15px;
 }
 
+.btn {
+    height: 40px;
+    width: 150px;
+    border-radius: var(--borderRadius1);
+}
 
+.add {
+    background-color: var(--color1);
+}
+
+.link-add {
+    color: #fcf7f1;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: var(--fontWeight1);
+}
 
 /* ********************************************** NAVBAR PAGE D'ACCUEIL ********************************************** */
 
@@ -182,3 +201,6 @@ header {
 #galerie {
     height: 60vh;
 }
+
+
+/* ********************************************** ADMIN : TABLEAU DES GÎTES ********************************************** */
