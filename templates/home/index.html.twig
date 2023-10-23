@@ -57,6 +57,22 @@
             <div class="title">
                 <h1>Galerie</h1>
             </div>
+            <div class="categories">
+
+            {% for category in firstPicturesPerCategory %}
+                <div class="category-01">
+                    <figure>
+
+                      
+                        <img class="category-img" src="{{asset(category.getPictures().first()getUrl()) }}" alt="">
+                       
+
+                        <figcaption><a href="{{ path('show_category', {'id': category.id}) }}">{{category}}</a></figcaption>
+                    </figure>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
 
 
     <section id="alentours">
@@ -64,5 +80,9 @@
             <div class="title">
                 <h2>Aux alentours</h2>
             </div>
+
+
+
+
 
 {% endblock %}

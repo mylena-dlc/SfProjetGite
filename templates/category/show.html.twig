@@ -4,16 +4,26 @@
 
 {% block body %}
 
+
+    {# div des messages flash #}
+    <div class="alert">
+        {% for flashMessage in app.flashes('success') %}
+        <p class="alert-success">{{ flashMessage }}</p>
+        {% endfor %}
+        {% for flashMessage in app.flashes('error') %}
+        <p class="alert-danger">{{ flashMessage }}</p>
+        {% endfor %}
+    </div>
+
     <h1>Les photos de la catégorie {{ category }}</h1>
             <p><a href="{{ path ('new_picture', {'category_id': category.id}) }}" class="btn add">Ajouter une photo</a></p>
 
     {% for picture in pictures %}
-        
-        {{ picture }}
-                <p><a href="{{ path ('edit_picture', {'id': picture.id}) }}" class="btn edit">Modifier une photo</a></p>
-            <p><a href="{{ path ('delete_picture', {'id': picture.id}) }}" class="btn delete">Supprimer une photo</a></p>
-    {% endfor %}
+        <img src="{{ asset(picture.url )}}" alt=" {{ picture.description }}">
+       
+   
 
-
-
+  <p><a href="{{ path ('edit_picture', {'id': picture.id, 'category_id': category.id}) }}" class="btn edit">Modifier une photo</a></p>
+            {# <p><a href="{{ path ('delete_picture', {'id': picture.id}) }}" class="btn delete">Supprimer une photo</a></p> #}
+ {% endfor %}
 {% endblock %}

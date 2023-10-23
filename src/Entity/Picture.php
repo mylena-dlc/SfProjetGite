@@ -24,6 +24,9 @@ class Picture
     #[ORM\JoinColumn(nullable: false)]
     private ?Gite $gite = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $url = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -67,6 +70,18 @@ class Picture
 
     public function __toString()
     {
-        return $this->getId();
+        return $this->getDescription();
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(string $url): static
+    {
+        $this->url = $url;
+
+        return $this;
     }
 }

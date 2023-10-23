@@ -30,6 +30,8 @@ class CategoryController extends AbstractController
      */
     private $em;
 
+    
+
     public function __construct(CategoryRepository $categoryRepository, EntityManagerInterface $em, PictureRepository $pictureRepository)
     {
         $this->categoryRepository = $categoryRepository;
@@ -40,13 +42,16 @@ class CategoryController extends AbstractController
 
     }
 
-    #[Route('/category', name: 'app_category')]
+    #[Route('/home', name: 'app_category')]
     public function index(): Response
     {
 
         $categories = $this->categoryRepository->findBy([], ['name' => 'ASC']);
-        return $this->render('category/index.html.twig', [
+        $firstPicturesPerCategory = $this->getDoctrine()->getRepository(Category::class)->findFirstPicturePerCategory();
+
+        return $this->render('home/index.html.twig', [
             'categories' => $categories,
+            'firstPicturesPerCategory' => $firstPicturesPerCategory
         ]);
     }
 
@@ -100,17 +105,26 @@ class CategoryController extends AbstractController
     }
 
 
-    #[Route('/category/{id}', name: 'show_category')]
-    public function show(Category $category, $id): Response {
+    // #[Route('/category/{id}', name: 'show_category')]
+    // public function show(Category $category, $id): Response {
 
+    //     $pictures = $this->pictureRepository ->findBy(['category' => $id ]);
+        
+    //     return $this->render('category/show.html.twig', [
+    //         'category' => $category,
+    //         'pictures' => $pictures,
+    //     ]);
+    // }
+
+
+    #[Route('home/category/{id}', name: 'show_category')]
+    public function show(Category $category, $id): Response {
 
         $pictures = $this->pictureRepository ->findBy(['category' => $id ]);
         
-
-        return $this->render('category/show.html.twig', [
+        return $this->render('/category/show.html.twig', [
             'category' => $category,
             'pictures' => $pictures,
         ]);
-
     }
 }
