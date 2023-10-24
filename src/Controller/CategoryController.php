@@ -42,16 +42,16 @@ class CategoryController extends AbstractController
 
     }
 
-    #[Route('/home', name: 'app_category')]
+    #[Route('/category', name: 'app_category')]
     public function index(): Response
     {
 
         $categories = $this->categoryRepository->findBy([], ['name' => 'ASC']);
-        $firstPicturesPerCategory = $this->getDoctrine()->getRepository(Category::class)->findFirstPicturePerCategory();
+        // $firstPicturesPerCategory = $this->getDoctrine()->getRepository(Category::class)->findFirstPicturePerCategory();
 
-        return $this->render('home/index.html.twig', [
-            'categories' => $categories,
-            'firstPicturesPerCategory' => $firstPicturesPerCategory
+        return $this->render('category/index.html.twig', [
+            'categories' => $categories
+            // 'firstPicturesPerCategory' => $firstPicturesPerCategory
         ]);
     }
 

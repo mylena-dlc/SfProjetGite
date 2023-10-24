@@ -20,15 +20,15 @@ class CategoryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Category::class);
     }
-    public function findFirstPicturePerCategory()
-    {
-        return $this->createQueryBuilder('c')
-            ->leftJoin('c.pictures', 'p')
-            ->groupBy('c.id')
-            ->addSelect('MIN(p.id) as HIDDEN minPictureId')
-            ->getQuery()
-            ->getResult();
-    }
+    // public function findFirstPicturePerCategory()
+    // {
+    //     return $this->createQueryBuilder('c')
+    //         ->leftJoin('c.pictures', 'p')
+    //         ->groupBy('c.id')
+    //         ->addSelect('MIN(p.id) as HIDDEN minPictureId')
+    //         ->getQuery()
+    //         ->getResult();
+    // }
 
     
 //    /**

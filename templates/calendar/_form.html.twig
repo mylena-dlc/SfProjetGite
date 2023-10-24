@@ -1,0 +1,14 @@
+{{ form_start(form) }}
+               {{ form_row(form.title) }} 
+
+            {{ form_row(form.startDate) }} 
+            {{ form_row(form.endDate) }} 
+            {{ form_row(form.description) }} 
+            {{ form_row(form.backgroundColor) }} 
+            {{ form_row(form.borderColor) }} 
+            {{ form_row(form.textColor) }} 
+
+
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
