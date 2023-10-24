@@ -13,19 +13,30 @@
 
     <section id="gite">
             <div class="gite-contain">
-                <div class="title">
+                <div class="title gite-title">
                     <h1>le gîte</h1>
                 </div>
-            
-                <p class="gite-description">description<p>
-                <figure>
-                    <img href="" alt="">
-                </figure>
-            
 
-            <div class="gite-background">        
+                <div class="description-and-picture">
+            
+                    <p class="gite-description">Bienvenue au Gîte du Rain du Pair, 
+                    un havre de paix situé dans un ancien corps de ferme récemment rénové, perché sur les hauteurs d'Orbey, en Alsace. 
+                    <br><br>
+                    Notre gîte offre une expérience exceptionnelle tout au long de l'année, que ce soit pour les plaisirs de l'hiver 
+                    à proximité de la station de ski du Lac Blanc, les aventures estivales le long de la Route des Crêtes 
+                    et des vignobles alsaciens, ou simplement pour une retraite paisible au cœur de la nature.</p>
+                    <figure>
+                        <img class="picture01" src="img/cuisine.jpg" alt="Photos du séjour du gîte"/>
+                    </figure>
+                
+            
+                    <div class="gite-background">        
+                    </div>
+                </div>
+
+
             </div>
-</div>
+
         <div class="banner">
             <div class="icons">
                 <div class="icon">
@@ -47,24 +58,51 @@
             </div>
         </div>
 
-<div class="caracteristique">
-    <h3>Caractéristique du logement</h3>
-</div>
+        <div class="caracteristique">
 
-<div class="banner2">
-    <p class="banner2-p">Que vous veniez en couple, en famille ou entre amis,
-    "Le Rain du Pair" est l'endroit idéal pour passer des moments inoubliables.
-    Laisser-vous séduire par l'authenticité et le charme de ce refuge cosy.</p>
-</div>
+            <div class="caracteristique-right">
+                <h2>Caractéristique du logement</h2>
+                <p class="caracteristique-p">Réparti sur deux étages, le logement offre un espace confortable pouvant accueillir jusqu'à 6 personnes. 
+                    Au rez-de chaussée, vous profiterez d’une cuisine entièrement équipée ouverte sur le séjour, ainsi qu’un wc séparé. 
+                    À l’étage, vous trouverez deux chambres élégamment aménagées, 
+                    chacune avec sa propre salle d'eau attenante pour plus d'intimité et un wc séparé.
+                    L'intérieur est chaleureux, accueillant et décoré avec soin pour vous offrir un séjour agréable et authentique.</p>
+                <figure class="figure-picture02">
+                    <img src="img/sejour.png" alt="" class="picture02"/>
+                </figure>
+            </div>
+            <div class="caracteristique-left">                
+                <figure>
+                    <img src="img/sejour.png" alt="" class="picture03"/>
+                </figure>
+                <figure>
+                    <img src="img/sejour.png" alt="" class="picture04"/>
+                </figure>
+
+                <p class="caracteristique-p">Notre terrasse privative qui offre une vue imprenable sur les montagnes environnantes et le village en contre bas. 
+                    Vous pourrez vous détendre dans notre bain finlandais extérieur chauffé au feu de bois, une expérience relaxante dans un petit coin de paradis en plein air.
+                    Notre gîte dispose d'un parking privatif pour votre véhicule, du Wi-Fi pour rester connecté, et  d'un petit garage fermé pour y laisser en toute sécurité vos vélos.</p>
+
+            </div>
+
+        </div>
+ </section>
+
+
+        {# <div class="banner2">
+            <p class="banner2-p">Que vous veniez en couple, en famille ou entre amis,
+            "Le Rain du Pair" est l'endroit idéal pour passer des moments inoubliables.
+            Laisser-vous séduire par l'authenticité et le charme de ce refuge cosy.</p>
+        </div>
             
-    </section>
+   
 
     <section id="galerie">
         <div class="galerie-contain">
             <div class="title">
                 <h1>Galerie</h1>
             </div>
-            <div class="categories">
+            <div class="categories"> #}
 
             {# {% for category in firstPicturesPerCategory %}
                 <div class="category-01">
@@ -78,7 +116,7 @@
                     </figure>
                 </div>
             {% endfor %} #}
-            </div>
+            {# </div>
         </div>
 
 
@@ -86,7 +124,7 @@
         <div class="alentours-contain">
             <div class="title">
                 <h2>Aux alentours</h2>
-            </div>
+            </div> #}
 
 
 {% block javascript %}
@@ -107,7 +145,7 @@
             end: 'dayGridMonth'
         },
     
-    events: {{ data|}}
+    events: {{ data|raw}}
 
            events: [
     {

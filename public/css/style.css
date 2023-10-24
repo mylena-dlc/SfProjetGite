@@ -32,6 +32,9 @@
     /* Bord */
     --borderRadius1: 20px;
 
+    /* Ombre */
+    --boxShadow1: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+
 }
 
 
@@ -40,7 +43,7 @@
 .title {
    position: relative;
    display: inline-block;
-   margin: 50px;
+   margin-left: 50px;
 }
 
 /* Ligne sous le titre */
@@ -73,7 +76,7 @@ h3 {
 }
 
 section {
-    margin: 80px 40px;
+    margin: 0 80px;
 }
 
 p {
@@ -135,21 +138,24 @@ header {
 
 /* ********************************************** SECTION GÎTE ********************************************** */
 
-
+#gite {
+   
+}
 .gite-contain {
-    height: 80vh;
+    /* height: 80vh; */
     background-color: var(--color4);
     position: relative;
 }
 
 .gite-background {
-    height: 80vh;
+    height: 100vh;
     width: 33%;
     background-image: url("../img/fond.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top right;
     opacity: 0.5;
+    z-index: 0;
 
     position: absolute;
     top: 0;
@@ -157,6 +163,27 @@ header {
    
     
 }
+
+.description-and-picture {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+.gite-description {
+    width: 33%;
+    text-align: center; 
+    margin-left: 50px;
+}
+
+.picture01 {
+    width: 300px;
+    height: auto;
+    z-index: 5 !important;
+    border-radius: 80px 180px 80px 180px ;
+    box-shadow: var(--boxShadow1);
+    margin-left: 50px;
+}
+
 
 .banner {
     background-color: var(--color2);
@@ -184,10 +211,6 @@ header {
     font-size: 22px;
 }
 
-.caracteristique {
-    height: 50vh;
-}
-
 .banner2 {
     background-color: var(--color1);
     display: flex;
@@ -203,6 +226,39 @@ header {
     text-align: center;
 }
 
+.caracteristique {
+    display: flex;
+}
+
+.caracteristique-right, .caracteristique-left {
+    margin: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.caracteristique-p {
+    margin: 50px 0px;
+    text-align: justify;
+}
+.figure-picture02 {
+    width: 100%;
+}
+.picture02 {
+    
+    width: 100%;
+}
+
+.picture03 {
+    height: 250px;
+    width: 80pw;
+}
+
+.picture04 {
+    height: 50px;
+    width: 50px;
+}
 /* ********************************************** SECTION GALERIE ********************************************** */
 
 #galerie {
