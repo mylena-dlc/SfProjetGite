@@ -12,6 +12,7 @@
     --color2: #a9b4a4;
     --color3: #b58869;
     --color4: #fcf7f1;
+   
 
     /* Couleur de fond */
 
@@ -128,6 +129,69 @@ header {
     font-family: var(--font1);
 }
 
+/* ********************************************** RECHERCHE ********************************************** */
+#search {
+    background-color: #a9b4a4;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-containt, .end-containt, .person-containt, .submit-containt {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+
+.start-containt {
+    position: relative;
+}
+
+#openCalendarModal {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 50%; /* Ajustez la largeur de la fenêtre modale selon vos besoins */
+    height: 50%; /* Ajustez la hauteur de la fenêtre modale selon vos besoins */
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    margin: 10% auto;
+    text-align: center;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.calendar-content {
+    /* Styles pour personnaliser le contenu du calendrier à l'intérieur de la fenêtre modale */
+}
+
 
 /* ********************************************** CALENDRIER ********************************************** */
 
@@ -136,6 +200,9 @@ header {
     margin: auto;
 }
 
+.fc-bg-event {
+    background-color: var(--color2);
+}
 /* ********************************************** SECTION GÎTE ********************************************** */
 
 #gite {

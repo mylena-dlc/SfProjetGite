@@ -19,13 +19,13 @@ class Gite
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 10)]
     private ?string $cp = null;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 255)]
     private ?string $city = null;
 
     #[ORM\Column]
@@ -40,9 +40,13 @@ class Gite
     #[ORM\OneToMany(mappedBy: 'gite', targetEntity: Picture::class, orphanRemoval: true)]
     private Collection $pictures;
 
+    #[ORM\OneToMany(mappedBy: 'gite', targetEntity: Reservation::class)]
+    private Collection $reservations;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,5 +171,35 @@ class Gite
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setGite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getGite() === $this) {
+                $reservation->setGite(null);
+            }
+        }
+
+        return $this;
     }
 }

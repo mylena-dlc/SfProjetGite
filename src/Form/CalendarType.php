@@ -15,12 +15,12 @@ class CalendarType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('startDate', DateType::class, [
+            ->add('start', DateType::class, [
                 'label' => 'Date de début',
                 'widget' => 'single_text',
                 "required" => true
             ])
-            ->add('endDate', DateType::class, [
+            ->add('end', DateType::class, [
                 'label' => 'Date de fin',
                 'widget' => 'single_text'
             ])

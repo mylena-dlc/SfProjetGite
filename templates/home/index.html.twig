@@ -3,13 +3,49 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-
-{{ dump(data)}}
-
-<div id="calendar">
-
+<div id="calendarModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" id="closeCalendarModal">&times;</span>
+            <h2>Calendrier</h2>
+        </div>
+        <div class="modal-body">
+            <div id="calendar" class="calendar-content"></div>
+        </div>
+    </div>
 </div>
 
+<div id="calendar">
+</div>
+
+<section id="search">
+
+    <div class="start-containt">
+        <label name="start">Date d'arrivée</label>
+        <input type="date" id="start" readonly>
+        <span id="openCalendarModal" class="spanStart">▼</span>
+
+    </div>
+
+    <div class="end-containt">
+        <label name="start">Date de départ</label>
+        <input type="date" id="end" readonly>
+        <span id="openCalendarModalEnd" class="spanEnd">▼</span>
+    </div>
+
+    <div class="person-containt">
+        <label name="numberAdult">Nombre d'adulte</label>
+        <input type="number" id="numberAdult">
+
+        <label name="numberKid">Nombre d'enfant</label>
+        <input type="number" id="numberKid">
+    </div>
+
+    <div class="submit-containt">
+        <input type="submit" id="search" value="Réserver">
+    </div>
+
+</section>
 
     <section id="gite">
             <div class="gite-contain">
@@ -130,39 +166,108 @@
 {% block javascript %}
     
     <script>
-  window.onload = () => { 
+    
+    //fonction ouverture calendrier date d'arrivée
 
+    document.getElementById('openCalendarModal').addEventListener('click', function() {
+    openCalendarModal();
+});
 
-    let calendarElt = document.querySelector('#calendar')
- 
-    let calendar = new FullCalendar.Calendar(calendarElt, {
+function openCalendarModal() {
+    // Affichez la fenêtre modale
+    const modal = document.getElementById('calendarModal');
+    modal.style.display = 'block';
+
+ const calendarElt = document.querySelector('#calendar');
+    const calendar = new FullCalendar.Calendar(calendarElt, {
         initialView: 'dayGridMonth',
         locale: 'fr',
         timeZone: 'Europe/Paris',
+        selectable: true,
+        select: function(info) {
+            // Cette fonction sera appelée lorsque l'utilisateur sélectionne une date
+            const selectedDate = info.startStr; // La date sélectionnée au format ISO 8601
+            document.querySelector('#start').value = selectedDate; // Insérez la date dans l'input
+            modal.style.display = 'none'; // Fermez la fenêtre modale
+        },
         headerToolbar: {
             start: 'prev,next today',
             center: 'title',
             end: 'dayGridMonth'
         },
-    
-    events: {{ data|raw}}
 
-           events: [
-    {
-        id: 4,
-        title: 'Test Event',
-        start: '2023-10-25T10:00:00',
-        end: '2023-10-25T12:00:00',
-        backgroundColor: '#ff0000',
-        borderColor: '#f5b2b2',
-        textColor: '#ffffff'
-    }
-]
+        events: 
+        {{ data|raw }},
     })
 
+
     calendar.render()
+// Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale lorsque l'utilisateur clique sur la croix
+    document.getElementById('closeCalendarModal').addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale si l'utilisateur clique en dehors de la fenêtre modale
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
 }
- 
+
+
+// Fonction pour afficher la fenetre modal de date de départ
+
+document.getElementById('openCalendarModal').addEventListener('click', function() {
+    openCalendarModal('start');
+});
+
+document.getElementById('openCalendarModalEnd').addEventListener('click', function() {
+    openCalendarModal('end');
+});
+
+function openCalendarModal(inputId) {
+    // Récupérez l'ID de l'input
+    const inputElement = document.getElementById(inputId);
+
+    // Affichez la fenêtre modale
+    const modal = document.getElementById('calendarModal');
+    modal.style.display = 'block';
+
+    const calendarElt = document.querySelector('#calendar');
+    const calendar = new FullCalendar.Calendar(calendarElt, {
+        initialView: 'dayGridMonth',
+        locale: 'fr',
+        timeZone: 'Europe/Paris',
+        selectable: true,
+        select: function(info) {
+            // Cette fonction sera appelée lorsque l'utilisateur sélectionne une date
+            const selectedDate = info.startStr; // La date sélectionnée au format ISO 8601
+            inputElement.value = selectedDate; // Insérez la date dans l'input correspondant
+            modal.style.display = 'none'; // Fermez la fenêtre modale
+        },
+        headerToolbar: {
+            start: 'prev,next today',
+            center: 'title',
+            end: 'dayGridMonth'
+        },
+        events: {{ data|raw }},
+    });
+
+    calendar.render();
+
+    // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale lorsque l'utilisateur clique sur la croix
+    document.getElementById('closeCalendarModal').addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale si l'utilisateur clique en dehors de la fenêtre modale
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
     </script>
 {% endblock %}
 

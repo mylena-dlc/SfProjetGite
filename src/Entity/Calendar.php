@@ -18,10 +18,10 @@ class Calendar
     private ?string $title = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $startDate = null;
+    private ?\DateTimeInterface $start = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $endDate = null;
+    private ?\DateTimeInterface $end = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
@@ -52,26 +52,26 @@ class Calendar
         return $this;
     }
 
-    public function getStartDate(): ?\DateTimeInterface
+    public function getStart(): ?\DateTimeInterface
     {
-        return $this->startDate;
+        return $this->start;
     }
 
-    public function setStartDate(\DateTimeInterface $startDate): static
+    public function setStart(\DateTimeInterface $start): static
     {
-        $this->startDate = $startDate;
+        $this->start = $start;
 
         return $this;
     }
 
-    public function getEndDate(): ?\DateTimeInterface
+    public function getEnd(): ?\DateTimeInterface
     {
-        return $this->endDate;
+        return $this->end;
     }
 
-    public function setEndDate(\DateTimeInterface $endDate): static
+    public function setEnd(\DateTimeInterface $end): static
     {
-        $this->endDate = $endDate;
+        $this->end = $end;
 
         return $this;
     }

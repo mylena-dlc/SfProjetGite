@@ -15,18 +15,24 @@ class HomeController extends AbstractController
         $events = $calendarRepository->findAll();
 
         $reservations = [];
+
+        $backgroundColor = '#000';
         
-        // dd($events);
         foreach($events as $event) {
             $reservations[] = [
                 'id' => $event->getId(),
                 'title' => $event->getTitle(),
-                'startDate' => $event->getStartDate()->format('Y-m-d H:i:s'),
-                'endDate' => $event->getEndDate()->format('Y-m-d H:i:s'),
+                'start' => $event->getStart()->format('Y-m-d'),
+                'end' => $event->getEnd()->format('Y-m-d'),
+                
                 'description' => $event->getDescription(),
-                'backgroundColor' => $event->getBackgroundColor(),
+                // 'backgroundColor' => $event->getBackgroundColor(),
+                'backgroundColor' => $backgroundColor,
                 'borderColor' => $event->getBorderColor(),
-                'textColor' => $event->getTextColor(),
+                // 'textColor' => $event->getTextColor(),
+                'display' => 'background',
+                'selectable' => false,
+
             ];
         }
 

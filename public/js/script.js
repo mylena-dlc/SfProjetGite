@@ -1,20 +1,16 @@
+const searchButton = document.querySelector('#search');
 
-// window.onload = () => {
-//     let calendarElt = document.querySelector('#calendar')
-//     let data = data
+searchButton.addEventListener('click', function() {
+    // Récupérez les critères de recherche depuis les champs du formulaire (date, nombre d'adultes, nombre d'enfants, etc.)
+    const startDate = document.querySelector('#start').value;
+    const endDate = document.querySelector('#end').value;
+    const numberAdult = document.querySelector('#numberAdult').value;
+    const numberKid = document.querySelector('#numberKid').value;
 
-//     let calendar = new FullCalendar.Calendar(calendarElt, {
-//         initialView: 'dayGridMonth',
-//         locale: 'fr',
-//         timeZone: 'Europe/Patis',
-//         headerToolbar: {
-//             start: 'prev, next today',
-//             center: 'title',
-//             end: 'dayGridMonth'
-//         },
-//         // events: data
-       
-//     })
+    // Effectuez la recherche avec ces critères et mettez à jour le calendrier
+    performSearch(startDate, endDate, numberAdult, numberKid);
+});
 
-//     calendar.render()
-// }
+
+
+
