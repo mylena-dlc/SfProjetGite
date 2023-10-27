@@ -7,6 +7,9 @@
         
 
         {% block stylesheets %}
+        {# flatpick #}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
@@ -17,18 +20,21 @@
     <body>
         <header>
             <nav class="navbar">
-                <a class="link-home" href="">
-                    <figure>
-                        <img src="" alt="">
-                    </figure>
-                </a>
+                
+                   
+                
 
                 {# boutton menu burger #}
                 {# <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button> #}
 
-                <ul class="nav-items">
+                <ul class="nav-items"> 
+                <li class="nav-item">
+                    <figure>
+                        <a class="link-home" href=""><img src="img/logook2.png" alt="logo" class="navLogo"></a>
+                    </figure></li>
+
                     <li class="nav-item"><a href="/#gite">le gîte</a></li>
                     <li class="nav-item"><a href="#galerie">galerie</a></li>
                     <li class="nav-item"><a href="#alentours">aux alentours</a></li>
@@ -66,10 +72,30 @@
         </main>
 
 
+
+<footer>
+    <div class="footerContaint">
+        <figure>
+            <img src="img/logook2.png" alt="logo" class="footerLogo">
+        </figure>
+        <div class="address">
+            <p class="footerP">Gîte du Rain du Pair </p>
+            <p class="footerP">224 Rain du Pair </p> 
+            <p class="footerP">68370 Orbey</p>
+        </div>
+        <div class="contact">
+        <p class="footerP"><i class="fa-brands fa-instagram"></i> <i class="fa-brands fa-facebook"></i> </p>
+        <p class="footerP">mail@mail.fr</p>
+        <p class="footerP"><i class="fa-solid fa-phone"></i> 06 36 29 62 22</p>
+        </div>
+    </div>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.9/index.global.min.js" integrity="sha256-9zSfnftul7UU4/TQ7fbXdZfHiB4xKjHMLRunC35rglc=" crossorigin="anonymous"></script>
 
        {% block javascripts %}               
 
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 
         <script src="{{ asset('js/script.js') }}"></script>

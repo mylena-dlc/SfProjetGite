@@ -3,11 +3,13 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
+
+
 <div id="calendarModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <span class="close" id="closeCalendarModal">&times;</span>
-            <h2>Calendrier</h2>
+            
         </div>
         <div class="modal-body">
             <div id="calendar" class="calendar-content"></div>
@@ -15,36 +17,55 @@
     </div>
 </div>
 
-<div id="calendar">
-</div>
-
 <section id="search">
 
+<form id="reservationForm" action="{{ path('app_reservation') }}" method="POST">
     <div class="start-containt">
-        <label name="start">Date d'arrivée</label>
-        <input type="date" id="start" readonly>
-        <span id="openCalendarModal" class="spanStart">▼</span>
-
+        <label name="start" class="start">Date d'arrivée</label>
+        <input type="date" id="start" class="start-input" name="start" readonly placeholder="Sélectionnez votre date d'arrivée" data-reserved-dates="{{ data }}">
+        {# <span id="openCalendarModal" class="spanStart">▼</span> #}
     </div>
 
     <div class="end-containt">
-        <label name="start">Date de départ</label>
-        <input type="date" id="end" readonly>
-        <span id="openCalendarModalEnd" class="spanEnd">▼</span>
+        <label name="start" class="start">Date de départ</label>
+        <input type="date" id="end" class="end-input" name="end" readonly placeholder="Sélectionnez votre date de départ" data-reserved-dates="{{ data }}">
+        {# <span id="openCalendarModalEnd" class="spanEnd">▼</span> #}
     </div>
 
-    <div class="person-containt">
-        <label name="numberAdult">Nombre d'adulte</label>
-        <input type="number" id="numberAdult">
+<div class="person-containt">
 
-        <label name="numberKid">Nombre d'enfant</label>
-        <input type="number" id="numberKid">
-    </div>
+        <div class="adult">
+            <label for="numberAdult" class="numberAdult">Adulte</label>
+            <div class="action">
+                <p class="decrement"><i class="fa-solid fa-circle-minus" onclick="decrement('numberAdult')"></i></p>
+                <input type="number" id="numberAdult" class="inputPerson" name="numberAdult" value="1" min="1" max="6" readonly>
+                <p class="increment"><i class="fa-solid fa-circle-plus" onclick="increment('numberAdult')"></i></p>
+            </div>
+        </div>
+        <div class="kid">
+            <label for="numberKid" class="numberKid">Enfant</label>
+            <div class="action">
+                <p class="decrement"><i class="fa-solid fa-circle-minus" onclick="decrement('numberKid')"></i></p>
+                <input type="number" id="numberKid" class="inputPerson" name="numberKid" value="0" max="5" readonly>
+                <p class="increment"><i class="fa-solid fa-circle-plus" onclick="increment('numberKid')"></i></p>
+            </div>
+        </div>    
+        <div class="person">
+            <label for="totalPerson" class="labelPerson">Voyageurs</label>
+            <div class="action">
+
+                <p class="decrement"><i class="fa-solid fa-circle-minus" onclick="decrement('numberKid')"></i></p>
+                <input type="number" id="totalPerson" class="inputPerson" value="1" min="1" max="6" readonly>
+                                <p class="increment"><i class="fa-solid fa-circle-plus" onclick="increment('numberKid')"></i></p>
+
+            </div>
+        </div>
+</div>
 
     <div class="submit-containt">
-        <input type="submit" id="search" value="Réserver">
+        <input type="submit" class="btn search" value="Réserver">
     </div>
-
+</form>
 </section>
 
     <section id="gite">
@@ -125,7 +146,7 @@
  </section>
 
 
-        {# <div class="banner2">
+         <div class="banner2">
             <p class="banner2-p">Que vous veniez en couple, en famille ou entre amis,
             "Le Rain du Pair" est l'endroit idéal pour passer des moments inoubliables.
             Laisser-vous séduire par l'authenticité et le charme de ce refuge cosy.</p>
@@ -138,138 +159,334 @@
             <div class="title">
                 <h1>Galerie</h1>
             </div>
-            <div class="categories"> #}
+            <div class="categories"> 
 
             {# {% for category in firstPicturesPerCategory %}
                 <div class="category-01">
                     <figure>
-
-                      
+                    
                         <img class="category-img" src="{{asset(category.getPictures().first()getUrl()) }}" alt="">
                        
-
                         <figcaption><a href="{{ path('show_category', {'id': category.id}) }}">{{category}}</a></figcaption>
                     </figure>
                 </div>
             {% endfor %} #}
             {# </div>
         </div>
-
+#}
 
     <section id="alentours">
         <div class="alentours-contain">
             <div class="title">
                 <h2>Aux alentours</h2>
-            </div> #}
+            </div> 
 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
 
 {% block javascript %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const startInput = document.getElementById("start");
+    const endInput = document.getElementById("end");
     
-    <script>
+    const reservedDatesData = startInput.getAttribute("data-reserved-dates");
+    const reservedDates = JSON.parse(reservedDatesData);
+
+    flatpickr(startInput, {
+      altInput: true,
+      altFormat: "j F Y",
+      dateFormat: "Y-m-d",
+      minDate: "today",
+      locale: {
+        firstDayOfWeek: 1,  // Lundi comme premier jour de la semaine
+        weekdays: {
+            shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+            longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+        },
+        months: {
+            shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
+            longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+        }
+    },
+      disable: reservedDates.map(date => ({
+            from: new Date(new Date(date.arrivalDate).setDate(new Date(date.arrivalDate).getDate() - 1)), // Soustraire un jour à la date d'arrivée
+
+        // date de départ disponible pour une nouvelle date d'arrivée
+        to: new Date(new Date(date.departureDate).setDate(new Date(date.departureDate).getDate() - 1)) // On soustrait un jour à la date de départ afin de laisser la date libre à une nouvelle réservation
+      }))
+    });
     
-    //fonction ouverture calendrier date d'arrivée
-
-    document.getElementById('openCalendarModal').addEventListener('click', function() {
-    openCalendarModal();
-});
-
-function openCalendarModal() {
-    // Affichez la fenêtre modale
-    const modal = document.getElementById('calendarModal');
-    modal.style.display = 'block';
-
- const calendarElt = document.querySelector('#calendar');
-    const calendar = new FullCalendar.Calendar(calendarElt, {
-        initialView: 'dayGridMonth',
-        locale: 'fr',
-        timeZone: 'Europe/Paris',
-        selectable: true,
-        select: function(info) {
-            // Cette fonction sera appelée lorsque l'utilisateur sélectionne une date
-            const selectedDate = info.startStr; // La date sélectionnée au format ISO 8601
-            document.querySelector('#start').value = selectedDate; // Insérez la date dans l'input
-            modal.style.display = 'none'; // Fermez la fenêtre modale
+    flatpickr(endInput, {
+      altInput: true,
+      altFormat: "j F Y",
+      dateFormat: "Y-m-d",
+      locale: {
+        firstDayOfWeek: 1,  // Lundi comme premier jour de la semaine
+        weekdays: {
+            shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+            longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
         },
-        headerToolbar: {
-            start: 'prev,next today',
-            center: 'title',
-            end: 'dayGridMonth'
-        },
-
-        events: 
-        {{ data|raw }},
-    })
-
-
-    calendar.render()
-// Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale lorsque l'utilisateur clique sur la croix
-    document.getElementById('closeCalendarModal').addEventListener('click', function() {
-        modal.style.display = 'none';
-    });
-
-    // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale si l'utilisateur clique en dehors de la fenêtre modale
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
+        months: {
+            shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
+            longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
         }
+    },
+      disable: reservedDates.map(date => ({ 
+        // date d'arrivée disponible pour une date de départ
+from: date.arrivalDate,
+        to: date.departureDate
+      }))
     });
-}
+  });
+</script>
 
 
-// Fonction pour afficher la fenetre modal de date de départ
 
-document.getElementById('openCalendarModal').addEventListener('click', function() {
-    openCalendarModal('start');
-});
 
-document.getElementById('openCalendarModalEnd').addEventListener('click', function() {
-    openCalendarModal('end');
-});
 
-function openCalendarModal(inputId) {
-    // Récupérez l'ID de l'input
-    const inputElement = document.getElementById(inputId);
 
-    // Affichez la fenêtre modale
-    const modal = document.getElementById('calendarModal');
-    modal.style.display = 'block';
 
-    const calendarElt = document.querySelector('#calendar');
-    const calendar = new FullCalendar.Calendar(calendarElt, {
-        initialView: 'dayGridMonth',
-        locale: 'fr',
-        timeZone: 'Europe/Paris',
-        selectable: true,
-        select: function(info) {
-            // Cette fonction sera appelée lorsque l'utilisateur sélectionne une date
-            const selectedDate = info.startStr; // La date sélectionnée au format ISO 8601
-            inputElement.value = selectedDate; // Insérez la date dans l'input correspondant
-            modal.style.display = 'none'; // Fermez la fenêtre modale
-        },
-        headerToolbar: {
-            start: 'prev,next today',
-            center: 'title',
-            end: 'dayGridMonth'
-        },
-        events: {{ data|raw }},
-    });
 
-    calendar.render();
+{# 
 
-    // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale lorsque l'utilisateur clique sur la croix
-    document.getElementById('closeCalendarModal').addEventListener('click', function() {
-        modal.style.display = 'none';
-    });
 
-    // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale si l'utilisateur clique en dehors de la fenêtre modale
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
-}
-    </script>
+//    var reservedDates = {{ app.request.attributes.get('reservedDates')|json_encode|raw }};
+    
+//     document.addEventListener("DOMContentLoaded", function () {
+//         flatpickr("#start", {
+//             altInput: true,
+//             altFormat: "j F Y",
+//             dateFormat: "Y-m-d",
+//             minDate: "today",
+//             locale: "fr",
+//             disable: reservedDates
+//         });
+
+//         flatpickr("#end", {
+//             altInput: true,
+//             altFormat: "j F Y",
+//             dateFormat: "Y-m-d",
+//             locale: "fr",
+//             disable: reservedDates
+//         });
+//     });
+
+
+
+
+// configStart = {
+//    altInput: true,
+//     altFormat: "j F Y",
+//     dateFormat: "Y-m-d",
+//     minDate: "today",
+//     locale: "fr",
+//     disable: reservedDates,
+
+//     onChange: function(selectedDates, dateStr, instance) {
+//         // Calcule la date minimale pour #end (start_date + 1 jour)
+//         const startDate = new Date(dateStr);
+//         startDate.setDate(startDate.getDate() + 1);
+//         configEnd.minDate = startDate;
+
+//         // Ajoute la classe CSS "selected-start-date" à la date de début sélectionnée
+//         const selectedStartDate = instance.days.querySelector(".flatpickr-day.selected");
+//         if (selectedStartDate) {
+//             selectedStartDate.classList.add("selectedStartDate");
+//         }
+
+//         // Réinitialise le champ de fin avec la nouvelle configuration
+//         flatpickr("#end", configEnd);
+//     }
+// };
+
+// configEnd = {
+//    altInput: true,
+//     altFormat: "j F Y",
+//     dateFormat: "Y-m-d",
+//     minDate: "today",
+//     disable: reservedDates,
+
+//     locale: {
+//         firstDayOfWeek: 1,  // Lundi comme premier jour de la semaine
+//         weekdays: {
+//             shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+//             longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+//         },
+//         months: {
+//             shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
+//             longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+//         }
+//     }
+// }
+
+// flatpickr("#start", configStart);
+// flatpickr("#end", configEnd);
+//    });
+
+// // Ajoutez le code suivant pour initialiser la date d'arrivée avec la date du jour
+// document.addEventListener("DOMContentLoaded", function() {
+//     const startInput = document.getElementById('start');
+//     const today = new Date(); // Obtenez la date actuelle
+//     const year = today.getFullYear();
+//     const month = (today.getMonth() + 1).toString().padStart(2, "0"); // Obtenez le mois (ajusté pour avoir toujours 2 chiffres)
+//     const day = today.getDate().toString().padStart(2, "0"); // Obtenez le jour (ajusté pour avoir toujours 2 chiffres)
+//     const currentDate = `${year}-${month}-${day}`; // Formattez la date
+
+//     startInput.value = currentDate; // Définissez la valeur de l'input sur la date du jour
+// });
+
+// document.addEventListener("DOMContentLoaded", function() {
+//     const startInput = document.getElementById('start');
+//     const endInput = document.getElementById('end'); // Sélectionnez l'input de date de départ
+//     const today = new Date(); // Obtenez la date actuelle
+//     const tomorrow = new Date(today); // Créez une copie de la date actuelle
+//     tomorrow.setDate(tomorrow.getDate() + 1); // Ajoutez un jour à la date actuelle
+
+//     // Formatez la date de départ (aujourd'hui + 1 jour)
+//     const startDate = formatDate(today);
+//     const endDate = formatDate(tomorrow);
+
+//     startInput.value = startDate; // Définissez la date d'arrivée sur la date du jour
+//     endInput.value = endDate; // Définissez la date de départ sur la date du jour + 1 jour
+// });
+
+// // Fonction pour formater une date au format "YYYY-MM-DD"
+// function formatDate(date) {
+//     const year = date.getFullYear();
+//     const month = (date.getMonth() + 1).toString().padStart(2, "0");
+//     const day = date.getDate().toString().padStart(2, "0");
+//     return `${year}-${month}-${day}`;
+// }
+
+//     // Fonction pour l'ouverture du calendrier à date d'arrivée
+//     document.getElementById('openCalendarModal').addEventListener('click', function() {
+//     openCalendarModal();
+// });
+
+// function openCalendarModal() {
+//     // Affichez la fenêtre modale
+//     const modal = document.getElementById('calendarModal');
+//     modal.style.display = 'block';
+
+//  const calendarElt = document.querySelector('#calendar');
+//     const calendar = new FullCalendar.Calendar(calendarElt, {
+//         initialView: 'dayGridMonth',
+//         locale: 'fr',
+//         timeZone: 'Europe/Paris',
+//         selectable: true,
+//         select: function(info) {
+//             // Cette fonction sera appelée lorsque l'utilisateur sélectionne une date
+//             const selectedDate = info.startStr; // La date sélectionnée au format ISO 8601
+//             document.querySelector('#start').value = selectedDate; // Insérez la date dans l'input
+//             modal.style.display = 'none'; // Fermez la fenêtre modale
+//         },
+//         headerToolbar: {
+//             start: 'prev,next today',
+//             center: 'title',
+//             end: 'dayGridMonth'
+//         },
+
+//         events: 
+//         {{ data|raw }},
+//     })
+
+
+//     calendar.render()
+// // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale lorsque l'utilisateur clique sur la croix
+//     document.getElementById('closeCalendarModal').addEventListener('click', function() {
+//         modal.style.display = 'none';
+//     });
+
+//     // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale si l'utilisateur clique en dehors de la fenêtre modale
+//     window.addEventListener('click', function(event) {
+//         if (event.target === modal) {
+//             modal.style.display = 'none';
+//         }
+//     });
+// }
+
+
+// // Fonction pour afficher la fenetre modal de date de départ
+// document.getElementById('openCalendarModal').addEventListener('click', function() {
+//     openCalendarModal('start');
+// });
+
+// document.getElementById('openCalendarModalEnd').addEventListener('click', function() {
+//     openCalendarModal('end');
+// });
+
+// function openCalendarModal(inputId) {
+//     // Récupérez l'ID de l'input
+//     const inputElement = document.getElementById(inputId);
+
+//     // Affichez la fenêtre modale
+//     const modal = document.getElementById('calendarModal');
+//     modal.style.display = 'block';
+
+//     const calendarElt = document.querySelector('#calendar');
+//     const calendar = new FullCalendar.Calendar(calendarElt, {
+//         initialView: 'dayGridMonth',
+//         locale: 'fr',
+//         timeZone: 'Europe/Paris',
+//         selectable: true,
+//         select: function(info) {
+//             // Cette fonction sera appelée lorsque l'utilisateur sélectionne une date
+//             const selectedDate = info.startStr; // La date sélectionnée au format ISO 8601
+//             inputElement.value = selectedDate; // Insérez la date dans l'input correspondant
+//             modal.style.display = 'none'; // Fermez la fenêtre modale
+//         },
+//         headerToolbar: {
+//             start: 'prev,next today',
+//             center: 'title',
+//             end: 'dayGridMonth'
+//         },
+//         events: {{ data|raw }},
+//     });
+
+//     calendar.render();
+
+//     // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale lorsque l'utilisateur clique sur la croix
+//     document.getElementById('closeCalendarModal').addEventListener('click', function() {
+//         modal.style.display = 'none';
+//     });
+
+//     // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale si l'utilisateur clique en dehors de la fenêtre modale
+//     window.addEventListener('click', function(event) {
+//         if (event.target === modal) {
+//             modal.style.display = 'none';
+//         }
+//     });
+// }   
+// document.getElementById("openCalendarModal").addEventListener("click", function() {
+//     var input = document.querySelector(".start-input");
+//     var modal = document.querySelector(".modal");
+//     modal.style.top = (input.offsetTop + input.offsetHeight) + "px";
+//     modal.style.left = input.offsetLeft + "px";
+//     modal.style.display = "block";
+// });
+
+// document.getElementById("openCalendarModalEnd").addEventListener("click", function() {
+//     var input = document.querySelector(".end-input");
+//     var modal = document.querySelector(".modal");
+//     modal.style.top = (input.offsetTop + input.offsetHeight) + "px";
+//     modal.style.left = input.offsetLeft + "px";
+//     modal.style.display = "block";
+// }); #}
+
+
+
+
 {% endblock %}
+
+
+
+
+
+
 
 
 {% endblock %}

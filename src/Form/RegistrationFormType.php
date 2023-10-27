@@ -23,15 +23,18 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'inputRegister'
                 ]
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false, // le champs ne sera pas stocké en BDD
                 'label' => "Cochez cette case pour accepter les conditions d'utilisations",
+                'attr' => [
+                    'class' => 'inputRegisterTerms'
+                ],
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => "Vous devez accepter les conditions d'utilisations pour continuer",
                     ]),
                 ],
             ])
@@ -39,7 +42,7 @@ class RegistrationFormType extends AbstractType
                 "mapped" => false, // le champs ne sera pas stocké en BDD
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les mots de passes doivent être identiques.', // message d'erreur si les mdp correspondents pas
-                'options' => ['attr' => ['class' => 'password-field, form-control']],
+                'options' => ['attr' => ['class' => 'inputRegister']],
                 'required' => true, // le mdp est obligatoire
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmation du mot de passe'],

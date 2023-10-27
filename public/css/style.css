@@ -2,6 +2,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    font-family: 'Catamaran';
 }
 
 /* Déclaration des variables */
@@ -35,6 +36,7 @@
 
     /* Ombre */
     --boxShadow1: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    --boxShadow2: rgba(50, 50, 93, 0.15) 0px 10px 18px -5px, rgba(0, 0, 0, 0.3) 0px 5px 10px -8px;
 
 }
 
@@ -64,8 +66,16 @@ h1, h2 {
     font-family: var(--font1);
     font-weight: var(--fontWeight2);
     letter-spacing: 3px;
+   
+   
 }
  
+.center {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+    margin-bottom: 70px;
+}
 
 h3 {
     color: var(--color1);
@@ -77,19 +87,38 @@ h3 {
 }
 
 section {
-    margin: 0 80px;
+    margin: 0 50px;
 }
 
 p {
     color: var(--color1);
     font-family: var(--font1);
     font-size: 15px;
+    margin: 0 50px;
+
+}
+
+.pBold {
+    font-size: 18px;
 }
 
 .btn {
     height: 40px;
     width: 150px;
     border-radius: var(--borderRadius1);
+    background: var(--color3);
+    border: none;
+    color: var(--color4);
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: var(--fontWeight1);
+    box-shadow: var(--boxShadow2);
+    transition-duration: 500ms;
+}
+
+.btn:hover {
+    cursor: pointer;
+    opacity: 0.8;
 }
 
 .add {
@@ -104,22 +133,38 @@ p {
     font-weight: var(--fontWeight1);
 }
 
+.fa-circle-arrow-right {
+    color: var(--color3);
+}
+
+.fa-circle-arrow-right:hover {
+    opacity: 0.8;
+}
+
+label {
+    color: var(--color1);
+}
 /* ********************************************** NAVBAR PAGE D'ACCUEIL ********************************************** */
+
 
 header {
     background-color: var(--color1);
     
 }
+.navLogo {
+    height: 90px;
+}
 .nav-items {
     list-style: none;
     display: flex;
+    align-items: center;
     
 
 }
 
 .nav-item {
     text-transform: uppercase;
-    padding: 20px;
+    padding-left: 60px;
     
 }
 
@@ -129,24 +174,43 @@ header {
     font-family: var(--font1);
 }
 
-/* ********************************************** RECHERCHE ********************************************** */
+/* ********************************************** RECHERCHE RESERVATION ********************************************** */
+
 #search {
     background-color: #a9b4a4;
     height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--color1);
+    width: 100%;
+     
 }
 
+#reservationForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
 .start-containt, .end-containt, .person-containt, .submit-containt {
     display: flex;
     flex-direction: column;
     margin: 30px;
+    align-items: flex-start
 }
 
-.start-containt {
+/* .start-containt {
     position: relative;
 }
+
+.end-containt {
+    position: relative;
+}
+
+.person-containt {
+    position: relative;
+} */
 
 #openCalendarModal {
     cursor: pointer;
@@ -154,25 +218,43 @@ header {
     top: 0;
     right: 0;
 }
+#openCalendarModalEnd {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#openNumberPerson {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .modal {
     display: none;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     left: 0;
     top: 0;
-    width: 50%; /* Ajustez la largeur de la fenêtre modale selon vos besoins */
-    height: 50%; /* Ajustez la hauteur de la fenêtre modale selon vos besoins */
-    overflow: auto;
+    width: 100%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: var(--color4);
     padding: 20px;
     border-radius: 5px;
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
     margin: 10% auto;
     text-align: center;
+    transform: translate(-50%, -50%);
 }
 
 .close {
@@ -182,27 +264,120 @@ header {
     font-weight: bold;
 }
 
-.close:hover {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+.adult, .kid {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.inputPerson {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    text-align: center ;  
+    line-height: 25px;
+    padding: 0;
+  
+
+
+}
+.numberPerson, .numberAdult, .numberKid, .start, .end {
+    margin: 0 10px;
+}
+.person {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
 }
 
-.calendar-content {
-    /* Styles pour personnaliser le contenu du calendrier à l'intérieur de la fenêtre modale */
+#totalPerson {
+    display: inline;
+}
+.labelPerson {
+    display: inline;
 }
 
-
+.decrement, .increment {
+    margin: 0;
+}
 /* ********************************************** CALENDRIER ********************************************** */
 
-#calendar {
-    width: 80%;
-    margin: auto;
+ .selectedStartDate {
+    background-color: green; /* Couleur de fond grise pour indiquer la sélection */
+    color: #333; /* Couleur du texte pour la date sélectionnée */
 }
 
 .fc-bg-event {
-    background-color: var(--color2);
+    background-color: var(--color2) !important;
 }
+
+
+.fc-toolbar-title {
+    font-size: 1.5em !important;
+}
+
+#calendar {
+    color: var(--color1) !important;
+}
+.fc-button-primary {
+    background-color: var(--color1) !important;
+}
+.fc .fc-button .fc-icon {
+    background-color: var(--color1) !important;
+}
+
+.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
+    display: none !important;
+}
+.fc-today-button.fc-button.fc-button-primary {
+    display: none !important;
+}
+.fc-button-group {
+    margin-right: 15px;
+}
+
+
+
+/* ********************************************** CONNECTION / INSCRIPTION ********************************************** */
+
+.registerForm {
+    background-color: var(--color4);
+    border-radius: 30px;
+    width: 50%;
+    margin: auto;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: var(--boxShadow1);
+}
+
+.inputRegister {
+    margin: 20px;
+}
+
+.inputRegisterTerms {
+    width: 30px !important;
+    margin: 20px;
+}
+.btn-register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.register {
+    margin: 30px;
+}
+
 /* ********************************************** SECTION GÎTE ********************************************** */
 
 #gite {
@@ -267,7 +442,7 @@ header {
 }
 
 .icon {
-    margin: 70px;
+    margin: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -329,7 +504,7 @@ header {
 /* ********************************************** SECTION GALERIE ********************************************** */
 
 #galerie {
-    height: 60vh;
+    height: 80vh;
 }
 
 .categories {
@@ -352,4 +527,110 @@ header {
     box-shadow: 1px 2px 2px 0px var(--color1);
 }
 
+/* ********************************************** SECTION AUX ALENTOURS ********************************************** */
+
+#alentours {
+    background-color: var(--color4);
+    height: 80vh;
+}
+/* ********************************************** CONFIRMATION RESERVATION ********************************************** */
+
+.recap {
+    background-color: var(--color4);
+    width: 70%;
+    margin: auto;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 70px;
+    margin-top: 70px;
+}
+
+.recapTop, .recapBottom {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    
+    
+}
+.recapTop {
+    margin-bottom: 30px;
+}
+
+.recapBottom {
+    margin-top: 30px;
+}
+.recapLeft {
+    margin-left: 30%;
+    display: flex;
+    flex-direction: column;
+}
+.recapTitle {
+    margin: 0px !important;
+    font-size: 22px;
+}
+
+.line {
+    width: 50%;
+    border: 1px solid var(--color1);
+    margin: auto;
+}
+.inline {
+    display: inline;
+}
+
+.resaForm {
+    margin: auto;
+    margin-top: 70px;
+    background-color: var(--color4);
+    width: 70%;
+    padding: 40px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+    border-radius: 10px;
+    border: 1px solid var(--color1);
+    padding: 2px;
+    width: 200px;
+    margin: 0 10px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+}
 /* ********************************************** ADMIN : TABLEAU DES GÎTES ********************************************** */
+
+
+
+
+/* ********************************************** FOOTER ********************************************** */
+footer {
+    margin-top: 70px;
+}
+.footerContaint {
+    height: 300px;
+    background-color: var(--color1);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footerLogo {
+    height: 200px;
+}
+
+.footerP {
+    color: var(--color4);
+    font-size: 20px;
+}
+
+.address, .contact {
+    display: flex;
+    flex-direction: column;
+align-items: center;}

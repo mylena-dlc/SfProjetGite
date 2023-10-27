@@ -1,16 +1,84 @@
-const searchButton = document.querySelector('#search');
+// Fonction pour appelée lorsqu'on clique sur '+' ou '-' pour le nombre de personnes dans la recherche de résa
 
-searchButton.addEventListener('click', function() {
-    // Récupérez les critères de recherche depuis les champs du formulaire (date, nombre d'adultes, nombre d'enfants, etc.)
-    const startDate = document.querySelector('#start').value;
-    const endDate = document.querySelector('#end').value;
-    const numberAdult = document.querySelector('#numberAdult').value;
-    const numberKid = document.querySelector('#numberKid').value;
+window.increment = function(inputId) {
+    const inputElement = document.getElementById(inputId);
+    const currentValue = parseInt(inputElement.value, 10);
 
-    // Effectuez la recherche avec ces critères et mettez à jour le calendrier
-    performSearch(startDate, endDate, numberAdult, numberKid);
-});
+    if (inputId === 'numberAdult' && currentValue >= 5) {
+        return; // Ne rien faire si le nombre d'adultes atteint 5
+    }
+
+    if (inputId === 'numberKid' && currentValue >= 5) {
+        return; // Ne rien faire si le nombre d'enfants atteint 5
+    }
+
+    if (inputId === 'numberAdult' && currentValue === 0) {
+        // S'assurer qu'il y a au moins un adulte
+        inputElement.value = 1;
+    } else {
+        inputElement.value = currentValue + 1;
+    }
+
+    updateTotalPerson();
+}
+
+window.decrement = function(inputId) {
+    const inputElement = document.getElementById(inputId);
+    const currentValue = parseInt(inputElement.value, 10);
+
+    if (currentValue > 0) { // Vérifie que la valeur actuelle est supérieure à 0
+        inputElement.value = currentValue - 1;
+        if (inputId === 'numberAdult' && document.getElementById('numberKid').value === '0') {
+            // S'assurer qu'il y a au moins un adulte si tous les adultes sont retirés
+            document.getElementById('numberAdult').value = 1;
+        }
+        updateTotalPerson();
+    }
+}
+
+// Fonction pour calculer le nombre total de voyageurs
+function updateTotalPerson() {
+    const numberAdult = parseInt(document.getElementById('numberAdult').value, 10);
+    const numberKid = parseInt(document.getElementById('numberKid').value, 10);
+    const totalPerson = numberAdult + numberKid;
+
+    if (totalPerson > 6) {
+        // Si le total dépasse 6, réduisez le nombre d'adultes ou d'enfants si nécessaire
+        if (numberAdult > 1) {
+            document.getElementById('numberAdult').value = 1;
+        } else if (numberKid > 1) {
+            document.getElementById('numberKid').value = 1;
+        }
+    }
+
+    // Met à jour le champ "Voyageurs" avec le nombre total
+    document.getElementById('totalPerson').value = totalPerson;
+}
+
+// Appeler la fonction pour initialiser le total
+updateTotalPerson();
 
 
 
 
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     const reservedDates = {{ reservedDates|json_encode|raw }};
+    
+//     flatpickr("#start", {
+//         altInput: true,
+//         altFormat: "j F Y",
+//         dateFormat: "Y-m-d",
+//         minDate: "today",
+//         locale: "fr",
+//         disable: reservedDates
+//     });
+
+//     flatpickr("#end", {
+//         altInput: true,
+//         altFormat: "j F Y",
+//         dateFormat: "Y-m-d",
+//         locale: "fr",
+//         disable: reservedDates
+//     });
+// });

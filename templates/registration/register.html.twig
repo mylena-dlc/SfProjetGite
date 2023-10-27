@@ -7,7 +7,12 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Inscription</h1>
+    <div class="title gite-title center">
+        <h1>Inscription</h1>
+    </div>
+   
+   <div class="registerForm">
+
 
     {{ form_errors(registrationForm) }}
 
@@ -18,9 +23,12 @@
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">S'inscrire</button>
+<div class="btn-register">
+        <button type="submit" class="btn register">S'inscrire</button>
 
         <p class="p-link">Déjà un compte? Connectez-vous <a class="link" href="{{ path('app_login')}}">ici</a> </p>
-
+</div>
     {{ form_end(registrationForm) }}
+
+    </div>
 {% endblock %}

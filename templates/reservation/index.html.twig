@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!{% endblock %}
+
+{% block body %}
+
+<div class="contain">
+
+<h1>Demande de réservation</h1>
+<div class="detail">
+
+    <p>Date d'arrivée : {{ startDate }}</p>
+
+    <p>Date de départ : {{ endDate }}</p>
+    <p>Nombre d'adultes : {{ numberAdult }}</p>
+    <p>Nombre d'enfants : {{ numberKid }}</p>
+    <p>Nombre de nuit : {{ numberNight }}</p>
+    <p>Prix de la nuit : {{ nightPrice }}</p>
+     <p>Prix : {{ totalPrice }}</p>
+   
+<button class="btn"><a href="{{ path ('new_reservation')}}">Confirmer la réservation</a></button>
+            
+
+</div>
+
+</div>
+
+
+
+{% endblock %}

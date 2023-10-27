@@ -37,9 +37,6 @@ class CategoryController extends AbstractController
         $this->categoryRepository = $categoryRepository;
         $this->em = $em;
         $this->pictureRepository = $pictureRepository;
-
-
-
     }
 
     #[Route('/category', name: 'app_category')]
