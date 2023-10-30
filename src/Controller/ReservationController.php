@@ -54,20 +54,23 @@ class ReservationController extends AbstractController
             $numberKid = $request->get('numberKid');
 
             // on recupère l'id du gite
-            $gite = $this->giteRepository->find(1);
+            $gite = $this->giteRepository->find(4);
 
             // on recherche le prix de la nuit
             $nightPrice = $gite->getPrice();
 
+            // on recherche le prix du forfait ménage
+            $cleaningCharge = $gite->getCleaningCharge();
+
             // var_dump($nightPrice);die;
-            //compter le nombre de nuit
+            // on compte le nombre de nuit
             $startDate2 = new \DateTime($startDate);
             $endDate2 = new \DateTime($endDate);
             $diff = $startDate2->diff($endDate2);
             $numberNight = $diff->format('%a');
 
             // on calcul le prix total pour la réservation
-            $totalPrice = $numberNight * $nightPrice;
+            $totalPrice = ($numberNight * $nightPrice) + $cleaningCharge;
 
             // Stockez les données dans la session
             $session = $request->getSession();
@@ -78,12 +81,10 @@ class ReservationController extends AbstractController
                 'numberKid' => $numberKid,
                 'numberNight' => $numberNight,
                 'nightPrice' => $nightPrice,
+                'cleaningCharge' => $cleaningCharge,
                 'totalPrice' => $totalPrice,
             ]);
-        
-            // var_dump($startDate);die;
         }
-
 
         return $this->render('reservation/index.html.twig', [
             'startDate' => $startDate,
@@ -92,6 +93,7 @@ class ReservationController extends AbstractController
             'numberKid' => $numberKid,
             'numberNight' => $numberNight,
             'nightPrice' => $nightPrice,
+            'cleaningCharge' => $cleaningCharge,
             'totalPrice' => $totalPrice
         ]);
     }
@@ -128,8 +130,6 @@ $arrivalDate = new \DateTime($arrivalDate);
 $departureDate = new \DateTime($departureDate);
 
 
-
-        
     // Créez une instance de l'entité Reservation et définissez les données initiales
     $reservation = new Reservation();
 

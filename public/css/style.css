@@ -66,8 +66,6 @@ h1, h2 {
     font-family: var(--font1);
     font-weight: var(--fontWeight2);
     letter-spacing: 3px;
-   
-   
 }
  
 .center {
@@ -82,7 +80,7 @@ h3 {
     letter-spacing: 2px;
     font-family: var(--font1);
     font-weight: var(--fontWeight1);
-    margin: 80px 40px;
+    margin: 20px 40px;
     font-size: 25px;
 }
 
@@ -119,6 +117,10 @@ p {
 .btn:hover {
     cursor: pointer;
     opacity: 0.8;
+}
+
+.submit {
+    margin-top: 10px;
 }
 
 .add {
@@ -533,6 +535,131 @@ header {
     background-color: var(--color4);
     height: 80vh;
 }
+
+
+/* ********************************************** DÉTAILS RÉSERVATION ********************************************** */
+.confirmReservation {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+}
+.confirm {
+    height: 280px;
+    width: 450px;
+    background-color: var(--color4);
+    border-radius: 20px;
+    box-shadow: var(--boxShadow2);
+    padding: 15px;
+    /* position: fixed;
+    right: 0;
+    top: 50; */
+    z-index: 5;
+    text-align: center;
+}
+
+.confirmLine {
+    width: 50%;
+    margin: auto;
+}
+
+.total-p {
+    display: inline-block;
+    padding: 5px;
+}
+
+.btnReservation {
+    width: auto;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    margin: auto;
+}
+
+.btnReservation a {
+    color: var(--color4);
+}
+
+button > a {
+    text-decoration: none;
+}
+
+.update {
+     
+}
+
+.update a {
+    color: var(--color3);
+}
+
+.description01 {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.descriptionIcon {
+    font-size: 18px;
+    font-weight: var(--fontWeight1);
+    letter-spacing: 1.3px;
+  
+}
+
+.descriptionRight {
+    background-color: var(--color4);
+    border-radius: 20px;
+    box-shadow: var(--boxShadow2);
+    width: 300px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.titleDescription {
+    text-transform: uppercase;
+    font-weight: var(--fontWeight1);
+}
+
+.info {
+    display: inline-block;
+    margin: 0;
+    text-align: center;
+    font-size: 17px;
+}
+
+.bold {
+    font-weight: 800;
+}
+
+.paraCenter {
+    margin: 20px;
+}
+
+.titleH5 {
+    text-align: center;
+    margin: 120px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--color2);
+    letter-spacing: 1px;
+}
+
+.descriptionLists {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    margin: 70px;
+}
+
+.titleList {
+    list-style-type: none;
+
+}
+
+.invisible {
+    visibility: hidden;
+}
 /* ********************************************** CONFIRMATION RESERVATION ********************************************** */
 
 .recap {
@@ -594,7 +721,7 @@ header {
 input {
     border-radius: 10px;
     border: 1px solid var(--color1);
-    padding: 2px;
+    padding: 4px;
     width: 200px;
     margin: 0 10px;
 }
@@ -604,9 +731,37 @@ input {
     flex-direction: row;
     margin: 20px;
 }
+
+
 /* ********************************************** ADMIN : TABLEAU DES GÎTES ********************************************** */
 
+.giteForm {
+    display: flex;
+    flex-direction: column;
+    width: 80% !important;
+}
 
+
+.row-add {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.row-add label {
+    margin: 0 20px;
+}
+
+.row-center input {
+    width: 100%;
+    margin: 5px 0;
+
+}
+
+.inputDescription {
+    width: 100%;
+    height: 100px;
+}
 
 
 /* ********************************************** FOOTER ********************************************** */

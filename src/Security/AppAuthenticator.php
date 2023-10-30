@@ -48,13 +48,27 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        // Redirection lorsque l'inscription fonctionne
-        return new RedirectResponse($this->urlGenerator->generate('app_home'));
+         // Vérification des données de réservation en session
+         $reservationData = $request->getSession()->get('reservation_details');
+
+         if ($reservationData) {
+            // Redirigez l'utilisateur vers la page new_reservation s'il y a des données de recherche
+            return new RedirectResponse($this->urlGenerator->generate('new_reservation'));
+        }
+
+        // Redirigez l'utilisateur vers la page app_home s'il n'y a pas de données de recherche
+        return new RedirectResponse($this->urlGenerator->generate('app_home')); 
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
+
+        // Redirection lorsque l'inscription fonctionne
+        // return new RedirectResponse($this->urlGenerator->generate('app_home'));
+       
+    // }
 
     protected function getLoginUrl(Request $request): string
     {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }
+

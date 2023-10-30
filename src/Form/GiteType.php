@@ -20,53 +20,60 @@ class GiteType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'inputRegister'
                 ],
                 "required" => true
             ])
             ->add('address', TextType::class, [
                 'label' => 'Adresse',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'inputRegister'
                 ],
                 "required" => true
             ])
             ->add('cp', TextType::class, [
                 'label' => 'Code postal',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'inputRegister'
                 ],
                 "required" => true
             ])
             ->add('city', TextType::class, [
                 'label' => 'Ville',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'inputRegister'
                 ],
                 "required" => true
             ])
             ->add('capacity', IntegerType::class, [
-                'label' => 'Capacité',
+                'label' => 'Nombre de personne maximum',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'inputRegister'
                 ],
                 "required" => true
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'inputDescription'
                 ],
                 "required" => true
             ])
             ->add('price', MoneyType::class, [
-                'label' => 'Prix de la nuitée',
+                'label' => 'Prix de la nuitée en ',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'inputRegister'
                 ],
                 "required" => true
             ])
-            ->add('valider', SubmitType::class, [
+            ->add('cleaningCharge', MoneyType::class, [
+                'label' => 'Prix du forfait ménage en ',
+                'attr' => [
+                    'class' => 'inputRegister'
+                ],
+                "required" => true
+            ])
+            ->add('Ajouter', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn submit'
                 ]

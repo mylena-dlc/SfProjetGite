@@ -25,12 +25,12 @@ class HomeController extends AbstractController
                 'departureDate' => $reservation->getDepartureDate()->format('Y-m-d')
             ];
         }
-         $data = json_encode($reservedDates);
-         return $this->render('home/index.html.twig', compact('data'));
 
-          
+         $data = json_encode($reservedDates);
+        //  var_dump($data);
+         
         return $this->render('home/index.html.twig', [
-            'reservedDates' => $reservedDates
+            'reservedDates' => $data
         ]);
 
 

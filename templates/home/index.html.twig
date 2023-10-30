@@ -5,7 +5,7 @@
 {% block body %}
 
 
-<div id="calendarModal" class="modal">
+{# <div id="calendarModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
             <span class="close" id="closeCalendarModal">&times;</span>
@@ -15,21 +15,20 @@
             <div id="calendar" class="calendar-content"></div>
         </div>
     </div>
-</div>
+</div> #}
 
 <section id="search">
 
 <form id="reservationForm" action="{{ path('app_reservation') }}" method="POST">
     <div class="start-containt">
         <label name="start" class="start">Date d'arrivée</label>
-        <input type="date" id="start" class="start-input" name="start" readonly placeholder="Sélectionnez votre date d'arrivée" data-reserved-dates="{{ data }}">
-        {# <span id="openCalendarModal" class="spanStart">▼</span> #}
+        <input type="text" id="start" class="start-input" name="start" readonly placeholder="Sélectionnez votre date d'arrivée" data-reserved-dates="{{ reservedDates }}">
+        
     </div>
 
     <div class="end-containt">
         <label name="start" class="start">Date de départ</label>
-        <input type="date" id="end" class="end-input" name="end" readonly placeholder="Sélectionnez votre date de départ" data-reserved-dates="{{ data }}">
-        {# <span id="openCalendarModalEnd" class="spanEnd">▼</span> #}
+        <input type="text" id="end" class="end-input" name="end" readonly placeholder="Sélectionnez votre date de départ" data-reserved-dates="{{ reservedDates }}">
     </div>
 
 <div class="person-containt">
@@ -53,10 +52,9 @@
         <div class="person">
             <label for="totalPerson" class="labelPerson">Voyageurs</label>
             <div class="action">
-
                 <p class="decrement"><i class="fa-solid fa-circle-minus" onclick="decrement('numberKid')"></i></p>
                 <input type="number" id="totalPerson" class="inputPerson" value="1" min="1" max="6" readonly>
-                                <p class="increment"><i class="fa-solid fa-circle-plus" onclick="increment('numberKid')"></i></p>
+                <p class="increment"><i class="fa-solid fa-circle-plus" onclick="increment('numberKid')"></i></p>
 
             </div>
         </div>
@@ -189,59 +187,107 @@
 {% block javascript %}
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const startInput = document.getElementById("start");
-    const endInput = document.getElementById("end");
-    
-    const reservedDatesData = startInput.getAttribute("data-reserved-dates");
-    const reservedDates = JSON.parse(reservedDatesData);
 
-    flatpickr(startInput, {
-      altInput: true,
-      altFormat: "j F Y",
-      dateFormat: "Y-m-d",
-      minDate: "today",
-      locale: {
-        firstDayOfWeek: 1,  // Lundi comme premier jour de la semaine
-        weekdays: {
-            shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-            longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
-        },
-        months: {
-            shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
-            longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
-        }
-    },
-      disable: reservedDates.map(date => ({
-            from: new Date(new Date(date.arrivalDate).setDate(new Date(date.arrivalDate).getDate() - 1)), // Soustraire un jour à la date d'arrivée
+// import flatpickr from "flatpickr"
+// import rangePlugin from "flatpickr/dist/plugins/rangePlugin"
 
-        // date de départ disponible pour une nouvelle date d'arrivée
-        to: new Date(new Date(date.departureDate).setDate(new Date(date.departureDate).getDate() - 1)) // On soustrait un jour à la date de départ afin de laisser la date libre à une nouvelle réservation
-      }))
-    });
+// AFFICHAGE DU CALENDRIER DANS LA BARRE DE RECHERCHE
+
+// recherche des éléments HTML
+  const startInput = document.getElementById("start");
+  const endInput = document.getElementById("end");
+  
+  // On récupère les dates déjà réservées depuis l'attribut "data-reserved-dates" 
+  const reservedDatesData = startInput.getAttribute("data-reserved-dates");
+  // On analyse cette chaîne JSON en objet JS
+  const reservedDates = JSON.parse(reservedDatesData);
+
+    // Configuration du calendrier pour le champs date d'arrivée
+    const startPicker = flatpickr(startInput, {
+    altInput: true,
+    altFormat: "j F Y",
+    dateFormat: "Y-m-d",
+    minDate: "today",
     
-    flatpickr(endInput, {
-      altInput: true,
-      altFormat: "j F Y",
-      dateFormat: "Y-m-d",
-      locale: {
-        firstDayOfWeek: 1,  // Lundi comme premier jour de la semaine
-        weekdays: {
-            shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-            longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
-        },
-        months: {
-            shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
-            longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
-        }
-    },
-      disable: reservedDates.map(date => ({ 
-        // date d'arrivée disponible pour une date de départ
-from: date.arrivalDate,
-        to: date.departureDate
+
+    locale: {
+      firstDayOfWeek: 1,
+      weekdays: {
+        shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+        longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+      },
+      months: {
+        shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
+        longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+      },
+    }, 
+    disable: reservedDates.map(date => ({
+        from: date.arrivalDate,
+        // On enlève un jour à la date de départ afin qu'elle reste disponible pour une autre arrivée
+        to: new Date(new Date(date.departureDate).getTime() - 86400000) // Soustraire un jour en millisecondes - on doit enveloppé avec 'new Date()' pour être sûre que date.departureDate soit un objet 'Date'
       }))
-    });
+    // plugins: [new rangePlugin({ input: "#end" })],
   });
+
+    // Configuration du calendrier pour le champs date de départ
+    const endPicker = flatpickr(endInput, {
+    altInput: true,
+    altFormat: "j F Y",
+    dateFormat: "Y-m-d",
+    disable: reservedDates.map(date => ({ 
+         // On enlève un jour à la date d'arrivée afin qu'elle reste disponible pour le départ d'une autre réservation
+        from: new Date(new Date(date.arrivalDate).getTime() - 86400000),
+        to: date.departureDate
+      })),
+    locale: {
+      firstDayOfWeek: 1,
+      weekdays: {
+        shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+        longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+      },
+      months: {
+        shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
+        longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+      }
+    },
+
+  
+  // on empêche la sélection de date de départ avant la date d'arrivée
+    onOpen: function(selectedDates, dateStr, instance) {
+      const selectedArrivalDate = startPicker.selectedDates[0];
+      if (selectedArrivalDate) {
+        instance.set("minDate", selectedArrivalDate);
+      } else {
+        // Si aucune date d'arrivée n'est sélectionnée, on n'autorisez pas la sélection
+        instance.close();
+      }
+    }
+  });
+
+// On désactive l'entrée de date de départ au chargement de la page
+  endInput.disabled = true;
+
+// Changement du champ de la date d'arrivée
+  startInput.addEventListener("change", function () {
+    const selectedDate = startPicker.selectedDates[0];
+    if (selectedDate) {
+        // Si une date d'arrivée est sélectionnée
+      const nextDay = new Date(selectedDate);
+      nextDay.setDate(selectedDate.getDate() + 1);
+
+    // On active l'input de la date de départ
+      endInput.disabled = false;
+      // On réinitialise le champ de date de départ
+      endInput.value = ""; 
+      // On met à jour la date minimale pour la date de départ
+      endPicker.set("minDate", nextDay);
+    } else {
+        // Si aucune date d'arrivée n'est sélectionnée, on désactive l'input de la date de départ
+      endInput.disabled = true;
+      endInput.value = "";
+    }
+  });
+
 </script>
 
 

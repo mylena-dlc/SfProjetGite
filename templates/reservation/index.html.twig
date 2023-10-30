@@ -6,24 +6,128 @@
 
 <div class="contain">
 
-<h1>Demande de réservation</h1>
+
+    <div class="title gite-title center">
+        <h1>Demande de réservation</h1>
+    </div>
+
+    <div class="confirmReservation">
+<div class="confirm">
+
+    <h2>Détails du prix</h2><br>
+    <p class="total-p"> {{ nightPrice }} x {{ numberNight }} nuit(s)</p><p class="total-p"> {{ nightPrice * numberNight }} €</p><br>
+    <p class="total-p">Frais de ménage : </p><p class="total-p"> {{ cleaningCharge }}€</p><br>
+    <hr class="confirmLine">
+    <p class="total-p pBold">Total : </p><p class="total-p pBold">{{ totalPrice }} €</p><br><br>
+
+    
+    <button class="btn btnReservation"><a href="{{ path ('new_reservation')}}">Confirmer la réservation</a></button>
+</div>
+
+
+
 <div class="detail">
 
-    <p>Date d'arrivée : {{ startDate }}</p>
+    <h3>Vos dates</h3>
 
+    <p>Date d'arrivée : {{ startDate }}</p>
     <p>Date de départ : {{ endDate }}</p>
+
+    <p class="update"><a href="">Modifier</a></p>
+
+    <h3>Nombre de personnes (s)</h3>
     <p>Nombre d'adultes : {{ numberAdult }}</p>
     <p>Nombre d'enfants : {{ numberKid }}</p>
-    <p>Nombre de nuit : {{ numberNight }}</p>
-    <p>Prix de la nuit : {{ nightPrice }}</p>
-     <p>Prix : {{ totalPrice }}</p>
-   
-<button class="btn"><a href="{{ path ('new_reservation')}}">Confirmer la réservation</a></button>
-            
 
+    <p class="update"><a href="">Modifier</a></p>
+    
+</div>
+</div>
+ 
+
+
+
+    <div class="title gite-title center">
+        <h2>Description</h2>
+    </div>
+
+<div class="description01">
+    <div class="descriptionLeft">
+
+        <p class="descriptionIcon">Bain nordique en extérieur</p>
+
+        <p class="descriptionIcon">Arrivée Autonome</p>
+
+        <p class="descriptionIcon">2 chambres</p>
+
+        <p class="descriptionIcon">2 salles d'eau</p>
+
+        <p class="descriptionIcon">Jolie vue sur les montagnes</p>
+
+    </div>
+
+
+    <div class="descriptionRight">
+        <h3 class="titleDescription">informations</h3>
+        <p class="info bold">Heure d'arrivée:</p> <p class="info"> à partir de 17h</p>
+        <p class="info bold">Heure de départ:</p> <p class="info"> avant 11h</p>
+        <br>
+        <p class="info paraCenter">Les lits sont faits à l'arrivée et le linge de bain est inclus</p>
+        <p class="info bold">Logement non fumeur</p>
+        <p class="info bold">Animaux non admis</p>
+        <p class="info bold">Fête interdite</p>
+    </div>
 </div>
 
+<div class="description02">
+    <h5 class="titleH5">Bienvenue au Gîte du Rain du Pair sur les hauteurs d’Orbey !<br>
+Venez profiter d’un logement aménagé et décoré avec soin.</h5>
+
+    <div class="descriptionLists">
+       
+        <ul>
+         <li class="titleList"><h4 class="descriptionList">Équipement extérieur</h4></li>
+            <li>Bain nordique privé et ilimité</li>
+            <li>Terasse et table à manger</li>
+            <li>Plancha à gaz</li>
+            <li>Parking privé</li>
+        </ul>
+        
+        
+        
+        <ul>
+        <li class="titleList"><h4 class="descriptionList">Équipement intérieur</h4></li>
+            <li>Chauffage au sol au RDC</li>
+            <li>Radiateur électrique à létage</li>
+            <li>Seche-serviette électrique</li>
+            <li>Lave-vaiselle</li>
+            <li>Four</li>
+            <li>Micro-onde</li>
+            <li>Plaque de cuisson induction</li>
+            <li>Machine à café Senseo</li>
+            <li>Bouilloire électrique</li>
+            <li>Grille-pain</li>
+            <li>Appareil à raclette</li>
+        </ul>
+       
+        <ul>
+         <li class="titleList"><h4 class="descriptionList"><span class="invisible">texte</span> </h4></li>
+            <li>Aspirateur</li>
+            <li>Lave-linge et étendoir</li>
+            <li>Fer à repasser</li>
+            <li>Sèche-cheveux</li>
+            <li>Couvertures supplémentaires</li>
+            <li>Télévision</li>
+            <li>Wifi</li>
+            <li>Détecteur de fumée</li>
+        </ul>
 </div>
+</div>
+
+    <div class="title gite-title center">
+        <h2>Situation</h2>
+    </div>
+
 
 
 

@@ -43,6 +43,9 @@ class Gite
     #[ORM\OneToMany(mappedBy: 'gite', targetEntity: Reservation::class)]
     private Collection $reservations;
 
+    #[ORM\Column]
+    private ?float $cleaningCharge = null;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
@@ -199,6 +202,18 @@ class Gite
                 $reservation->setGite(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCleaningCharge(): ?float
+    {
+        return $this->cleaningCharge;
+    }
+
+    public function setCleaningCharge(float $cleaningCharge): static
+    {
+        $this->cleaningCharge = $cleaningCharge;
 
         return $this;
     }
