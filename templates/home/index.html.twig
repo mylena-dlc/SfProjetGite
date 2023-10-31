@@ -208,8 +208,6 @@
     altFormat: "j F Y",
     dateFormat: "Y-m-d",
     minDate: "today",
-    
-
     locale: {
       firstDayOfWeek: 1,
       weekdays: {
@@ -234,11 +232,18 @@
     altInput: true,
     altFormat: "j F Y",
     dateFormat: "Y-m-d",
-    disable: reservedDates.map(date => ({ 
+    minDate: startInput.value,
+    disable: [
+        { 
+        from: startInput.value,
+        to: startInput.value,
+        },
+        reservedDates.map(date => ({ 
          // On enlève un jour à la date d'arrivée afin qu'elle reste disponible pour le départ d'une autre réservation
         from: new Date(new Date(date.arrivalDate).getTime() - 86400000),
         to: date.departureDate
       })),
+    ],
     locale: {
       firstDayOfWeek: 1,
       weekdays: {
@@ -275,18 +280,53 @@
       const nextDay = new Date(selectedDate);
       nextDay.setDate(selectedDate.getDate() + 1);
 
+       // On active l'input de la date de départ
+    endInput.disabled = false;
+    // On réinitialise le champ de date de départ
+    endInput.value = nextDay.toLocaleDateString('en-GB'); // Formatage de la date (assurez-vous d'utiliser le format approprié)
+
+    // On met à jour la date minimale pour la date de départ
+    endPicker.set("minDate", nextDay);
+
+    // On empêche de sélectionner la même date que la date d'arrivée
+    endPicker.set("disable", [{ from: selectedDate, to: selectedDate }]);
+
+    // On met également à jour la date de départ automatiquement à la date de départ choisie + 1 jour
+    endPicker.setDate(nextDay, false);
+  } else {
+    // Si aucune date d'arrivée est sélectionnée, on désactive l'input de la date de départ
+    endInput.disabled = true;
+    endInput.value = "";
+    endPicker.clear(); // Effacer la date de départ
+  }
+});
+
+
+  // Changement du champ de la date d'arrivée
+startInput.addEventListener("change", function () {
+  const selectedDate = startPicker.selectedDates[0];
+  if (selectedDate) {
+    // Si une date d'arrivée est sélectionnée
+    const nextDay = new Date(selectedDate);
+    nextDay.setDate(selectedDate.getDate() + 1);
+
     // On active l'input de la date de départ
-      endInput.disabled = false;
-      // On réinitialise le champ de date de départ
-      endInput.value = ""; 
-      // On met à jour la date minimale pour la date de départ
-      endPicker.set("minDate", nextDay);
-    } else {
-        // Si aucune date d'arrivée n'est sélectionnée, on désactive l'input de la date de départ
-      endInput.disabled = true;
-      endInput.value = "";
-    }
-  });
+    endInput.disabled = false;
+    // On réinitialise le champ de date de départ
+    endInput.value = nextDay.toLocaleDateString('en-GB'); // Formatage de la date (assurez-vous d'utiliser le format approprié)
+
+    // On met à jour la date minimale pour la date de départ
+    endPicker.set("minDate", nextDay);
+
+    // On met également à jour la date de départ automatiquement à la date de départ choisie + 1 jour
+    endPicker.setDate(nextDay, false);
+  } else {
+    // Si aucune date d'arrivée est sélectionnée, on désactive l'input de la date de départ
+    endInput.disabled = true;
+    endInput.value = "";
+    endPicker.clear(); // Effacer la date de départ
+  }
+});
 
 </script>
 

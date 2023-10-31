@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Gite;
+use App\Entity\Period;
 use App\Form\GiteType;
+use App\Form\PeriodType;
 use App\Repository\GiteRepository;
+use App\Repository\PeriodRepository;
 use App\Repository\PictureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,12 +33,18 @@ class GiteController extends AbstractController
      */
     private $pictureRepository;
 
+    /**
+     * @var PeriodRepository
+     */
+    private $periodRepository;
 
-    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository)
+
+    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, PeriodRepository $periodRepository)
     {
         $this->giteRepository = $giteRepository;
         $this->em = $em;
         $this->pictureRepository = $pictureRepository;
+        $this->periodRepository = $periodRepository;
     }
 
 
@@ -97,4 +106,46 @@ class GiteController extends AbstractController
         return $this->redirectToRoute('app_gite');
     }
 
+
+
+    // /**
+    // * Fonction pour ajouter ou éditer une période
+    // */
+
+    // #[Route('/gite', name: 'new_period')]
+    // // #[Route('/gite/{id}/period/edit', name: 'edit_period')]
+
+    // public function newperiod(Period $period = null, Request $request): Response {
+    
+    //     if(!$period) {
+    //         $period = new Period();
+    //     }
+
+    //     // on recupère l'id du gite
+    //     $gite = $this->giteRepository->find(4);
+
+    // // Associez le gîte à la période
+    // $period->setGite($gite);
+
+    
+    //     $form = $this->createForm(PeriodType::class, $period);
+
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+
+    //         $period = $form->getData(); 
+    //         // prepare en PDO
+    //         $this->em->persist($period);
+    //         // execute PDO
+    //         $this->em->flush();
+
+    //         return $this->redirectToRoute('app_period');
+    //     }
+
+    //     return $this->render('period/new.html.twig', [
+    //         'form' => $form,
+    //         'edit' => $period->getId(),
+    //     ]);
+    // }  
 }

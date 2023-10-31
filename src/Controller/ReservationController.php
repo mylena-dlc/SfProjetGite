@@ -8,6 +8,7 @@ use App\Form\ReservationType;
 use App\Repository\GiteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +27,11 @@ class ReservationController extends AbstractController
      */
     private $giteRepository;
 
+        /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
     /**
      * @var EntityManagerInterface
      */
@@ -33,10 +39,11 @@ class ReservationController extends AbstractController
 
     
 
-    public function __construct(ReservationRepository $reservationRepository, GiteRepository $giteRepository, EntityManagerInterface $em)
+    public function __construct(ReservationRepository $reservationRepository, GiteRepository $giteRepository, EntityManagerInterface $em, UserRepository $userRepository)
     {
         $this->reservationRepository = $reservationRepository;
         $this->giteRepository = $giteRepository;
+        $this->userRepository = $userRepository;
         $this->em = $em;
     }
     
@@ -99,9 +106,6 @@ class ReservationController extends AbstractController
     }
 
     
-    
-    
-
 
     /**
     * Fonction pour confirmer une réservation
@@ -125,35 +129,67 @@ class ReservationController extends AbstractController
     $nightPrice = $session->get('reservation_details')['nightPrice'];
     $totalPrice = $session->get('reservation_details')['totalPrice'];
 
-    // Convertissez les chaînes de caractères en objets DateTime
-$arrivalDate = new \DateTime($arrivalDate);
-$departureDate = new \DateTime($departureDate);
+    // $user = $session->get('reservation_details')['user'];
 
+    // Convertissez les chaînes de caractères en objets DateTime
+    $arrivalDate = new \DateTime($arrivalDate);
+    $departureDate = new \DateTime($departureDate);
 
     // Créez une instance de l'entité Reservation et définissez les données initiales
     $reservation = new Reservation();
 
+    $reservation->setArrivalDate($arrivalDate); 
+    $reservation->setDepartureDate($departureDate);
+    $reservation->setNumberAdult($numberAdult);
+    $reservation->setNumberKid($numberKid);
+    $reservation->setTotalPrice($totalPrice);
+
+    // on recupère l'id du gite
+    $gite = $this->giteRepository->find(4);
+
+    // Associez le gîte à la réservation
+    $reservation->setGite($gite);
+
+
+
+        // Maintenant, récupérez l'objet utilisateur complet à partir de l'ID
+        // $userRepository = $this->userRepository->getRepository(User::class);
+        // $user = $this->userRepository->getR;
+
+
+    // Récupérez l'id de l'utilisateur connecté
+//    $user = $this->getUser()->getId();
+//     $reservation->setUser($user);
+    
+// var_dump($user); die;
+
+$user = $this->getUser();
+
+$reservation->setUser($user);
+
+// var_dump($user); die;
+
    // Utilisez setData pour pré-remplir les champs du formulaire
    $form = $this->createForm(ReservationType::class, $reservation);
-   $form->setData([
-       'arrivalDate' => $arrivalDate,
-       'departureDate' => $departureDate,
-       'numberAdult' => $numberAdult,
-       'numberKid' => $numberKid,
-   ]);
+//    $form->setData([
+//        'arrivalDate' => $arrivalDate,
+//        'departureDate' => $departureDate,
+//    ]);
 
     // Gérez la soumission du formulaire
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $reservation = $form->getData(); 
+     
             // prepare en PDO
             $this->em->persist($reservation);
             // execute PDO
             $this->em->flush();
 
             // Redirigez l'utilisateur vers une page de confirmation ou autre
-            return $this->redirectToRoute('app_reservation');
+            return $this->redirectToRoute('confirm_reservation');
         }
 
         // Affichez le formulaire dans la vue Twig
@@ -170,26 +206,20 @@ $departureDate = new \DateTime($departureDate);
         ]);
     }   
 
+    /**
+    * Fonction pour afficher la vue de confirmation d'une réservation
+    */
 
-    // private function getReservedDates(): array
-    // {
-    //     $reservedDates = [];
-    //     $reservations = $this->reservationRepository->findAll(); // Obtenez toutes les réservations
-    
-    //     foreach ($reservations as $reservation) {
-    //         $arrivalDate = $reservation->getArrivalDate();
-    //         $departureDate = $reservation->getDepartureDate();
-    
-    //         // Générez un tableau de dates entre les dates d'arrivée et de départ de chaque réservation
-    //         $currentDate = clone $arrivalDate;
-    //         while ($currentDate <= $departureDate) {
-    //             $reservedDates[] = $currentDate->format('Y-m-d');
-    //             $currentDate->add(new DateInterval('P1D')); // Incrémentation d'un jour
-    //         }
-    //     }
-    
-    //     return $reservedDates;
-    // }
-    
+    #[Route('/reservation/confirm', name: 'confirm_reservation')]
+    public function confirm(): Response {
 
+        $data = [
+            'message' => 'La réservation a été enregistrée avec succès.',
+        ];
+    
+        return $this->render('reservation/confirm.html.twig', [
+            'data' => $data
+        ]);
+
+}
 }

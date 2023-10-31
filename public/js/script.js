@@ -106,6 +106,7 @@ function decrement(inputId, totalId, minAllowed) {
     }
 }
 
+
 // Associer les fonctions aux éléments + et - pour les adultes
 document.querySelector('.adult .increment').onclick = function () {
     increment('numberAdult', 'totalPerson', 6);

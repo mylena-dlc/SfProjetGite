@@ -46,10 +46,14 @@ class Gite
     #[ORM\Column]
     private ?float $cleaningCharge = null;
 
+    #[ORM\OneToMany(mappedBy: 'gite', targetEntity: Period::class)]
+    private Collection $periods;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
         $this->reservations = new ArrayCollection();
+        $this->periods = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -214,6 +218,36 @@ class Gite
     public function setCleaningCharge(float $cleaningCharge): static
     {
         $this->cleaningCharge = $cleaningCharge;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Period>
+     */
+    public function getPeriods(): Collection
+    {
+        return $this->periods;
+    }
+
+    public function addPeriod(Period $period): static
+    {
+        if (!$this->periods->contains($period)) {
+            $this->periods->add($period);
+            $period->setGite($this);
+        }
+
+        return $this;
+    }
+
+    public function removePeriod(Period $period): static
+    {
+        if ($this->periods->removeElement($period)) {
+            // set the owning side to null (unless already changed)
+            if ($period->getGite() === $this) {
+                $period->setGite(null);
+            }
+        }
 
         return $this;
     }

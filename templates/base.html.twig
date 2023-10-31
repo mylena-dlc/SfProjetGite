@@ -13,6 +13,7 @@
 {# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> #}
 
 
+    <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
 
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -49,8 +50,7 @@
 
                     {% if is_granted('ROLE_ADMIN') %} {# Si je suis admin #}
         
-                    <li class="nav-item"><a aria-current="page" href="{{ path('new_gite') }}">Ajouter un gîte</a></li>
-                    <li class="nav-item"><a aria-current="page" href="{{ path('new_category') }}">Ajouter une catégorie de photos</a></li>
+                    
 
                     {% endif %}
 

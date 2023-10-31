@@ -3,6 +3,7 @@
     padding: 0;
     margin: 0;
     font-family: 'Catamaran';
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
 }
 
 /* Déclaration des variables */
@@ -18,8 +19,8 @@
     /* Couleur de fond */
 
     /* Police */
-    --font1: "Catamaran";
-    --font2: "Corinthia";
+    /* --font1: "Catamaran";
+    --font2: "Corinthia"; */
 
     /* Taille de police */
     --size1: 1rem;
@@ -66,6 +67,7 @@ h1, h2 {
     font-family: var(--font1);
     font-weight: var(--fontWeight2);
     letter-spacing: 3px;
+    margin-top: 20px;
 }
  
 .center {
@@ -84,9 +86,9 @@ h3 {
     font-size: 25px;
 }
 
-section {
+/* section {
     margin: 0 50px;
-}
+} */
 
 p {
     color: var(--color1);
@@ -145,6 +147,15 @@ p {
 
 label {
     color: var(--color1);
+}
+
+.edit i, .delete i {
+    height: 30px;
+    width: 30px;
+}
+
+.edit, .delete {
+    text-align: center;
 }
 /* ********************************************** NAVBAR PAGE D'ACCUEIL ********************************************** */
 
@@ -763,7 +774,36 @@ input {
     height: 100px;
 }
 
+.tableGite {
+    margin: auto;
 
+}
+
+th, td {
+    padding: 20px;
+    text-align: center;
+}
+
+.tdDescription {
+    width: 400px;
+
+}
+/* ********************************************** VUE CONFIRMATION RESERVATION ********************************************** */
+
+.messageConfirm {
+    font-size: 25px;
+    text-align: center;
+}
+
+.messageConfirm2 {
+    margin: 0 200px;
+    text-align: center;
+}
+.sectionMessage {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
 /* ********************************************** FOOTER ********************************************** */
 footer {
     margin-top: 70px;

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Reservation;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,18 +17,18 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('arrivalDate', DateType::class, [
-            'label' => 'Date d\'arrivée',
-            'widget' => 'single_text', // Utilisation d'un widget de type texte unique
-            'format' => 'yyyy-MM-dd', // Format de la date
-            'required' => true,
-        ])
-        ->add('departureDate', DateType::class, [
-            'label' => 'Date de départ',
-            'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd',
-            'required' => true,
-        ])
+        // ->add('arrivalDate', DateType::class, [
+        //     'label' => 'Date d\'arrivée',
+        //     'widget' => 'single_text', // Utilisation d'un widget de type texte unique
+        //     'format' => 'yyyy-MM-dd', // Format de la date
+        //     'required' => true,
+        // ])
+        // ->add('departureDate', DateType::class, [
+        //     'label' => 'Date de départ',
+        //     'widget' => 'single_text',
+        //     'format' => 'yyyy-MM-dd',
+        //     'required' => true,
+        // ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom',
                 "required" => true,
@@ -60,8 +61,10 @@ class ReservationType extends AbstractType
             // ->add('numberAdult')
             // ->add('numberKid')
             // ->add('total_price')
-            // ->add('gite')
-            // ->add('user')
+
+            // ->add('gite', HiddenType::class)
+
+            // ->add('user', HiddenType::class)
             
             ->add('payer', SubmitType::class, [
                 'attr' => [
