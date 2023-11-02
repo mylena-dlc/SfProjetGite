@@ -4,17 +4,32 @@
 
 {% block body %}
 
+    <div class="title gite-title center">
+            <h1>Ajouter une image</h1>
+        </div>
+        
+{% for type, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+   
+<div class="registerForm ">
 
-    <h1>Ajouter une photo</h1>
+    {{ form_start(form) }}
 
-     {{ form_start(form) }}
     {{ form_row(form.picture) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.category) }}
+    <div class="pictureFormSubmit">
+        {{ form_row(form.valider) }}
+    </div>
+    
 
-        {{ form_row(form.description) }} 
+    {{ form_end(form) }}
+</div>
 
-    {# empêche l'apparition d'une légende "categorie", si la collection est vide (en cas de création d'une nouvelle session) #}
-    {# {% do form.categories.setRendered %} #}
- {{ form_row(form.valider) }}
-{{ form_end(form) }}
 
 {% endblock %}

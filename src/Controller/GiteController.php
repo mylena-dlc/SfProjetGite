@@ -107,45 +107,67 @@ class GiteController extends AbstractController
     }
 
 
+    // Fonction pour afficher les périodes avec supplément tarifaire 
+    // #[Route('/period', name: 'app_period')]
+    // public function showPeriod(): Response
+    // {
+        
+    //     return $this->render('period/index.html.twig', [
+            
+    //     ]);
+    // }
+
+
 
     // /**
     // * Fonction pour ajouter ou éditer une période
     // */
 
-    // #[Route('/gite', name: 'new_period')]
-    // // #[Route('/gite/{id}/period/edit', name: 'edit_period')]
+    #[Route('/period', name: 'app_period')]
 
-    // public function newperiod(Period $period = null, Request $request): Response {
-    
-    //     if(!$period) {
-    //         $period = new Period();
-    //     }
+    public function newPeriod(Period $newPeriod = null, Request $request): Response {
 
-    //     // on recupère l'id du gite
-    //     $gite = $this->giteRepository->find(4);
+        $periods = $this->periodRepository->findAll();
 
-    // // Associez le gîte à la période
-    // $period->setGite($gite);
+        $newPeriod = new Period();
+        
+        // on recupère l'id du gite
+        $gite = $this->giteRepository->find(4);
 
-    
-    //     $form = $this->createForm(PeriodType::class, $period);
+        // Associez le gîte à la période
+        $newPeriod->setGite($gite);
 
-    //     $form->handleRequest($request);
+        $form = $this->createForm(PeriodType::class, $newPeriod);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
+        $form->handleRequest($request);
 
-    //         $period = $form->getData(); 
-    //         // prepare en PDO
-    //         $this->em->persist($period);
-    //         // execute PDO
-    //         $this->em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
 
-    //         return $this->redirectToRoute('app_period');
-    //     }
+            $newPeriod = $form->getData(); 
+  
+            $startDate = $newPeriod->getStartDate();
+            $endDate = $newPeriod->getEndDate();
 
-    //     return $this->render('period/new.html.twig', [
-    //         'form' => $form,
-    //         'edit' => $period->getId(),
-    //     ]);
-    // }  
+            $overlappingPeriods = $this->periodRepository->findOverlappingPerriods($startDate, $endDate, $newPeriod->getId());
+
+            if (!empty($overlappingPeriods)) {
+                $this->addFlash('error', 'Les dates de début et de fin chevauchent une période existante.');
+            } else {
+                // Si le formulaire est valide et qu'il n'y a pas de chevauchement, enregistrez la nouvelle période
+
+            // prepare en PDO
+            $this->em->persist($newPeriod);
+            // execute PDO
+            $this->em->flush();
+
+            $this->addFlash('success', 'La période a été ajoutée avec succès.');
+            return $this->redirectToRoute('app_period');
+        }
+    }
+
+        return $this->render('period/index.html.twig', [
+            'form' => $form,
+            'periods' => $periods
+        ]);
+    }  
 }

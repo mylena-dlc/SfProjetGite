@@ -788,6 +788,86 @@ th, td {
     width: 400px;
 
 }
+
+/* ********************************************** ADMIN : DASHBOARD ********************************************** */
+
+.slidebar {
+    background-color: var(--color4);
+    width: 200px;
+    position: fixed;
+    top: 10;
+    left: 0;
+    padding: 30px;
+}
+
+.linkAdmin {
+    color: var(--color1);
+    text-decoration: none;
+}
+
+/* .containt {
+    height: 100vh;
+} */
+
+/* PERIODES */
+
+/* PHOTOS */
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 50px;
+}
+.card {
+    height: 200px;
+    width: 200px;
+    background-color: var(--color4);
+    box-shadow: var(--boxShadow1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.cardLink {
+    text-decoration: none;
+    font-size: 20px;
+    color: var(--color1);
+    margin-bottom: 15px;
+}
+
+.cardBtn {
+    width: 30px;
+    height: 30px;
+    margin: 5px;
+}
+
+.btnRight {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 100px;
+    
+}
+.categoryBtnAdd {
+    height: 70px;
+}
+.pictureInput {
+    width: 300px;
+}
+
+#picture_description {
+    height: 100px;
+    width: 300px;
+}
+
+.pictureFormSubmit {
+    display: flex;
+    justify-content: center;
+}
+
+.categoryInput {
+    margin: 0 !important;
+}
 /* ********************************************** VUE CONFIRMATION RESERVATION ********************************************** */
 
 .messageConfirm {

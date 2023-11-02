@@ -7,6 +7,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+
 class Reservation
 {
     #[ORM\Id]
@@ -57,6 +59,12 @@ class Reservation
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $reservationDate = null;
+
+    #[ORM\Column]
+    private ?bool $view = false;
 
     public function getId(): ?int
     {
@@ -230,4 +238,29 @@ class Reservation
 
         return $this;
     }
+
+    public function getReservationDate(): ?\DateTimeInterface
+    {
+        return $this->reservationDate;
+    }
+
+    #[ORM\PrePersist]
+    public function setReservationDateValue(): void
+    {
+        $this->reservationDate = new \DateTime();
+    }
+
+    public function isView(): ?bool
+    {
+        return $this->view;
+    }
+
+    public function setView(bool $view): static
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+
+
 }

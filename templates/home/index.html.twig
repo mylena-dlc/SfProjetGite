@@ -233,17 +233,22 @@
     altFormat: "j F Y",
     dateFormat: "Y-m-d",
     minDate: startInput.value,
-    disable: [
-        { 
-        from: startInput.value,
-        to: startInput.value,
-        },
-        reservedDates.map(date => ({ 
-         // On enlève un jour à la date d'arrivée afin qu'elle reste disponible pour le départ d'une autre réservation
-        from: new Date(new Date(date.arrivalDate).getTime() - 86400000),
-        to: date.departureDate
+    // disable: [
+    //     { 
+    //     from: startInput.value,
+    //     to: startInput.value,
+    //     },
+    //     reservedDates.map(date => ({ 
+    //      // On enlève un jour à la date d'arrivée afin qu'elle reste disponible pour le départ d'une autre réservation
+    //     from: new Date(new Date(date.arrivalDate).getTime() - 86400000),
+    //     to: date.departureDate
+    //   })),
+    // ],
+    disable: reservedDates.map(date => ({
+        from: date.arrivalDate,
+        // On enlève un jour à la date de départ afin qu'elle reste disponible pour une autre arrivée
+        //to: new Date(new Date(date.departureDate).getTime() - 86400000) // Soustraire un jour en millisecondes - on doit enveloppé avec 'new Date()' pour être sûre que date.departureDate soit un objet 'Date'
       })),
-    ],
     locale: {
       firstDayOfWeek: 1,
       weekdays: {

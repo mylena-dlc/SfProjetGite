@@ -15,10 +15,13 @@
 <div class="confirm">
 
     <h2>Détails du prix</h2><br>
-    <p class="total-p"> {{ nightPrice }} x {{ numberNight }} nuit(s)</p><p class="total-p"> {{ nightPrice * numberNight }} €</p><br>
+    <p class="total-p"> {{ nightPrice }} € x {{ numberNight }} nuit(s)</p><p class="total-p"> {{ nightPrice * numberNight }} €</p><br>
     <p class="total-p">Forfait ménage : </p><p class="total-p"> {{ cleaningCharge }}€</p><br>
     <hr class="confirmLine">
     <p class="total-p pBold">Total : </p><p class="total-p pBold">{{ totalPrice }} €</p><br><br>
+
+        <p class="total-p pBold">Supplément : </p><p class="total-p pBold">{{ supplement }} €</p><br><br>
+
 
     
     <button class="btn btnReservation"><a href="{{ path ('new_reservation')}}">Confirmer la réservation</a></button>

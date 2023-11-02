@@ -20,25 +20,18 @@ class PictureType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('description', TextType::class, [
-                'label' => 'Description',
-            ])
             
             ->add('picture', FileType::class, [
                 'label' => 'Image',
-
-                // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
-
-                // make it optional so you don't have to re-upload the PDF file
-                // every time you edit the Product details
                 'required' => false,
+                'attr' => [
+                    'class' => 'inputRegister pictureInput'
+                ],
 
-                // unmapped fields can't define their validation using annotations
-                // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
                     new File([
-                        'maxSize' => '200k',
+                        'maxSize' => '400k',
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/jpg',
@@ -48,22 +41,27 @@ class PictureType extends AbstractType
                     ])
                 ],
             ])
-
+            ->add('description', TextType::class, [
+                'label' => 'Description',
+                'attr' => [
+                    'class' => 'inputRegister'
+                ]
+            ])
             ->add('category', EntityType::class, [
                 'label' => 'Catégorie',
                 'class' => Category::class,
+                'choice_label' => 'name', // Remplacez 'name' par la propriété que vous souhaitez afficher
+                'multiple' => false, // Autorise la sélection d'une seule catégorie
+                'expanded' => true, // Affiche les catégories comme des cases à cocher
                 'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
-            ->add('gite', EntityType::class, [
-                'label' => 'Gîte',
-                'class' => Gite::class,
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+                    'class' => 'inputRegister categoryInput'
+                ],             
+                'required' => false, // Rend le champ non obligatoire
+                'placeholder' => 'Sans catégorie', // Définit la valeur du placeholder
 
+
+            ])
+      
             ->add('url', HiddenType::class, [ // Champ "url" de type HiddenType
                 'mapped' => false, // Ne pas mapper ce champ à l'entité
             ])

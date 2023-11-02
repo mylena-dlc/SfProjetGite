@@ -1,0 +1,78 @@
+ {% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+{% block body %}
+
+    <div class="title gite-title center">
+            <h1>Listes des périodes avec supplément</h1>
+        </div>
+        
+{% for type, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+
+    <table class="tableGite">
+        <thead>
+            <tr>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Supplément (par nuit)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for period in periods %}
+            <tr>
+                <td>{{ period.startDate|date('d-m-Y') }}</td>
+                <td>{{ period.endDate|date('d-m-Y') }}</td>
+                <td>{{ period.supplement }} € </td>
+
+                <td>      
+                    {# <a href="{{ path ('edit_gite', {'id': gite.id}) }}" class="btn edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href="{{ path ('delete_gite', {'id': gite.id}) }}" class="btn delete"><i class="fa-solid fa-trash-can"></i></a> #}
+                </td>
+            </tr>   
+
+               {% endfor %}
+        </tbody>
+    </table>        
+
+    <button class="btn add" id="addPeriodLink">Ajouter une période</button>
+
+
+{# <div class="addPeriodSection" style="display: none;" data-prototype="{{ form_widget(form.periods.vars.prototype)|e('html_attr') }}"> #}
+<div class="addPeriodSection">
+
+    <div class="title gite-title center">
+            <h2>Ajouter une période</h2>
+    </div>
+
+
+
+
+    <div id="addPeriodForm">
+  
+    {{ form_start(form) }} 
+
+            {{ form_row(form.startDate) }} 
+            {{ form_row(form.endDate) }} 
+            {{ form_row(form.supplement) }} 
+
+             {{ form_row(form.ajouter) }} 
+
+
+        {# <button class="btn add"><a href="{{ path('app_period') }}">Ajouter </a></button> #}
+
+  {{ form_end(form) }}
+
+   </div>
+</div>
+
+    {% endblock %}    
+    
+    

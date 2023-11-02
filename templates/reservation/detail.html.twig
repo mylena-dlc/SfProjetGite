@@ -32,6 +32,12 @@
                 <th>Prix total</th>
                 <th>Nom</th>
                 <th>Prénom</th>
+                <th>Adresse</th>
+                <th>CP</th>
+                <th>Ville</th>
+                <th>Pays</th>
+                <th>Numéro de téléphone</th>
+                <th>Adresse mail</th>
                 <th>Vue par le gérant</th>
             </tr>
         </thead>
@@ -40,12 +46,10 @@
             <tr>
                 <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
                 <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td>
-                <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
-                <td>{{ reservation.numberAdult }}</td>
-                <td>{{ reservation.numberKid }}</td>
-                <td>{{ reservation.totalPrice }} €</td>
-                 <td>{{ reservation.firstName }}</td>
-                  <td>{{ reservation.LastName }}</td>
+      
+                    {# <a href="{{ path ('edit_gite', {'id': gite.id}) }}" class="btn edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href="{{ path ('delete_gite', {'id': gite.id}) }}" class="btn delete"><i class="fa-solid fa-trash-can"></i></a> #}
+                </td>
             </tr>   
 
                {% endfor %}

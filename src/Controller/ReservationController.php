@@ -6,9 +6,10 @@ use DateInterval;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Repository\GiteRepository;
+use App\Repository\UserRepository;
+use App\Repository\PeriodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
-use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,25 +34,29 @@ class ReservationController extends AbstractController
     private $userRepository;
 
     /**
+     * @var PeriodRepository
+     */
+    private $periodRepository;
+
+    /**
      * @var EntityManagerInterface
      */
     private $em;
 
     
 
-    public function __construct(ReservationRepository $reservationRepository, GiteRepository $giteRepository, EntityManagerInterface $em, UserRepository $userRepository)
+    public function __construct(ReservationRepository $reservationRepository, GiteRepository $giteRepository, EntityManagerInterface $em, UserRepository $userRepository, PeriodRepository $periodRepository)
     {
         $this->reservationRepository = $reservationRepository;
         $this->giteRepository = $giteRepository;
         $this->userRepository = $userRepository;
+        $this->periodRepository = $periodRepository;
         $this->em = $em;
     }
     
     #[Route('/reservation', name: 'app_reservation')]
     public function index(Request $request): Response
     {
-        // $reservedDates = $this->getReservedDates();
-
         if ($request->isMethod('POST')) {
     
             // Récupérez les données du formulaire
@@ -60,24 +65,41 @@ class ReservationController extends AbstractController
             $numberAdult = $request->get('numberAdult');
             $numberKid = $request->get('numberKid');
 
+            
             // on recupère l'id du gite
             $gite = $this->giteRepository->find(4);
-
-            // on recherche le prix de la nuit
-            $nightPrice = $gite->getPrice();
 
             // on recherche le prix du forfait ménage
             $cleaningCharge = $gite->getCleaningCharge();
 
-            // var_dump($nightPrice);die;
+            // Récupérez les dates de début et de fin de la réservation
+            $startDate = new \DateTime($startDate);
+            $endDate = new \DateTime($endDate);
+
+            // Vérifiez si les dates de la réservation chevauchent une période avec supplément
+            $overlappingPeriods = $this->periodRepository->findOverlappingPerriods($startDate, $endDate);
+
+            // Initialisez le supplément à zéro par défaut
+            $supplement = 0;
+
+            if (!empty($overlappingPeriods)) {
+                // Ajoutez le supplément au prix de la réservation
+                foreach ($overlappingPeriods as $period) {
+                    $supplement += $period->getSupplement(); 
+                }
+            }
+
+             // on recherche le prix de la nuit
+            $nightPrice = $gite->getPrice() + $supplement;
+
             // on compte le nombre de nuit
-            $startDate2 = new \DateTime($startDate);
-            $endDate2 = new \DateTime($endDate);
-            $diff = $startDate2->diff($endDate2);
+            // $startDate2 = new \DateTime($startDate);
+            // $endDate2 = new \DateTime($endDate);
+            $diff = $startDate->diff($endDate);
             $numberNight = $diff->format('%a');
 
-            // on calcul le prix total pour la réservation
-            $totalPrice = ($numberNight * $nightPrice) + $cleaningCharge;
+            // Calculez le prix total de la réservation (avec supplément)
+            $totalPrice = ($numberNight * $nightPrice) + $cleaningCharge + $supplement;
 
             // Stockez les données dans la session
             $session = $request->getSession();
@@ -89,6 +111,7 @@ class ReservationController extends AbstractController
                 'numberNight' => $numberNight,
                 'nightPrice' => $nightPrice,
                 'cleaningCharge' => $cleaningCharge,
+                'supplement' => $supplement,
                 'totalPrice' => $totalPrice,
             ]);
         }
@@ -101,6 +124,7 @@ class ReservationController extends AbstractController
             'numberNight' => $numberNight,
             'nightPrice' => $nightPrice,
             'cleaningCharge' => $cleaningCharge,
+            'supplement' => $supplement,
             'totalPrice' => $totalPrice
         ]);
     }
@@ -129,11 +153,9 @@ class ReservationController extends AbstractController
     $nightPrice = $session->get('reservation_details')['nightPrice'];
     $totalPrice = $session->get('reservation_details')['totalPrice'];
 
-    // $user = $session->get('reservation_details')['user'];
-
     // Convertissez les chaînes de caractères en objets DateTime
-    $arrivalDate = new \DateTime($arrivalDate);
-    $departureDate = new \DateTime($departureDate);
+    // $arrivalDate = new \DateTime($arrivalDate);
+    // $departureDate = new \DateTime($departureDate);
 
     // Créez une instance de l'entité Reservation et définissez les données initiales
     $reservation = new Reservation();
@@ -150,31 +172,12 @@ class ReservationController extends AbstractController
     // Associez le gîte à la réservation
     $reservation->setGite($gite);
 
+    // on récupère l'id de l'utilisateur connecté
+    $user = $this->getUser();
+    $reservation->setUser($user);
 
-
-        // Maintenant, récupérez l'objet utilisateur complet à partir de l'ID
-        // $userRepository = $this->userRepository->getRepository(User::class);
-        // $user = $this->userRepository->getR;
-
-
-    // Récupérez l'id de l'utilisateur connecté
-//    $user = $this->getUser()->getId();
-//     $reservation->setUser($user);
-    
-// var_dump($user); die;
-
-$user = $this->getUser();
-
-$reservation->setUser($user);
-
-// var_dump($user); die;
-
-   // Utilisez setData pour pré-remplir les champs du formulaire
+  
    $form = $this->createForm(ReservationType::class, $reservation);
-//    $form->setData([
-//        'arrivalDate' => $arrivalDate,
-//        'departureDate' => $departureDate,
-//    ]);
 
     // Gérez la soumission du formulaire
         $form->handleRequest($request);

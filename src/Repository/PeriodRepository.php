@@ -21,6 +21,27 @@ class PeriodRepository extends ServiceEntityRepository
         parent::__construct($registry, Period::class);
     }
 
+    // Fonction pour vérifier si les dates chevauchent les périodes existantes en BDD
+    public function findOverlappingPerriods(\DateTimeInterface $startDate, \DateTimeInterface $endDate, int $excludePeriodId = null) 
+    {
+        $qb = $this->createQueryBuilder('p')
+        ->where('p.startDate <= :endDate')
+        ->andWhere('p.endDate >= :startDate')
+        ->setParameters([
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+        ]);
+
+    if ($excludePeriodId) {
+        $qb->andWhere('p.id != :excludePeriodId')
+            ->setParameter('excludePeriodId', $excludePeriodId);
+    }
+
+    return $qb->getQuery()->getResult();
+}
+
+    }
+
 //    /**
 //     * @return Period[] Returns an array of Period objects
 //     */
@@ -45,4 +66,4 @@ class PeriodRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
+

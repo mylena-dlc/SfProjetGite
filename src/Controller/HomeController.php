@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PictureRepository;
 use App\Repository\CalendarRepository;
 use App\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,11 +11,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+
+    /**
+     * @var PictureRepository
+     */
+    private $pictureRepository;
+
+    /**
+     * @var ReservationRepository
+     */
+    private $reservationRepository;
+    
+    public function __construct(PictureRepository $pictureRepository, ReservationRepository $reservationRepository)
+    {
+        $this->pictureRepository = $pictureRepository;
+        $this->reservationRepository = $reservationRepository;
+    }
+
+
+
+
     #[Route('/', name: 'app_home')]
-    public function index(ReservationRepository $reservationRepository): Response
+    public function index(): Response
     {
 
-        $reservations = $reservationRepository->findAll();
+        $pictures = $this->pictureRepository->findAll();
+
+        $reservations = $this->reservationRepository->findAll();
 
         $reservedDates = [];
 
@@ -22,15 +45,15 @@ class HomeController extends AbstractController
             $reservedDates[] = [
                 'id' => $reservation->getId(),
                 'arrivalDate' => $reservation->getArrivalDate()->format('Y-m-d'),
-                'departureDate' => $reservation->getDepartureDate()->format('Y-m-d')
+                'departureDate' => $reservation->getDepartureDate()->format('Y-m-d'),
             ];
         }
 
          $data = json_encode($reservedDates);
-        //  var_dump($data);
          
         return $this->render('home/index.html.twig', [
-            'reservedDates' => $data
+            'reservedDates' => $data,
+            'pictures' => $pictures
         ]);
 
 

@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class PeriodType extends AbstractType
 {
@@ -17,25 +18,33 @@ class PeriodType extends AbstractType
         $builder
            
             ->add('startDate', DateType::class, [
-            'label' => 'Date d\'arrivée',
-            'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd', 
+            'label' => 'Date de début',
+            'widget' => 'single_text', // Utiliser un widget de saisie unique
+            'format' => 'yyyy-MM-dd', // Format personnalisé
             'required' => true,
+            'attr' => [
+                'placeholder' => 'Sélectionnez le début de la période', // Ajouter un attribut de placeholder
+            ],
         ])
             ->add('endDate', DateType::class, [
-                'label' => 'Date d\'arrivée',
-                'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd', 
+                'label' => 'Date de fin',
+                'widget' => 'single_text', // Utiliser un widget de saisie unique
+                'format' => 'yyyy-MM-dd', // Format personnalisé
                 'required' => true,
+                'attr' => [
+                    'placeholder' => 'Sélectionnez la fin de la période', // Ajouter un attribut de placeholder
+                ],
+    
             ])
             ->add('supplement', MoneyType::class, [
                 'label' => 'Supplément en ',
                 'required' => true
+        
             ])
 
             // ->add('gite')
 
-            ->add('Ajouter', SubmitType::class, [
+            ->add('ajouter', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn submit'
                 ]

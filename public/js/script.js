@@ -62,64 +62,61 @@
 
 
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const reservedDates = {{ reservedDates|json_encode|raw }};
-    
-//     flatpickr("#start", {
-//         altInput: true,
-//         altFormat: "j F Y",
-//         dateFormat: "Y-m-d",
-//         minDate: "today",
-//         locale: "fr",
-//         disable: reservedDates
-//     });
 
-//     flatpickr("#end", {
-//         altInput: true,
-//         altFormat: "j F Y",
-//         dateFormat: "Y-m-d",
-//         locale: "fr",
-//         disable: reservedDates
-//     });
+
+
+
+
+// //Fonction d'incrémentation
+// function increment(inputId, totalId, maxAllowed) {
+//     const inputElement = document.getElementById(inputId);
+//     const totalElement = document.getElementById(totalId);
+    
+//     if (parseInt(inputElement.value) < maxAllowed && parseInt(totalElement.value) < 6) {
+//         inputElement.value = parseInt(inputElement.value) + 1;
+//         totalElement.value = parseInt(totalElement.value) + 1;
+//     }
+// }
+
+// // Fonction de décrémentation
+// function decrement(inputId, totalId, minAllowed) {
+//     const inputElement = document.getElementById(inputId);
+//     const totalElement = document.getElementById(totalId);
+    
+//     if (parseInt(inputElement.value) > minAllowed) {
+//         inputElement.value = parseInt(inputElement.value) - 1;
+//         totalElement.value = parseInt(totalElement.value) - 1;
+//     }
+// }
+
+
+// // Associer les fonctions aux éléments + et - pour les adultes
+// document.querySelector('.adult .increment').onclick = function () {
+//     increment('numberAdult', 'totalPerson', 6);
+// };
+// document.querySelector('.adult .decrement').onclick = function () {
+//     decrement('numberAdult', 'totalPerson', 1);
+// };
+
+// // Associer les fonctions aux éléments + et - pour les enfants
+// document.querySelector('.kid .increment').onclick = function () {
+//     increment('numberKid', 'totalPerson', 5);
+// };
+// document.querySelector('.kid .decrement').onclick = function () {
+//     decrement('numberKid', 'totalPerson', 0);
+// };
+
+
+
+
+
+// document.getElementById('addPeriodLink').addEventListener('click', function(e) {
+     
+//     // Récupérez l'élément HTML de la div addPeriodSection
+//     var addPeriodSection = document.querySelector('.addPeriodSection');
+
+//     // Affichez la div en changeant la propriété display à 'block'
+//     addPeriodSection.style.display = 'block';
 // });
 
-
-// Fonction d'incrémentation
-function increment(inputId, totalId, maxAllowed) {
-    const inputElement = document.getElementById(inputId);
-    const totalElement = document.getElementById(totalId);
-    
-    if (parseInt(inputElement.value) < maxAllowed && parseInt(totalElement.value) < 6) {
-        inputElement.value = parseInt(inputElement.value) + 1;
-        totalElement.value = parseInt(totalElement.value) + 1;
-    }
-}
-
-// Fonction de décrémentation
-function decrement(inputId, totalId, minAllowed) {
-    const inputElement = document.getElementById(inputId);
-    const totalElement = document.getElementById(totalId);
-    
-    if (parseInt(inputElement.value) > minAllowed) {
-        inputElement.value = parseInt(inputElement.value) - 1;
-        totalElement.value = parseInt(totalElement.value) - 1;
-    }
-}
-
-
-// Associer les fonctions aux éléments + et - pour les adultes
-document.querySelector('.adult .increment').onclick = function () {
-    increment('numberAdult', 'totalPerson', 6);
-};
-document.querySelector('.adult .decrement').onclick = function () {
-    decrement('numberAdult', 'totalPerson', 1);
-};
-
-// Associer les fonctions aux éléments + et - pour les enfants
-document.querySelector('.kid .increment').onclick = function () {
-    increment('numberKid', 'totalPerson', 5);
-};
-document.querySelector('.kid .decrement').onclick = function () {
-    decrement('numberKid', 'totalPerson', 0);
-};
 
