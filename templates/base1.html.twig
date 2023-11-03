@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Bienvenue{% endblock %}</title>
+        <title>{% block title %}Bienvenue {% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         
 
@@ -36,18 +36,17 @@
                 </button> #}
 
                 <ul class="nav-items"> 
-                    <li class="nav-item">
-                        <figure>
-                            <a class="link-home" href="#"><img src="{{ asset( 'img/logook2.png' )}}" alt="logo" class="navLogo"></a>
-                        </figure>
-                    </li>
+                <li class="nav-item">
+                    <figure>
+                        <a class="link-home" href=""><img src="{{ asset( 'img/logook2.png' )}}" alt="logo" class="navLogo"></a>
+                    </figure></li>
 
-                    <li class="nav-item"><a href="/#gite">le gîte</a></li>
+                    <li class="nav-item"><a href="/#gite">le Gîte page 1</a></li>
                     <li class="nav-item"><a href="#galerie">galerie</a></li>
                     <li class="nav-item"><a href="#alentours">aux alentours</a></li>
                     <li class="nav-item"><a href="#avis">avis</a></li>
-                    <li class="nav-item"><a href="#">contact</a></li>
-                    <li class="nav-item"><a href="#">réservation</a></li>
+                    <li class="nav-item"><a href="">contact</a></li>
+                    <li class="nav-item"><a href="">réservation</a></li>
 
 
                     {% if is_granted('ROLE_ADMIN') %} {# Si je suis admin #}

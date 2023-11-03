@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
 class ReservationController extends AbstractController
 {
 
@@ -28,7 +29,7 @@ class ReservationController extends AbstractController
      */
     private $giteRepository;
 
-        /**
+    /**
      * @var UserRepository
      */
     private $userRepository;
@@ -58,14 +59,23 @@ class ReservationController extends AbstractController
     public function index(Request $request): Response
     {
         if ($request->isMethod('POST')) {
-    
+
+
             // Récupérez les données du formulaire
             $startDate = $request->get('start');
             $endDate = $request->get('end');
             $numberAdult = $request->get('numberAdult');
             $numberKid = $request->get('numberKid');
 
+            var_dump($endDate); die;     
             
+            
+            if ($startDate != $endDate) {
+                // Les dates sont différentes, continuez le processus de réservation
+            } else {
+                // Affichez un message d'erreur ou renvoyez l'utilisateur à la page de réservation
+            }
+
             // on recupère l'id du gite
             $gite = $this->giteRepository->find(4);
 
@@ -75,6 +85,8 @@ class ReservationController extends AbstractController
             // Récupérez les dates de début et de fin de la réservation
             $startDate = new \DateTime($startDate);
             $endDate = new \DateTime($endDate);
+
+            
 
             // Vérifiez si les dates de la réservation chevauchent une période avec supplément
             $overlappingPeriods = $this->periodRepository->findOverlappingPerriods($startDate, $endDate);
@@ -212,7 +224,6 @@ class ReservationController extends AbstractController
     /**
     * Fonction pour afficher la vue de confirmation d'une réservation
     */
-
     #[Route('/reservation/confirm', name: 'confirm_reservation')]
     public function confirm(): Response {
 
