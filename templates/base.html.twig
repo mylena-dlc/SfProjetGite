@@ -16,7 +16,13 @@
 
     <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css?family=Ruthie" rel="stylesheet">
+
+                
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+            
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
 
@@ -38,7 +44,7 @@
                 <ul class="nav-items"> 
                     <li class="nav-item">
                         <figure>
-                            <a class="link-home" href="#"><img src="{{ asset( 'img/logook2.png' )}}" alt="logo" class="navLogo"></a>
+                            <a class="link-home" href="{{ path('app_home')}}"><img src="{{ asset( 'img/logook2.png' )}}" alt="logo" class="navLogo"></a>
                         </figure>
                     </li>
 
@@ -71,6 +77,11 @@
                 </ul>
             </nav>
 
+        <!-- Bouton scroll pour remonter en haut de la page -->
+        <div class="btn-scroll-to-top">
+            <i class="fa-solid fa-arrow-up"></i>
+        </div>
+
 
         </header>
 
@@ -83,7 +94,7 @@
 <footer>
     <div class="footerContaint">
         <figure>
-            <img src="img/logook2.png" alt="logo" class="footerLogo">
+            <img src="{{ asset( 'img/logook2.png' )}}" alt="Logo du gîte du Rain du Pair" class="footerLogo">
         </figure>
         <div class="address">
             <p class="footerP">Gîte du Rain du Pair </p>
@@ -99,8 +110,12 @@
 </footer>
 
 
-       {% block javascripts %}               
+       {% block javascripts %}       
+       
+               
 
+<!-- Include SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.9/index.global.min.js" integrity="sha256-9zSfnftul7UU4/TQ7fbXdZfHiB4xKjHMLRunC35rglc=" crossorigin="anonymous"></script>
    

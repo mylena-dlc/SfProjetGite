@@ -12,6 +12,9 @@
         {# flatpick #}
 {# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> #}
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/rangePlugin.min.js" integrity="sha512-44bA1YzQUqHACfLj2v0wEdX9z6EmlALcta6ENgPZnxH/aIiuBw92he+M/51kTCueY/2DsqEYM7mCwGUyO2q79w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
@@ -36,10 +39,11 @@
                 </button> #}
 
                 <ul class="nav-items"> 
-                <li class="nav-item">
-                    <figure>
-                        <a class="link-home" href=""><img src="{{ asset( 'img/logook2.png' )}}" alt="logo" class="navLogo"></a>
-                    </figure></li>
+                    <li class="nav-item">
+                        <figure>
+                            <a class="link-home" href="{{ path('app_home')}}"><img src="{{ asset( 'img/logook2.png' )}}" alt="logo" class="navLogo"></a>
+                        </figure>
+                    </li>
 
                     <li class="nav-item"><a href="/#gite">le Gîte page 1</a></li>
                     <li class="nav-item"><a href="#galerie">galerie</a></li>
@@ -70,7 +74,12 @@
                 </ul>
             </nav>
 
+        <!-- Bouton scroll pour remonter en haut de la page -->
+        <div class="btn-scroll-to-top">
+            <i class="fa-solid fa-arrow-up"></i>
+        </div>
 
+        
         </header>
 
         <main class="container">
@@ -81,6 +90,8 @@
 
 <footer>
     <div class="footerContaint">
+        <div class="footer-background"></div>
+        <div class="footerTop">
         <figure>
             <img src="img/logook2.png" alt="logo" class="footerLogo">
         </figure>
@@ -94,12 +105,28 @@
         <p class="footerP">mail@mail.fr</p>
         <p class="footerP"><i class="fa-solid fa-phone"></i> 06 36 29 62 22</p>
         </div>
+        </div>
+        <div class="footer-line"></div>
+        <div class="footerBottom">
+        <div class="footer-link">
+            <div class="link-right">
+                <p class="footerLink">Conditions générales de vente</p>
+                <p class="footerLink">Politique de confidentialités</p>
+                <p class="footerLink">Plan du site</p>
+            </div>
+            <div class="link-left">
+                <p class="footerLink">&copy; 2023 Gîte du Rain du Pair - Tous droits réservés.</p>
+            </div>
+        </div>
+        </div>
     </div>
 </footer>
 
 
        {% block javascripts %}               
 
+<!-- Include SweetAlert CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.9/index.global.min.js" integrity="sha256-9zSfnftul7UU4/TQ7fbXdZfHiB4xKjHMLRunC35rglc=" crossorigin="anonymous"></script>
    

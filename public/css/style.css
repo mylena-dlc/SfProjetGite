@@ -2,7 +2,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: 'Catamaran';
+    font-family: 'Catamaran', 'Ruthie', 'Corinthia';
     /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
 }
 
@@ -12,8 +12,10 @@
     /* Couleur */
     --color1: #504f4b;
     --color2: #a9b4a4;
-    --color3: #b58869;
+    --color3: rgb(181, 136, 105);
     --color4: #fcf7f1;
+    --color5: rgb(217, 186, 166);
+    --color6: #85634d;
    
 
     /* Couleur de fond */
@@ -47,18 +49,17 @@
 .title {
    position: relative;
    display: inline-block;
-   margin-left: 50px;
+   margin: 80px 0 0 80px;
 }
 
 /* Ligne sous le titre */
 .title::after {
     content: "";
     position: absolute;
-    width: 60%; 
+    width: 70%; 
     height: 1px; 
     background-color: var(--color1); 
-    bottom: -4px; 
-    left: 20%; 
+    bottom: -3px; 
 }
 
 h1, h2 {
@@ -68,6 +69,10 @@ h1, h2 {
     font-weight: var(--fontWeight2);
     letter-spacing: 3px;
     margin-top: 20px;
+}
+
+h2 {
+    font-size: 27px;
 }
  
 .center {
@@ -81,9 +86,9 @@ h3 {
     color: var(--color1);
     letter-spacing: 2px;
     font-family: var(--font1);
-    font-weight: var(--fontWeight1);
+    font-weight: 500;
     margin: 20px 40px;
-    font-size: 25px;
+    font-size: 18px;
 }
 
 /* section {
@@ -93,9 +98,7 @@ h3 {
 p {
     color: var(--color1);
     font-family: var(--font1);
-    font-size: 15px;
     margin: 0 50px;
-
 }
 
 .pBold {
@@ -157,6 +160,33 @@ label {
 .edit, .delete {
     text-align: center;
 }
+
+/* Bouton scroll haut de page */
+
+.btn-scroll-to-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: 3%;
+    bottom: 6%;
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: var(--color1);
+    z-index: 1;
+}
+
+.btn-scroll-to-top i {
+    height: 40px;
+    width: 40px;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 /* ********************************************** NAVBAR PAGE D'ACCUEIL ********************************************** */
 
 
@@ -346,15 +376,59 @@ header {
 
 .fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active {
     display: none !important;
+ 
 }
 .fc-today-button.fc-button.fc-button-primary {
     display: none !important;
 }
 .fc-button-group {
     margin-right: 15px;
+  
 }
 
 
+/* Styles pour le sélecteur de plage */
+.flatpickr-range {
+    /* Styles généraux pour le sélecteur de plage */
+  }
+  
+  /* Styles pour la plage sélectionnée */
+  .flatpickr-range .flatpickr-day.selected,
+  .flatpickr-range .flatpickr-day.startRange,
+  .flatpickr-range .flatpickr-day.endRange {
+    background: var(--color5); /* Couleur de fond pour la plage sélectionnée */
+    color: var(--color1); /* Couleur du texte pour la plage sélectionnée */
+    border: 1px solid var(--color6);
+    border-color: var(--color6);
+  }
+  .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
+    background: var(--color5); /* Couleur de fond pour la plage sélectionnée */
+    color: var(var(--color1)); /* Couleur du texte pour la plage sélectionnée */
+    border: 1px solid var(--color6);
+    border-color: var(--color6);
+
+  }
+   
+  .flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n+1)), .flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n+1)), .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n+1)) {
+    -webkit-box-shadow: -10px 0 0 var(--color5);
+     box-shadow: -10px 0 0 var(--color5);
+  }
+  /* Styles pour les jours survolés dans la plage */
+  .flatpickr-range .flatpickr-day.inRange:hover {
+    background-color: var(--color5); /* Couleur de survol pour la plage sélectionnée */
+  }
+  
+  .flatpickr-day.inRange{
+    background-color: var(--color5);
+    border-color: var(--color5);
+    box-shadow: -5px 0 0 var(--color5), 5px 0 0 var(--color5);
+  }
+  /* Styles pour les jours de début et de fin de plage */
+  .flatpickr-range .flatpickr-day.startRange,
+  .flatpickr-range .flatpickr-day.endRange {
+    /* Styles spécifiques pour les jours de début et de fin de plage */
+  }
+  
 
 /* ********************************************** CONNECTION / INSCRIPTION ********************************************** */
 
@@ -393,56 +467,57 @@ header {
 
 /* ********************************************** SECTION GÎTE ********************************************** */
 
-#gite {
-   
+.gite-title {
+    margin: 80px 0 0 80px;
 }
+
 .gite-contain {
-    /* height: 80vh; */
-    background-color: var(--color4);
     position: relative;
+    height: 80vh;
+    width: 100%;
+    overflow: hidden; 
 }
 
-.gite-background {
-    height: 100vh;
-    width: 33%;
-    background-image: url("../img/fond.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top right;
-    opacity: 0.5;
-    z-index: 0;
-
+.background-image {
     position: absolute;
     top: 0;
     right: 0;
-   
-    
+    width: 40%;
+    height: 100%;
+    background-image: url("../img/fond.jpg");
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+    opacity: 0.4;
 }
 
 .description-and-picture {
     display: flex;
     align-items: center;
-    height: 100vh;
+    justify-content: flex-start;
 }
+
 .gite-description {
     width: 33%;
     text-align: center; 
-    margin-left: 50px;
+    margin: 80px;
+}
+
+.giteFigure {
+    z-index: 10;
 }
 
 .picture01 {
-    width: 300px;
+    width: 400px;
     height: auto;
-    z-index: 5 !important;
-    border-radius: 80px 180px 80px 180px ;
+    border-radius: 80px 180px 80px 180px;
     box-shadow: var(--boxShadow1);
-    margin-left: 50px;
+    margin-left: 140px;
 }
-
 
 .banner {
     background-color: var(--color2);
-    height: 200px;
+    height: 300px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -461,83 +536,218 @@ header {
     justify-content: center;
     align-items: center;
 }
-.banner-icon i, .banner-p {
+
+.banner-icon i  {
     color: var(--color4);
-    font-size: 22px;
+    font-size: 40px;
 }
 
-.banner2 {
-    background-color: var(--color1);
+.banner-p {
+    font-family: 'Corinthia';
+    color: var(--color4);
+    font-size: 40px;
+    font-weight: 300;
+}
+
+/* .banner2 {
+    background-image: url('../img/banniere.jpg');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
+    height: 400px;
+} */
+
+.banner2 {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 450px;
+}
+
+.banner2::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(142, 103, 78, 0.7), rgb(255, 224, 203, 0.2)), url('../img/banniere.jpg');
+   
+        /* Effet parallax */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .banner2-p {
     color: white;
-    font-size: 20px;
-    width: 50%;
+    font-size: 43px;
+    font-family: 'Corinthia';
+    width: 70%;
     text-align: center;
+    z-index: 5;
 }
 
 .caracteristique {
     display: flex;
+    margin: 100px 250px;
 }
 
-.caracteristique-right, .caracteristique-left {
-    margin: 100px;
+.caracteristique-right  {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+}
+
+.caracteristique-right {
+    margin-right: 20px;
+    width: 50%;
+}
+
+.caracteristique-left {
+    margin-left: 20px;
+    position: relative;
+    width: 50%;
 }
 
 .caracteristique-p {
     margin: 50px 0px;
     text-align: justify;
 }
-.figure-picture02 {
+
+.picture02,
+.picture03,
+.picture04 {
     width: 100%;
+    border: 10px solid white;
+    box-shadow: var(--boxShadow1);
 }
+
 .picture02 {
-    
     width: 100%;
 }
 
+
 .picture03 {
-    height: 250px;
-    width: 80pw;
+    height: 550px;
+ width: 400px;  
 }
 
 .picture04 {
-    height: 50px;
-    width: 50px;
+    height: 300px;
+    width: 300px;
+    position: absolute;
+    top: 40px;
+    right: 0;
 }
 /* ********************************************** SECTION GALERIE ********************************************** */
 
-#galerie {
-    height: 80vh;
-}
-
 .categories {
     display: flex;
-
+    justify-content: center;
+    margin-top: 80px;
 }
 
-.category-01 {
+.categories div {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100px;
-    height: 150px;
 }
 
-.category-img {
-    width: 100px;
-    height: 100px;
-    border: 1px solid white;
-    box-shadow: 1px 2px 2px 0px var(--color1);
+.categoryImg {
+    width: 300px;
+    height: 300px;
+   
+    transition-duration: 0.6s; 
+    object-fit: cover; 
+    position: relative;    
+}
+
+.categoryFigure {
+    width: 300px;
+    height: 300px; 
+    overflow: hidden; 
+    border: 15px solid white;
+    box-shadow: var(--boxShadow1);
+}
+
+.category-1:hover .categoryImg,
+.category-2:hover .categoryImg,
+.category-3:hover .categoryImg,
+.category-4:hover .categoryImg {
+    filter: grayscale(90%);
+    transform: scale(1.1);
+}
+
+.titleGalerie {
+    font-family: 'Corinthia';
+    color: var(--color3);
+    font-size: 50px;
+    text-align: center;
+}
+
+.hover-link {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.category-1{
+    transform: rotate(-5deg);
+    z-index: 1;
+}
+
+.category-1 .titleGalerie{
+    text-align: center;
+    position: relative;
+}
+
+.category-2 figure{
+    z-index: 2;
+    transform: translateY(15px);
+}
+
+.category-2 .categoryFigure {
+    display: flex;
+    flex-direction: column-reverse;   
+}
+
+.category-3 figure{
+    z-index: 3;
+    transform: rotate(6deg) translateX(-20px);
+}
+
+.category-4 figure{
+    z-index: 4;
+    transform: translateX(-30px) translateY(-30px);
+}
+
+.category-4 .categoryFigure {
+    display: flex;
+    flex-direction: column-reverse;   
+}
+
+.voirPlus {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    margin: auto;
+    opacity: 0;
+    font-size: 18px;
+    color: white;
+    font-weight: 100;
+    background-color: var(--color3);
+    border-radius: 10px;
+    padding: 8px;
+    text-transform: uppercase;
+    /* width: 150px; */
+}
+
+.categoryFigure:hover .voirPlus {
+    opacity: 1;
 }
 
 /* ********************************************** SECTION AUX ALENTOURS ********************************************** */
@@ -555,8 +765,8 @@ header {
     justify-content: space-around;
 }
 .confirm {
-    height: 280px;
-    width: 450px;
+    height: 300px;
+    width: 400px;
     background-color: var(--color4);
     border-radius: 20px;
     box-shadow: var(--boxShadow2);
@@ -594,10 +804,6 @@ button > a {
     text-decoration: none;
 }
 
-.update {
-     
-}
-
 .update a {
     color: var(--color3);
 }
@@ -620,16 +826,16 @@ button > a {
     background-color: var(--color4);
     border-radius: 20px;
     box-shadow: var(--boxShadow2);
-    width: 300px;
+    width: 350px;
     padding: 15px;
     display: flex;
     flex-direction: column;
-
 }
 
 .titleDescription {
     text-transform: uppercase;
     font-weight: var(--fontWeight1);
+    text-align: center;
 }
 
 .info {
@@ -649,7 +855,7 @@ button > a {
 
 .titleH5 {
     text-align: center;
-    margin: 120px;
+    margin: 100px;
     font-size: 20px;
     font-weight: 700;
     color: var(--color2);
@@ -661,15 +867,42 @@ button > a {
     grid-template-columns: 1fr 1fr 1fr;
     justify-items: center;
     margin: 70px;
+    
+}
+.descriptionList {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color1);
+}
+li {
+    color: var(--color1);
+    font-size: 15px;
+    padding: 5px;
+    list-style-type: none;
 }
 
 .titleList {
     list-style-type: none;
-
 }
 
 .invisible {
     visibility: hidden;
+}
+
+.sectionSituations {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.situationFigure img {
+    height: 600px;
+    box-shadow: var(--boxShadow2);
+
+}
+
+.paragrapheSituation {
+margin: 0;
 }
 /* ********************************************** CONFIRMATION RESERVATION ********************************************** */
 
@@ -884,16 +1117,66 @@ th, td {
     justify-content: center;
     flex-direction: column;
 }
-/* ********************************************** FOOTER ********************************************** */
-footer {
-    margin-top: 70px;
+
+/* ********************************************** FENETRE D'ALERTE ********************************************** */
+
+ .swal2-styled {
+    background-color: var(--color2) !important;
+    border-color: var(--color1) !important;
 }
+
+.swal2-loader {
+    border-color: var(--color1) !important;
+    outline: none !important;
+}
+
+.flatpickr-day.startRange,
+.flatpickr-day.endRange.endRange {
+    background-color: var(--color3) !important;
+    outline: none !important;
+}
+
+.swal2-styled.swal2-confirm, div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm  {
+    background-color: var(--color1) !important;
+    outline: none !important;
+}
+/* ********************************************** FOOTER ********************************************** */
+
+
 .footerContaint {
-    height: 300px;
-    background-color: var(--color1);
+    height: 350px;
+    position: relative;
+}
+
+.footerTop {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    padding: 30px;
+}
+
+.footer-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color1);
+    background-image: url('/img/fond.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+.footer-background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Couleur d'arrière-plan semi-transparente pour assombrir */
 }
 
 .footerLogo {
@@ -905,7 +1188,28 @@ footer {
     font-size: 20px;
 }
 
+.footer-line {
+    background-color: white;
+    width: 80%;
+    height: 1px;
+   margin: 10px auto;
+}
+
 .address, .contact {
     display: flex;
     flex-direction: column;
-align-items: center;}
+    align-items: center;
+}
+
+.footer-link {
+    display: flex;
+    justify-content: space-around;
+    color: white;
+}
+
+.footerLink {
+    color: white;
+    padding: 7px;
+    display: inline;
+    margin: 0;
+}

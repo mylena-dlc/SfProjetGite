@@ -4,22 +4,22 @@
 
 {% block body %}
 
+{% for flash_message in app.flashes('error') %}
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Erreur",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
 
-{# <div id="calendarModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="close" id="closeCalendarModal">&times;</span>
-            
-        </div>
-        <div class="modal-body">
-            <div id="calendar" class="calendar-content"></div>
-        </div>
-    </div>
-</div> #}
+
+
 
 <section id="search">
 
-  <form id="reservationForm" action="{{ path('app_reservation') }}" method="POST">
+  <form id="reservationForm" action="{{ path('app_reservation') }}" method="post" onsubmit="return validateForm()">
 
       <div class="start-containt">
           <label for="start" class="start">Date d'arrivée</label>
@@ -30,6 +30,8 @@
           <label for="end" class="end">Date de départ</label>
           <input type="text" id="end" class="end-input" name="end" required placeholder="Sélectionnez votre date de départ" data-reserved-dates="{{ reservedDates }}">
       </div>
+
+
 
   <div class="person-containt">
 
@@ -45,7 +47,7 @@
     <label for="numberKid" class="numberKid">Enfant</label>
     <div class="action">
         <p class="decrement"><i class="fa-solid fa-circle-minus"></i></p>
-        <input type="number" id="numberKid" class="inputPerson" name="numberKid" value="0" max="5" readonly>
+        <input type="number" id="numberKid" class="inputPerson" name="numberKid" value="0" min="0" max="5" readonly>
         <p class="increment"><i class="fa-solid fa-circle-plus"></i></p>
     </div>
 </div>    
@@ -54,8 +56,8 @@
     <div class="action">
         <input type="number" id="totalPerson" class="inputPerson" value="1" min="1" max="6" readonly>
     </div>
-</div>
-
+    
+</div> 
 
   </div>
 
@@ -70,6 +72,10 @@
 
     <section id="gite">
             <div class="gite-contain">
+
+    <div class="background-image"></div>
+
+
                 <div class="title gite-title">
                     <h1>le gîte</h1>
                 </div>
@@ -82,13 +88,12 @@
                     Notre gîte offre une expérience exceptionnelle tout au long de l'année, que ce soit pour les plaisirs de l'hiver 
                     à proximité de la station de ski du Lac Blanc, les aventures estivales le long de la Route des Crêtes 
                     et des vignobles alsaciens, ou simplement pour une retraite paisible au cœur de la nature.</p>
-                    <figure>
+                    <figure class="giteFigure">
                         <img class="picture01" src="img/cuisine.jpg" alt="Photos du séjour du gîte"/>
                     </figure>
                 
-            
-                    <div class="gite-background">        
-                    </div>
+    
+                    
                 </div>
 
 
@@ -129,15 +134,15 @@
                 </figure>
             </div>
             <div class="caracteristique-left">                
-                <figure>
+                <figure class="figure-picture03">
                     <img src="img/sejour.png" alt="" class="picture03"/>
                 </figure>
-                <figure>
+                <figure class="figure-picture04">
                     <img src="img/sejour.png" alt="" class="picture04"/>
                 </figure>
 
                 <p class="caracteristique-p">Notre terrasse privative qui offre une vue imprenable sur les montagnes environnantes et le village en contre bas. 
-                    Vous pourrez vous détendre dans notre bain finlandais extérieur chauffé au feu de bois, une expérience relaxante dans un petit coin de paradis en plein air.
+                    Vous pourrez vous détendre dans notre bain finlandais extérieur chauffé au feu de bois, une expérience relaxante dans un petit coin de paradis en plein air.<br>
                     Notre gîte dispose d'un parking privatif pour votre véhicule, du Wi-Fi pour rester connecté, et  d'un petit garage fermé pour y laisser en toute sécurité vos vélos.</p>
 
             </div>
@@ -147,8 +152,8 @@
 
 
          <div class="banner2">
-            <p class="banner2-p">Que vous veniez en couple, en famille ou entre amis,
-            "Le Rain du Pair" est l'endroit idéal pour passer des moments inoubliables.
+            <p class="banner2-p">Que vous veniez en couple, en famille ou entre amis,<br>
+            "Le Rain du Pair" est l'endroit idéal pour passer des moments inoubliables.<br>
             Laisser-vous séduire par l'authenticité et le charme de ce refuge cosy.</p>
         </div>
             
@@ -159,21 +164,26 @@
             <div class="title">
                 <h1>Galerie</h1>
             </div>
-            <div class="categories"> 
 
-            {# {% for category in firstPicturesPerCategory %}
-                <div class="category-01">
-                    <figure>
-                    
-                        <img class="category-img" src="{{asset(category.getPictures().first()getUrl()) }}" alt="">
-                       
-                        <figcaption><a href="{{ path('show_category', {'id': category.id}) }}">{{category}}</a></figcaption>
+            <div class="categories"> 
+            {% for categoryName, firstPicture in categoryFirstPictures %}
+
+             {# Générez une classe unique en ajoutant le compteur à la classe 'category' #}
+            {% set categoryClass = 'category-' ~ loop.index %}
+                <div class="{{ categoryClass }}">
+                    <a class="hover-link" href="{{ path('show_category', {'id': firstPicture.getCategory().getId()}) }}">
+                    <figure class="categoryFigure">
+                        <figcaption class="titleGalerie">{{ categoryName }}</figcaption>
+                        <img class="categoryImg" src="{{ firstPicture.getUrl() }}" alt="">
+                        <p class="voirPlus"><i class="fa-solid fa-magnifying-glass-plus"></i> Voir plus</p> 
                     </figure>
+                    </a>
                 </div>
-            {% endfor %} #}
-            {# </div>
+            {% endfor %} 
+            </div>
+
         </div>
-#}
+
 
     <section id="alentours">
         <div class="alentours-contain">
@@ -185,6 +195,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {% block javascript %}
 
@@ -263,8 +275,11 @@
           })),
         }
    ],
+       plugins: [new rangePlugin({ input: startInput })],  // Utilisez startInput ici
+
 
   });
+
 
   // Gestionnaire d'événements pour le champ de date d'arrivée
 startInput.addEventListener("change", function() {
@@ -274,7 +289,14 @@ startInput.addEventListener("change", function() {
   // Vérifiez si la date d'arrivée est postérieure à la date de départ
   if (arrivalDate > departureDate) {
     // Affichez un message d'erreur ou réinitialisez la date de départ
-    alert("La date d'arrivée ne peut pas être postérieure à la date de départ.");
+       // Utilisez Swal à la place de l'alerte native
+    Swal.fire({
+      icon: "error",
+      title: "Erreur",
+      text: "La date d'arrivée ne peut pas être postérieure à la date de départ.",
+
+    });
+
     // Réinitialisez la date de départ (vous pouvez également choisir de gérer cette situation différemment)
     endInput.value = "";
   }
@@ -288,25 +310,22 @@ endInput.addEventListener("change", function() {
   // Vérifiez si la date de départ est antérieure à la date d'arrivée
   if (departureDate < arrivalDate) {
     // Affichez un message d'erreur ou réinitialisez la date de départ
-    alert("La date de départ ne peut pas être antérieure à la date d'arrivée.");
+        // Utilisez Swal à la place de l'alerte native
+    Swal.fire({
+      icon: "error",
+      title: "Erreur",
+      text: "La date de départ ne peut pas être antérieure à la date d'arrivée.",
+     
+    });
     // Réinitialisez la date de départ (vous pouvez également choisir de gérer cette situation différemment)
     endInput.value = "";
   }
 });
 
-// Récupérer la valeur de l'input start
-const startDateValue = startInput.value;
 
-// Vous pouvez maintenant diviser la valeur en deux dates distinctes (début et fin)
-const [arrivalDate, departureDate] = startDateValue.split(" to ");
 
-// Convertir les chaînes en objets Date
-const arrivalDateObj = new Date(arrivalDate);
-const departureDateObj = new Date(departureDate);
 
-// Vous avez maintenant deux dates distinctes que vous pouvez utiliser séparément
-console.log("Date d'arrivée :", arrivalDateObj);
-console.log("Date de départ :", departureDateObj);
+
 
 
 
@@ -316,234 +335,6 @@ console.log("Date de départ :", departureDateObj);
 
 
 
-
-
-
-{# 
-
-
-//    var reservedDates = {{ app.request.attributes.get('reservedDates')|json_encode|raw }};
-    
-//     document.addEventListener("DOMContentLoaded", function () {
-//         flatpickr("#start", {
-//             altInput: true,
-//             altFormat: "j F Y",
-//             dateFormat: "Y-m-d",
-//             minDate: "today",
-//             locale: "fr",
-//             disable: reservedDates
-//         });
-
-//         flatpickr("#end", {
-//             altInput: true,
-//             altFormat: "j F Y",
-//             dateFormat: "Y-m-d",
-//             locale: "fr",
-//             disable: reservedDates
-//         });
-//     });
-
-
-
-
-// configStart = {
-//    altInput: true,
-//     altFormat: "j F Y",
-//     dateFormat: "Y-m-d",
-//     minDate: "today",
-//     locale: "fr",
-//     disable: reservedDates,
-
-//     onChange: function(selectedDates, dateStr, instance) {
-//         // Calcule la date minimale pour #end (start_date + 1 jour)
-//         const startDate = new Date(dateStr);
-//         startDate.setDate(startDate.getDate() + 1);
-//         configEnd.minDate = startDate;
-
-//         // Ajoute la classe CSS "selected-start-date" à la date de début sélectionnée
-//         const selectedStartDate = instance.days.querySelector(".flatpickr-day.selected");
-//         if (selectedStartDate) {
-//             selectedStartDate.classList.add("selectedStartDate");
-//         }
-
-//         // Réinitialise le champ de fin avec la nouvelle configuration
-//         flatpickr("#end", configEnd);
-//     }
-// };
-
-// configEnd = {
-//    altInput: true,
-//     altFormat: "j F Y",
-//     dateFormat: "Y-m-d",
-//     minDate: "today",
-//     disable: reservedDates,
-
-//     locale: {
-//         firstDayOfWeek: 1,  // Lundi comme premier jour de la semaine
-//         weekdays: {
-//             shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-//             longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
-//         },
-//         months: {
-//             shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
-//             longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
-//         }
-//     }
-// }
-
-// flatpickr("#start", configStart);
-// flatpickr("#end", configEnd);
-//    });
-
-// // Ajoutez le code suivant pour initialiser la date d'arrivée avec la date du jour
-// document.addEventListener("DOMContentLoaded", function() {
-//     const startInput = document.getElementById('start');
-//     const today = new Date(); // Obtenez la date actuelle
-//     const year = today.getFullYear();
-//     const month = (today.getMonth() + 1).toString().padStart(2, "0"); // Obtenez le mois (ajusté pour avoir toujours 2 chiffres)
-//     const day = today.getDate().toString().padStart(2, "0"); // Obtenez le jour (ajusté pour avoir toujours 2 chiffres)
-//     const currentDate = `${year}-${month}-${day}`; // Formattez la date
-
-//     startInput.value = currentDate; // Définissez la valeur de l'input sur la date du jour
-// });
-
-// document.addEventListener("DOMContentLoaded", function() {
-//     const startInput = document.getElementById('start');
-//     const endInput = document.getElementById('end'); // Sélectionnez l'input de date de départ
-//     const today = new Date(); // Obtenez la date actuelle
-//     const tomorrow = new Date(today); // Créez une copie de la date actuelle
-//     tomorrow.setDate(tomorrow.getDate() + 1); // Ajoutez un jour à la date actuelle
-
-//     // Formatez la date de départ (aujourd'hui + 1 jour)
-//     const startDate = formatDate(today);
-//     const endDate = formatDate(tomorrow);
-
-//     startInput.value = startDate; // Définissez la date d'arrivée sur la date du jour
-//     endInput.value = endDate; // Définissez la date de départ sur la date du jour + 1 jour
-// });
-
-// // Fonction pour formater une date au format "YYYY-MM-DD"
-// function formatDate(date) {
-//     const year = date.getFullYear();
-//     const month = (date.getMonth() + 1).toString().padStart(2, "0");
-//     const day = date.getDate().toString().padStart(2, "0");
-//     return `${year}-${month}-${day}`;
-// }
-
-//     // Fonction pour l'ouverture du calendrier à date d'arrivée
-//     document.getElementById('openCalendarModal').addEventListener('click', function() {
-//     openCalendarModal();
-// });
-
-// function openCalendarModal() {
-//     // Affichez la fenêtre modale
-//     const modal = document.getElementById('calendarModal');
-//     modal.style.display = 'block';
-
-//  const calendarElt = document.querySelector('#calendar');
-//     const calendar = new FullCalendar.Calendar(calendarElt, {
-//         initialView: 'dayGridMonth',
-//         locale: 'fr',
-//         timeZone: 'Europe/Paris',
-//         selectable: true,
-//         select: function(info) {
-//             // Cette fonction sera appelée lorsque l'utilisateur sélectionne une date
-//             const selectedDate = info.startStr; // La date sélectionnée au format ISO 8601
-//             document.querySelector('#start').value = selectedDate; // Insérez la date dans l'input
-//             modal.style.display = 'none'; // Fermez la fenêtre modale
-//         },
-//         headerToolbar: {
-//             start: 'prev,next today',
-//             center: 'title',
-//             end: 'dayGridMonth'
-//         },
-
-//         events: 
-//         {{ data|raw }},
-//     })
-
-
-//     calendar.render()
-// // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale lorsque l'utilisateur clique sur la croix
-//     document.getElementById('closeCalendarModal').addEventListener('click', function() {
-//         modal.style.display = 'none';
-//     });
-
-//     // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale si l'utilisateur clique en dehors de la fenêtre modale
-//     window.addEventListener('click', function(event) {
-//         if (event.target === modal) {
-//             modal.style.display = 'none';
-//         }
-//     });
-// }
-
-
-// // Fonction pour afficher la fenetre modal de date de départ
-// document.getElementById('openCalendarModal').addEventListener('click', function() {
-//     openCalendarModal('start');
-// });
-
-// document.getElementById('openCalendarModalEnd').addEventListener('click', function() {
-//     openCalendarModal('end');
-// });
-
-// function openCalendarModal(inputId) {
-//     // Récupérez l'ID de l'input
-//     const inputElement = document.getElementById(inputId);
-
-//     // Affichez la fenêtre modale
-//     const modal = document.getElementById('calendarModal');
-//     modal.style.display = 'block';
-
-//     const calendarElt = document.querySelector('#calendar');
-//     const calendar = new FullCalendar.Calendar(calendarElt, {
-//         initialView: 'dayGridMonth',
-//         locale: 'fr',
-//         timeZone: 'Europe/Paris',
-//         selectable: true,
-//         select: function(info) {
-//             // Cette fonction sera appelée lorsque l'utilisateur sélectionne une date
-//             const selectedDate = info.startStr; // La date sélectionnée au format ISO 8601
-//             inputElement.value = selectedDate; // Insérez la date dans l'input correspondant
-//             modal.style.display = 'none'; // Fermez la fenêtre modale
-//         },
-//         headerToolbar: {
-//             start: 'prev,next today',
-//             center: 'title',
-//             end: 'dayGridMonth'
-//         },
-//         events: {{ data|raw }},
-//     });
-
-//     calendar.render();
-
-//     // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale lorsque l'utilisateur clique sur la croix
-//     document.getElementById('closeCalendarModal').addEventListener('click', function() {
-//         modal.style.display = 'none';
-//     });
-
-//     // Ajoutez un gestionnaire d'événements pour fermer la fenêtre modale si l'utilisateur clique en dehors de la fenêtre modale
-//     window.addEventListener('click', function(event) {
-//         if (event.target === modal) {
-//             modal.style.display = 'none';
-//         }
-//     });
-// }   
-// document.getElementById("openCalendarModal").addEventListener("click", function() {
-//     var input = document.querySelector(".start-input");
-//     var modal = document.querySelector(".modal");
-//     modal.style.top = (input.offsetTop + input.offsetHeight) + "px";
-//     modal.style.left = input.offsetLeft + "px";
-//     modal.style.display = "block";
-// });
-
-// document.getElementById("openCalendarModalEnd").addEventListener("click", function() {
-//     var input = document.querySelector(".end-input");
-//     var modal = document.querySelector(".modal");
-//     modal.style.top = (input.offsetTop + input.offsetHeight) + "px";
-//     modal.style.left = input.offsetLeft + "px";
-//     modal.style.display = "block";
-// }); #}
 
 
 

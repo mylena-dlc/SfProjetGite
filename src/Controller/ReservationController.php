@@ -45,7 +45,6 @@ class ReservationController extends AbstractController
     private $em;
 
     
-
     public function __construct(ReservationRepository $reservationRepository, GiteRepository $giteRepository, EntityManagerInterface $em, UserRepository $userRepository, PeriodRepository $periodRepository)
     {
         $this->reservationRepository = $reservationRepository;
@@ -60,33 +59,31 @@ class ReservationController extends AbstractController
     {
         if ($request->isMethod('POST')) {
 
-
             // Récupérez les données du formulaire
+
             $startDate = $request->get('start');
             $endDate = $request->get('end');
-            $numberAdult = $request->get('numberAdult');
-            $numberKid = $request->get('numberKid');
+            $dateRange = $request->get('start');
 
-            var_dump($endDate); die;     
-            
-            
-            if ($startDate != $endDate) {
-                // Les dates sont différentes, continuez le processus de réservation
-            } else {
-                // Affichez un message d'erreur ou renvoyez l'utilisateur à la page de réservation
-            }
-
-            // on recupère l'id du gite
-            $gite = $this->giteRepository->find(4);
-
-            // on recherche le prix du forfait ménage
-            $cleaningCharge = $gite->getCleaningCharge();
+            // Extraire les dates de début et de fin
+            list($startDate, $endDate) = explode(' to ', $dateRange);
 
             // Récupérez les dates de début et de fin de la réservation
             $startDate = new \DateTime($startDate);
             $endDate = new \DateTime($endDate);
-
             
+            $numberAdult = $request->get('numberAdult');
+            $numberKid = $request->get('numberKid');    
+            
+
+            // Vérifiez si les dates sélectionnées chevauchent d'autres réservations en BDD
+            $overlappingReservations = $this->reservationRepository->findOverlappingReservations($startDate, $endDate);
+
+            // S'il y a des chevauchements, retournez à la page d'accueil avec une alerte
+            if (!empty($overlappingReservations)) {
+                $this->addFlash('error', 'Les dates choisies ne sont plus disponibles.');
+                return $this->redirectToRoute('app_home');  
+            }
 
             // Vérifiez si les dates de la réservation chevauchent une période avec supplément
             $overlappingPeriods = $this->periodRepository->findOverlappingPerriods($startDate, $endDate);
@@ -101,12 +98,15 @@ class ReservationController extends AbstractController
                 }
             }
 
+            // on recupère l'id du gite
+            $gite = $this->giteRepository->find(4);
+
+            // on recherche le prix du forfait ménage
+            $cleaningCharge = $gite->getCleaningCharge();
              // on recherche le prix de la nuit
             $nightPrice = $gite->getPrice() + $supplement;
 
             // on compte le nombre de nuit
-            // $startDate2 = new \DateTime($startDate);
-            // $endDate2 = new \DateTime($endDate);
             $diff = $startDate->diff($endDate);
             $numberNight = $diff->format('%a');
 
@@ -150,9 +150,6 @@ class ReservationController extends AbstractController
     #[Route('/reservation/new', name: 'new_reservation')]
     public function new(Reservation $reservation = null, Request $request): Response {
     
-//         $session = $request->getSession();
-// $allSessionData = $session->all();
-// var_dump($allSessionData); die;
 
     // Récupérez les données stockées en session
     $session = $request->getSession();
@@ -164,10 +161,6 @@ class ReservationController extends AbstractController
     $numberNight = $session->get('reservation_details')['numberNight'];
     $nightPrice = $session->get('reservation_details')['nightPrice'];
     $totalPrice = $session->get('reservation_details')['totalPrice'];
-
-    // Convertissez les chaînes de caractères en objets DateTime
-    // $arrivalDate = new \DateTime($arrivalDate);
-    // $departureDate = new \DateTime($departureDate);
 
     // Créez une instance de l'entité Reservation et définissez les données initiales
     $reservation = new Reservation();
@@ -188,7 +181,7 @@ class ReservationController extends AbstractController
     $user = $this->getUser();
     $reservation->setUser($user);
 
-  
+
    $form = $this->createForm(ReservationType::class, $reservation);
 
     // Gérez la soumission du formulaire
