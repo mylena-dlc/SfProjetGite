@@ -66,6 +66,9 @@ class Reservation
     #[ORM\Column]
     private ?bool $view = false;
 
+    #[ORM\Column(length: 255)]
+    private ?string $reference = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -258,6 +261,22 @@ class Reservation
     public function setView(bool $view): static
     {
         $this->view = $view;
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    #[ORM\PrePersist]
+    public function setReference(): static
+    {
+        if($this->reference === null) {
+            $timeReservation = date('ymdHis');
+            $this->reference = 'RES_' . $timeReservation;
+        }
 
         return $this;
     }

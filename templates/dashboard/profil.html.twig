@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+
+    <div class="title gite-title center">
+         <h1>Mon compte</h1>
+    </div>
+
+
+    <div class="containt">
+        <div class="profilContaint">
+            <p class="profilEmail">Email</p> <p class="profilEmailAddress">{{ user.email }}</p> <p class="profilEmailAddress"><a href="{{ path('app_update_email', {'id': app.user.id}) }}" id="updateEmailLink" >Modifier l'adresse mail</a></p>
+        
+        {# <div id="updateEmailForm">
+            {% include 'dashboard/updateMail.html.twig' %}
+        </div>  #}
+
+            <button>Supprimer mon compte</button>
+        
+        </div>
+
+
+
+        <div class="title gite-title center">
+            <h2>Mes réservations</h2>
+        </div>
+
+        <div class="resaContaint">
+                  
+               
+                    
+                      
+                  
+ {% if reservations is not empty %}
+<table class="tableGite">
+        <thead>
+            <tr>
+            
+                <th>Référence de la réservation</th>  
+                <th>Date de réservation</th> 
+                <th>Date d'arrivée</th>
+                <th>Date de départ</th>
+                <th>Nombre d'adulte(s)</th>
+                <th>Nombre d'enfant(s)</th>
+                <th>Prix total</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.reference }}</td>
+                <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.numberAdult }}</td>
+                <td>{{ reservation.numberKid }}</td>
+                <td>{{ reservation.totalPrice }} €</td>
+            </tr>   
+               {% endfor %}
+        </tbody>
+    </table>        
+
+
+
+            {% else %}
+                <p class="profilResa">Vous n'avez aucune réservation.</p>
+            {% endif %}
+        </div>
+
+
+
+
+    </div>
+
+
+
+    </div>
+
+{% endblock %}

@@ -2,9 +2,11 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Bienvenue{% endblock %}</title>
+        <title>{% block title %}Bienvenue {% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
@@ -12,17 +14,14 @@
         {# flatpick #}
 {# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> #}
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/rangePlugin.min.js" integrity="sha512-44bA1YzQUqHACfLj2v0wEdX9z6EmlALcta6ENgPZnxH/aIiuBw92he+M/51kTCueY/2DsqEYM7mCwGUyO2q79w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css?family=Ruthie" rel="stylesheet">
-
-                
-<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-            
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
 
@@ -30,7 +29,7 @@
         
     </head>
     <body>
-        <header>
+        <header id="header">
             <nav class="navbar">
                 
                    
@@ -48,12 +47,12 @@
                         </figure>
                     </li>
 
-                    <li class="nav-item"><a href="/#gite">le gîte</a></li>
+                    <li class="nav-item"><a href="/#gite">le Gîte page 1</a></li>
                     <li class="nav-item"><a href="#galerie">galerie</a></li>
                     <li class="nav-item"><a href="#alentours">aux alentours</a></li>
                     <li class="nav-item"><a href="#avis">avis</a></li>
-                    <li class="nav-item"><a href="#">contact</a></li>
-                    <li class="nav-item"><a href="#">réservation</a></li>
+                    <li class="nav-item"><a href="">contact</a></li>
+                    <li class="nav-item"><a href="">réservation</a></li>
 
 
                     {% if is_granted('ROLE_ADMIN') %} {# Si je suis admin #}
@@ -66,7 +65,7 @@
                     
                     {% if app.user %} {# Si je suis connecté: #}
                     <li class="nav-item"><a aria-current="page" href="{{ path('app_logout') }}">Se déconnecter</a></li>
-                    {# <li class="nav-item"><a aria-current="page" href="{{ path('app_profile', {'id': app.user.id}) }}">Mon profil</a></li> #}
+                    <li class="nav-item"><a aria-current="page" href="{{ path('app_profil', {'id': app.user.id}) }}">Mon profil</a></li> 
                 {% else %}
                     <li class="nav-item"><a aria-current="page" href="{{ path('app_login') }}"><i class="fa-solid fa-circle-user"></i></a></li>
 
@@ -82,7 +81,7 @@
             <i class="fa-solid fa-arrow-up"></i>
         </div>
 
-
+        
         </header>
 
         <main class="container">
@@ -92,9 +91,16 @@
 
 
 <footer>
+
+    {# Carte Leaflet #}
+    <div id="map"></div>
+
+
     <div class="footerContaint">
+        <div class="footer-background"></div>
+        <div class="footerTop">
         <figure>
-            <img src="{{ asset( 'img/logook2.png' )}}" alt="Logo du gîte du Rain du Pair" class="footerLogo">
+            <img src="img/logook2.png" alt="logo" class="footerLogo">
         </figure>
         <div class="address">
             <p class="footerP">Gîte du Rain du Pair </p>
@@ -106,14 +112,29 @@
         <p class="footerP">mail@mail.fr</p>
         <p class="footerP"><i class="fa-solid fa-phone"></i> 06 36 29 62 22</p>
         </div>
+        </div>
+        <div class="footer-line"></div>
+        <div class="footerBottom">
+        <div class="footer-link">
+            <div class="link-right">
+                <p class="footerLink">Conditions générales de vente</p>
+                <p class="footerLink">Politique de confidentialités</p>
+                <p class="footerLink">Plan du site</p>
+            </div>
+            <div class="link-left">
+                <p class="footerLink">&copy; 2023 Gîte du Rain du Pair - Tous droits réservés.</p>
+            </div>
+        </div>
+        </div>
     </div>
 </footer>
 
 
-       {% block javascripts %}       
-       
-               
-
+       {% block javascripts %}               
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+     
 <!-- Include SweetAlert CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 

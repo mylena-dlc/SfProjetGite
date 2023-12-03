@@ -4,54 +4,69 @@
 
 {% block body %}
 
-    <div class="title gite-title center">
-         <h1>Tableau de bord</h1>
-    </div>
 
-
+<div class="containerDashboard">
 <div class="slidebar">
     <ul>
-        <li><a href="" class="linkAdmin">Les réservations</a></li>
-        <li><a href="{{ path('app_period') }}" class="linkAdmin">Les périodes</a></li>
-        <li><a href="{{ path('app_gite') }}" class="linkAdmin">Le gîte</a></li>
-        <li><a href="{{ path('app_category') }}" class="linkAdmin">Les photos</a></li>
-
+        <li class="titleSlidebar">gestion des réservations</li>
+        <li class="linkSlidebar"><a href="" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations à venir</a></li>
+        <li class="linkSlidebar"><a href="" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations passées</a></li>
+        <li class="titleSlidebar">gestion du calendrier</li>
+        <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les périodes</a></li>
+        <li class="titleSlidebar">gestion du gîte</li>
+        <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Le gîte</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les photos</a></li>
     </ul>
 </div>
 
-<div class="containt">
+<div class="content">
 
-<table class="tableGite">
+    <div class="title gite-title center">
+         <h1>Tableau de bord Administrateur</h1>
+    </div> 
+    
+<table class="tableGite tableReservation">
         <thead>
             <tr>
-                <th>Date de réservation</th>
-                <th>Date d'arrivée</th>
-                <th>Date de départ</th>
-                <th>Nombre d'adulte(s)</th>
-                <th>Nombre d'enfant(s)</th>
-                <th>Prix total</th>
+                <th>Référence</th> 
+                <th>Date de réservation</th>                
                 <th>Nom</th>
                 <th>Prénom</th>
+                <th>Date d'arrivée</th>
+                <th>Date de départ</th>
+                <th>Prix total</th>
                 <th>Vue par le gérant</th>
             </tr>
         </thead>
         <tbody>
              {% for reservation in reservations %}
             <tr>
+                <td>{{ reservation.reference }}</td>
                 <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.firstName }}</td>
+                <td>{{ reservation.LastName }}</td>
                 <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td>
                 <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
-                <td>{{ reservation.numberAdult }}</td>
-                <td>{{ reservation.numberKid }}</td>
                 <td>{{ reservation.totalPrice }} €</td>
-                 <td>{{ reservation.firstName }}</td>
-                  <td>{{ reservation.LastName }}</td>
+
+                <!-- bouton checkbox pour changer le statut à "vu" par le gérant -->
+                <td class="td-checkbox">
+                    {{ form_start(form) }}
+    {% for reservation in reservations %}
+        {{ form_widget(form.view[reservation.id]) }}
+    {% endfor %}
+    {{ form_widget(form.save) }}
+    {{ form_end(form) }}
+
+                </td>   
+
             </tr>   
 
                {% endfor %}
         </tbody>
     </table>        
 
+</div>
 </div>
 
 {% endblock %}

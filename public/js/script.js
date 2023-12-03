@@ -80,8 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 /* Bouton scroll haut de page */
-
-
 const btn = document.querySelector('.btn-scroll-to-top');
 btn.addEventListener('click', () => {
 
@@ -91,3 +89,44 @@ btn.addEventListener('click', () => {
         behavior: "smooth" // pour adoucir l'effet
     })
 })
+
+
+/* API Leaflet */ 
+
+// Dans votre fichier JavaScript
+
+        // Créez une icône personnalisée avec une couleur différente
+        var customIcon = L.icon({
+            iconUrl: '../img/icon-localisation.png',  // Remplacez par le chemin de votre propre icône
+            iconSize: [38, 38],  // Taille de l'icône en pixels
+            iconAnchor: [16, 32],  // Point d'ancrage de l'icône par rapport à son coin inférieur gauche
+            popupAnchor: [0, -32],  // Point d'ancrage du popup par rapport à son coin supérieur gauche
+        });
+    
+        // Initialisez la carte avec l'icône personnalisée
+        var map = L.map('map').setView([48.116933, 7.140431], 12);
+    
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 13,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+    
+        // Utilisez l'icône personnalisée pour le marqueur
+        var marker = L.marker([48.116933, 7.140431], { icon: customIcon }).addTo(map);
+        marker.bindPopup("Le gîte du Rain du Pair").openPopup();
+
+
+
+
+
+    /* Affichage dynamique du formulaire de modification de l'email de l'user */ 
+
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     var updateEmailLink = document.getElementById('updateEmailLink');
+    //     var updateEmailForm = document.getElementById('updateEmailForm');
+
+    //     updateEmailLink.addEventListener('click', function(event) {
+    //         event.preventDefault();
+    //         updateEmailForm.style.display = 'block';
+    //     });
+    // });

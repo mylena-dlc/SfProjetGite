@@ -56,7 +56,7 @@
 .title::after {
     content: "";
     position: absolute;
-    width: 70%; 
+    width: 30%; 
     height: 1px; 
     background-color: var(--color1); 
     bottom: -3px; 
@@ -186,14 +186,43 @@ label {
     align-items: center;
 }
 
-
 /* ********************************************** NAVBAR PAGE D'ACCUEIL ********************************************** */
-
-
 header {
-    background-color: var(--color1);
+    position: relative;
+    /* min-height: 80vh; */
+}
+
+.videoContaint {
     
 }
+#videoHome {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    z-index: -1;
+    object-fit: cover;
+}
+
+#videoHome::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 255, 0, 0.5); /* Couleur verte avec opacité */
+    z-index: 1; /* Positionné au-dessus de la vidéo */
+}
+
+
+/* ********************************************** NAVBAR ********************************************** */
+
+#header {
+    background-color: var(--color1);
+}
+
 .navLogo {
     height: 90px;
 }
@@ -201,7 +230,6 @@ header {
     list-style: none;
     display: flex;
     align-items: center;
-    
 
 }
 
@@ -1024,24 +1052,52 @@ th, td {
 
 /* ********************************************** ADMIN : DASHBOARD ********************************************** */
 
+.containerDashboard{
+    display: flex;
+    height: 100%;
+}
+
 .slidebar {
     background-color: var(--color4);
-    width: 200px;
-    position: fixed;
-    top: 10;
+    width: 330px;
+    /* height: 100%; */
+    /* position: fixed; */
+    top: 100px;
     left: 0;
-    padding: 30px;
+    bottom: 530px;
+    padding: 20px;
+    z-index: 200;
+    padding-top: 50px;
+}
+
+.linkAdmin, li {
+    color: var(--color1);
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.content {
+    padding: 20px;
+}
+
+.titleSlidebar {
+    font-weight: 600;
+    font-size: 15px;
 }
 
 .linkAdmin {
-    color: var(--color1);
-    text-decoration: none;
+    padding-left: 20px;
+    font-size: 12px;
+    transition-duration: 500ms;
 }
 
-/* .containt {
-    height: 100vh;
-} */
+.linkAdmin:hover {
+    color: var(--color3);
+}
 
+.tableReservation {
+    margin-top: 50px;
+}
 /* PERIODES */
 
 /* PHOTOS */
@@ -1101,6 +1157,34 @@ th, td {
 .categoryInput {
     margin: 0 !important;
 }
+
+
+/* ********************************************** MON PROFIL ********************************************** */
+
+.profilEmail {
+    font-size: 25px;
+    font-weight: 700;
+    display: inline;
+}
+
+.profilEmailAddress {
+    display: inline;
+}
+
+.profilContaint {
+    margin: 50px;
+    text-align: center;
+}
+
+.profilResa {
+    text-align: center;
+    font-size: 25px;
+
+}
+
+.resaContaint {
+    margin: 100px;
+}
 /* ********************************************** VUE CONFIRMATION RESERVATION ********************************************** */
 
 .messageConfirm {
@@ -1142,6 +1226,10 @@ th, td {
 }
 /* ********************************************** FOOTER ********************************************** */
 
+#map {
+    height: 180px;
+    z-index: 5;
+}
 
 .footerContaint {
     height: 350px;
