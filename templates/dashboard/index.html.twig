@@ -36,6 +36,7 @@
                 <th>Date de départ</th>
                 <th>Prix total</th>
                 <th>Vue par le gérant</th>
+                <th>Détails</th>
             </tr>
         </thead>
         <tbody>
@@ -49,16 +50,19 @@
                 <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
                 <td>{{ reservation.totalPrice }} €</td>
 
+
+
                 <!-- bouton checkbox pour changer le statut à "vu" par le gérant -->
                 <td class="td-checkbox">
-                    {{ form_start(form) }}
+                    {# {{ form_start(form) }}
     {% for reservation in reservations %}
         {{ form_widget(form.view[reservation.id]) }}
     {% endfor %}
     {{ form_widget(form.save) }}
-    {{ form_end(form) }}
+    {{ form_end(form) }} #}
 
                 </td>   
+                <td><a href="{{ path('show_reservation', {'id': reservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
 
             </tr>   
 

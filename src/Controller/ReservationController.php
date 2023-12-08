@@ -3,16 +3,22 @@
 namespace App\Controller;
 
 use DateInterval;
+use Stripe\Stripe;
 use App\Entity\Reservation;
+use Stripe\Checkout\Session;
 use App\Form\ReservationType;
+use App\Service\DompdfService;
 use App\Repository\GiteRepository;
 use App\Repository\UserRepository;
 use App\Repository\PeriodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -196,8 +202,9 @@ class ReservationController extends AbstractController
             // execute PDO
             $this->em->flush();
 
-            // Redirigez l'utilisateur vers une page de confirmation ou autre
-            return $this->redirectToRoute('confirm_reservation');
+      
+             //  redirigez vers la page de paiement
+            return $this->redirectToRoute('paiement', ['id' => $reservation->getId()]);
         }
 
         // Affichez le formulaire dans la vue Twig
@@ -214,6 +221,39 @@ class ReservationController extends AbstractController
         ]);
     }   
 
+    #[Route('/reservation/{id}/paiement', name: 'paiement')]
+public function paiement(Request $request, Reservation $reservation): Response {
+    // Récupérez les détails de la réservation
+    $totalPrice = $reservation->getTotalPrice() * 100; // Convertissez le prix en centimes
+
+    // Configurez Stripe
+    // Stripe::setApiKey($this->getParameter('sk_test_51OL5DQAbkgcVVGZDKN6MS8EVZOGCJSGM5gXA53MGhMwtUV2RYQGjoaR7HHs5i7OFXuKBTlbIamEk0Hkb7DDDZg5P00IXHHv8tj'));
+    Stripe::setApiKey('sk_test_51OL5DQAbkgcVVGZDKN6MS8EVZOGCJSGM5gXA53MGhMwtUV2RYQGjoaR7HHs5i7OFXuKBTlbIamEk0Hkb7DDDZg5P00IXHHv8tj');
+
+    
+    // Créez une session de paiement avec Stripe Checkout
+    $session = Session::create([
+        'payment_method_types' => ['card'],
+        'line_items' => [[
+            'price_data' => [
+                'currency' => 'eur',
+                'product_data' => [
+                    'name' => 'Réservation de gîte',
+                ],
+                'unit_amount' => $totalPrice,
+            ],
+            'quantity' => 1,
+        ]],
+        'mode' => 'payment',
+        'success_url' => $this->generateUrl('confirm_reservation', [], UrlGeneratorInterface::ABSOLUTE_URL),
+        'cancel_url' => $this->generateUrl('new_reservation', ['id' => $reservation->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+    ]);
+
+    // Redirigez l'utilisateur vers la page de paiement de Stripe
+    return $this->redirect($session->url);
+}
+
+
     /**
     * Fonction pour afficher la vue de confirmation d'une réservation
     */
@@ -229,4 +269,45 @@ class ReservationController extends AbstractController
         ]);
 
 }
+
+    /**
+    * Fonction pour afficher les détails d'une réservation
+    */
+
+    #[Route('/reservation/{id}', name: 'show_reservation')]
+    public function show(int $id): Response
+    {
+    // Récupérez la réservation depuis la base de données
+    $reservation = $this->reservationRepository->find($id);
+
+    // Passez les données de la réservation à la vue
+    return $this->render('reservation/show.html.twig', [
+        'reservation' => $reservation,
+    ]);
+}
+
+    #[Route('/reservation/{id}/show/download-invoice', name: 'download_invoice')]
+    public function downloadInvoice(DompdfService $dompdfService, int $id): Response
+    {
+        // Récupérez les informations nécessaires pour la facture
+        // ...
+        $reservation = $this->reservationRepository->find($id);
+
+
+        // Générez le HTML pour la facture
+        $html = $this->renderView('reservation/invoice.html.twig', [
+            'reservation' => $reservation, // Passez les données nécessaires à la facture
+            // ...
+        ]);
+
+        // Générez le PDF à partir du HTML
+        $pdfContent = $dompdfService->generatePdf($html);
+
+        // Créez une réponse de téléchargement
+        $response = new Response($pdfContent);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment;filename=facture.pdf');
+
+        return $response;
+    }
 }
