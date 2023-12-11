@@ -66,7 +66,6 @@ class ReservationController extends AbstractController
         if ($request->isMethod('POST')) {
 
             // Récupérez les données du formulaire
-
             $startDate = $request->get('start');
             $endDate = $request->get('end');
             $dateRange = $request->get('start');
@@ -290,14 +289,30 @@ public function paiement(Request $request, Reservation $reservation): Response {
     public function downloadInvoice(DompdfService $dompdfService, int $id): Response
     {
         // Récupérez les informations nécessaires pour la facture
-        // ...
         $reservation = $this->reservationRepository->find($id);
+        $gite = $this->giteRepository->find(4);
+
+         // Obtenez les dates de début et de fin de la réservation
+        $startDate = $reservation->getArrivalDate();
+        $endDate = $reservation->getDepartureDate();
+
+        // Calcule du nombre de nuit
+        $diff = $startDate->diff($endDate);
+        $numberNight = $diff->format('%a');
+
+        // Calcul du prix sans le forfait de ménage
+        $cleaningCharge = $gite->getcleaningCharge();
+        $priceHt = $reservation->getTotalPrice() - $cleaningCharge;
+
 
 
         // Générez le HTML pour la facture
         $html = $this->renderView('reservation/invoice.html.twig', [
-            'reservation' => $reservation, // Passez les données nécessaires à la facture
-            // ...
+            'reservation' => $reservation, 
+            'numberNight' => $numberNight,
+            'gite' => $gite,
+            'priceHt' => $priceHt,
+            
         ]);
 
         // Générez le PDF à partir du HTML
