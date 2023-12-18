@@ -29,10 +29,8 @@
         
     </head>
     <body>
-        <header id="header">
-            <nav class="navbar">
-                
-                   
+        <header id="header-interne">
+            <nav class="navbar base">
                 
 
                 {# boutton menu burger #}
@@ -41,38 +39,32 @@
                 </button> #}
 
                 <ul class="nav-items"> 
-                    <li class="nav-item">
+                    <li class="nav-item-logo">
                         <figure>
                             <a class="link-home" href="{{ path('app_home')}}"><img src="{{ asset( 'img/logook2.png' )}}" alt="logo" class="navLogo"></a>
                         </figure>
                     </li>
 
-                    <li class="nav-item"><a href="/#gite">le Gîte page 1</a></li>
+                    <li class="nav-item"><a href="/#gite">le Gîte page interne</a></li>
                     <li class="nav-item"><a href="#galerie">galerie</a></li>
                     <li class="nav-item"><a href="#alentours">aux alentours</a></li>
                     <li class="nav-item"><a href="#avis">avis</a></li>
                     <li class="nav-item"><a href="">contact</a></li>
                     <li class="nav-item"><a href="">réservation</a></li>
 
-
                     {% if is_granted('ROLE_ADMIN') %} {# Si je suis admin #}
                         <li class="nav-item"><a aria-current="page" href="{{ path('app_dashboard') }}">Tableau de bord</a></li>
-
-                    
-
                     {% endif %}
 
-                    
-                    {% if app.user %} {# Si je suis connecté: #}
-                    <li class="nav-item"><a aria-current="page" href="{{ path('app_logout') }}">Se déconnecter</a></li>
-                    <li class="nav-item"><a aria-current="page" href="{{ path('app_profil', {'id': app.user.id}) }}">Mon profil</a></li> 
-                {% else %}
-                    <li class="nav-item"><a aria-current="page" href="{{ path('app_login') }}"><i class="fa-solid fa-circle-user"></i></a></li>
+                    {# Si je suis connecté: #}
+                    {% if app.user %} 
+                        <li class="nav-item"><a aria-current="page" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                        <li class="nav-item"><a aria-current="page" href="{{ path('app_profil', {'id': app.user.id}) }}">Mon profil</a></li> 
+                    {% else %}
+                        <li class="nav-item"><a aria-current="page" href="{{ path('app_login') }}">Se connecter</a></li>
+                        <li class="nav-item"><a aria-current="page" href="{{ path('app_register') }}">S'inscrire</a></li>
+                    {% endif %}  
 
-                    <li class="nav-item"><a aria-current="page" href="{{ path('app_login') }}">Se connecter</a></li>
-                    <li class="nav-item"><a aria-current="page" href="{{ path('app_register') }}">S'inscrire</a></li>
-
-                {% endif %}   
                 </ul>
             </nav>
 

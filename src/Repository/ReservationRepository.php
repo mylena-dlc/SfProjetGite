@@ -46,28 +46,37 @@ class ReservationRepository extends ServiceEntityRepository
     return $qb->getQuery()->getResult();
 }
 
-//    /**
-//     * @return Reservation[] Returns an array of Reservation objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?Reservation
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+
+// Fonction pour rechercher les réservations passées
+
+    public function findPreviousReservations()
+    {
+        $today = new \DateTime();
+        $qb = $this->createQueryBuilder('r')
+            ->where('r.departureDate < :today')
+            ->setParameter('today', $today)
+            ->orderBy('r.departureDate', 'DESC')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
+
+
+// Fonction pour rechercher les réservations à venir
+
+    public function findUpcomingReservations()
+    {
+        $today = new \DateTime();
+        $qb = $this->createQueryBuilder('r')
+            ->where('r.departureDate > :today')
+            ->setParameter('today', $today)
+            ->orderBy('r.departureDate', 'ASC')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
+
 }

@@ -69,6 +69,9 @@ class Reservation
     #[ORM\Column(length: 255)]
     private ?string $reference = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $paymentMethod = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -277,6 +280,18 @@ class Reservation
             $timeReservation = date('ymdHis');
             $this->reference = 'RES_' . $timeReservation;
         }
+
+        return $this;
+    }
+
+    public function getPaymentMethod(): ?string
+    {
+        return $this->paymentMethod;
+    }
+
+    public function setPaymentMethod(string $paymentMethod): static
+    {
+        $this->paymentMethod = $paymentMethod;
 
         return $this;
     }

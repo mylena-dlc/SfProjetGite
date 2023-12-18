@@ -117,6 +117,34 @@ btn.addEventListener('click', () => {
 
 
 
+        // Bouton checkbox pour la vue de l'admin
+        document.addEventListener('DOMContentLoaded', function () {
+            const customCheckboxes = document.querySelectorAll('.custom-checkbox');
+
+            customCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', () => {
+                    if (checkbox.classList.contains('verrouille')) {
+                        checkbox.classList.remove('verrouille');
+                        checkbox.classList.add('actif');
+                        const label = checkbox.nextElementSibling;
+                        label.innerHTML = '<i class="fa-solid fa-check"></i> Vue !';
+                    } else {
+                        checkbox.classList.remove('actif');
+                        checkbox.classList.add('verrouille');
+                        const label = checkbox.nextElementSibling;
+                        label.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Non vue !';
+                    }
+                    showSubmitButton(checkbox);
+                });
+            });
+
+            function showSubmitButton(checkbox) {
+                const checkboxWrapper = checkbox.closest('.checkbox-wrapper');
+                const submitButton = checkboxWrapper.querySelector('.submit-checkbox');
+                submitButton.style.display = 'block';
+            }
+        });
+        
 
 
     /* Affichage dynamique du formulaire de modification de l'email de l'user */ 

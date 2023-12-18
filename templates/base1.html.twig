@@ -30,21 +30,19 @@
     </head>
     <body>
         <header>        
-        <div class="videoContaint">
-            <video  id="videoHome" src="{{ asset('img/video.mp4') }}" type="video/mp4" autoplay muted loop>
+      
+      <div class="videoContent">
+            <video  class="videoHome" src="{{ asset('img/video.mp4') }}" type="video/mp4" autoplay muted loop>
             </video>
         </div>
             <nav class="navbar">
-
-
-
                 {# boutton menu burger #}
                 {# <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button> #}
 
                 <ul class="nav-items"> 
-                    <li class="nav-item">
+                    <li class="nav-item-logo">
                         <figure>
                             <a class="link-home" href="{{ path('app_home')}}"><img src="{{ asset( 'img/logook2.png' )}}" alt="logo" class="navLogo"></a>
                         </figure>
@@ -62,12 +60,11 @@
                         <li class="nav-item"><a aria-current="page" href="{{ path('app_dashboard') }}">Tableau de bord</a></li>
                     {% endif %}
 
-                    
-                    {% if app.user %} {# Si je suis connecté: #}
+                    {# Si je suis connecté: #}
+                    {% if app.user %} 
                         <li class="nav-item"><a aria-current="page" href="{{ path('app_logout') }}">Se déconnecter</a></li>
                         <li class="nav-item"><a aria-current="page" href="{{ path('app_profil', {'id': app.user.id}) }}">Mon profil</a></li> 
                     {% else %}
-                        <li class="nav-item"><a aria-current="page" href="{{ path('app_login') }}"><i class="fa-solid fa-circle-user"></i></a></li>
                         <li class="nav-item"><a aria-current="page" href="{{ path('app_login') }}">Se connecter</a></li>
                         <li class="nav-item"><a aria-current="page" href="{{ path('app_register') }}">S'inscrire</a></li>
                     {% endif %}   

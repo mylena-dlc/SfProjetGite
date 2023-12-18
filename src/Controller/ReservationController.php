@@ -195,16 +195,24 @@ class ReservationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $reservation = $form->getData(); 
-     
+
+            $paymentMethod = $form->get('paymentMethod')->getData();
+
             // prepare en PDO
             $this->em->persist($reservation);
             // execute PDO
             $this->em->flush();
 
       
-             //  redirigez vers la page de paiement
+
+        // En fonction de $paymentMethod, redirigez l'utilisateur vers la page de paiement appropriée
+        if ($paymentMethod === 'stripe') {
             return $this->redirectToRoute('paiement', ['id' => $reservation->getId()]);
+        } elseif ($paymentMethod === 'paypal') {
+            return $this->redirectToRoute('page_paiement_paypal');
         }
+        }
+        
 
         // Affichez le formulaire dans la vue Twig
         return $this->render('reservation/new.html.twig', [
@@ -220,13 +228,18 @@ class ReservationController extends AbstractController
         ]);
     }   
 
+
+    /**
+    * Fonction de paiement
+    */
+
     #[Route('/reservation/{id}/paiement', name: 'paiement')]
-public function paiement(Request $request, Reservation $reservation): Response {
+    public function paiement(Request $request, Reservation $reservation): Response {
+
     // Récupérez les détails de la réservation
     $totalPrice = $reservation->getTotalPrice() * 100; // Convertissez le prix en centimes
 
     // Configurez Stripe
-    // Stripe::setApiKey($this->getParameter('sk_test_51OL5DQAbkgcVVGZDKN6MS8EVZOGCJSGM5gXA53MGhMwtUV2RYQGjoaR7HHs5i7OFXuKBTlbIamEk0Hkb7DDDZg5P00IXHHv8tj'));
     Stripe::setApiKey('sk_test_51OL5DQAbkgcVVGZDKN6MS8EVZOGCJSGM5gXA53MGhMwtUV2RYQGjoaR7HHs5i7OFXuKBTlbIamEk0Hkb7DDDZg5P00IXHHv8tj');
 
     
@@ -253,9 +266,11 @@ public function paiement(Request $request, Reservation $reservation): Response {
 }
 
 
+
     /**
     * Fonction pour afficher la vue de confirmation d'une réservation
     */
+
     #[Route('/reservation/confirm', name: 'confirm_reservation')]
     public function confirm(): Response {
 
@@ -285,6 +300,11 @@ public function paiement(Request $request, Reservation $reservation): Response {
     ]);
 }
 
+
+    /**
+    * Fonction pour télécharger une facture d'une réservation
+    */
+
     #[Route('/reservation/{id}/show/download-invoice', name: 'download_invoice')]
     public function downloadInvoice(DompdfService $dompdfService, int $id): Response
     {
@@ -303,7 +323,6 @@ public function paiement(Request $request, Reservation $reservation): Response {
         // Calcul du prix sans le forfait de ménage
         $cleaningCharge = $gite->getcleaningCharge();
         $priceHt = $reservation->getTotalPrice() - $cleaningCharge;
-
 
 
         // Générez le HTML pour la facture
@@ -325,4 +344,7 @@ public function paiement(Request $request, Reservation $reservation): Response {
 
         return $response;
     }
+
+
+
 }

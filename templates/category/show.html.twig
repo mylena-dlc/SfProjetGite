@@ -4,8 +4,10 @@
 
 {% block body %}
     <div class="title gite-title center">
-          <h1> Image {{ category }} </h1>
+          <h1> {{ category }} </h1>
     </div>
+
+
 
     {# div des messages flash #}
     <div class="alert">
@@ -17,17 +19,20 @@
         {% endfor %}
     </div>
 
-            {# <p><a href="{{ path ('new_picture', {'category_id': category.id}) }}" class="btn add">Ajouter une photo</a></p> #}
+<div class="gallery">
 
     {% for picture in pictures %}
-        <img src="{{ asset(picture.url )}}" alt=" {{ picture.description }}">
-       
+            <div class="gallery-item">
+
+        <img src="{{ asset(picture.url )}}" alt=" {{ picture.description }}"><br>
+        <p><a href="{{ path ('edit_picture', {'id': picture.id, 'category_id': category.id}) }}" class="btn edit"><i class="fa-regular fa-pen-to-square"></i></a></p>
+            {# <p><a href="{{ path ('delete_picture', {'id': picture.id}) }}" class="btn delete">Supprimer une photo</a></p> #}
+      </div>
    
 
-  <p><a href="{{ path ('edit_picture', {'id': picture.id, 'category_id': category.id}) }}" class="btn edit">Modifier une photo</a></p>
-            {# <p><a href="{{ path ('delete_picture', {'id': picture.id}) }}" class="btn delete">Supprimer une photo</a></p> #}
+ 
  {% endfor %}
-
+</div>
      <div class="btnRight">
         <button class="btn add categoryBtnAdd"><a href="{{ path ('new_picture') }}" class="btn add">Ajouter une image</a></button>
     </div>

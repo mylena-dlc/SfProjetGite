@@ -2,39 +2,38 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: 'Catamaran', 'Ruthie', 'Corinthia';
-    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+    font-family: 'Catamaran', 'Ruthie', 'Corinthia', "Rochester";
 }
 
 /* Déclaration des variables */
 
 :root {
+
     /* Couleur */
     --color1: #504f4b;
     --color2: #a9b4a4;
-    --color3: rgb(181, 136, 105);
+    --color3: #b58869;
     --color4: #fcf7f1;
     --color5: rgb(217, 186, 166);
     --color6: #85634d;
-   
 
-    /* Couleur de fond */
+    --green: #22773d;
+    --red: #712424;
 
-    /* Police */
-    /* --font1: "Catamaran";
-    --font2: "Corinthia"; */
 
     /* Taille de police */
     --size1: 1rem;
     --size2: 1.5rem;
 
     /* Largeur de police */
-    --fontWeight1: 400;
-    --fontWeight2: 500 ;
-    --fontWeight3: ;
-    --fontWeight4: ;
+    --thin: 100;
+    --light: 300 ;
+    --regular: 400;
+    --medium: 500;
+    --bold: 700;
+    --black: 900;
 
-    /* Bord */
+    /* Bordure */
     --borderRadius1: 20px;
 
     /* Ombre */
@@ -49,7 +48,7 @@
 .title {
    position: relative;
    display: inline-block;
-   margin: 80px 0 0 80px;
+   /* margin: 80px 0 0 80px; */
 }
 
 /* Ligne sous le titre */
@@ -66,7 +65,7 @@ h1, h2 {
     color: var(--color1);
     text-transform: uppercase;
     font-family: var(--font1);
-    font-weight: var(--fontWeight2);
+    font-weight: var(--black);
     letter-spacing: 3px;
     margin-top: 20px;
 }
@@ -86,7 +85,7 @@ h3 {
     color: var(--color1);
     letter-spacing: 2px;
     font-family: var(--font1);
-    font-weight: 500;
+    font-weight: var(--medium);
     margin: 20px 40px;
     font-size: 18px;
 }
@@ -94,7 +93,6 @@ h3 {
 p {
     color: var(--color1);
     font-family: var(--font1);
-    margin: 0 50px;
 }
 
 .pBold {
@@ -110,7 +108,7 @@ p {
     color: var(--color4);
     font-size: 1rem;
     text-transform: uppercase;
-    font-weight: var(--fontWeight1);
+    font-weight: var(--medium);
     box-shadow: var(--boxShadow2);
     transition-duration: 500ms;
 }
@@ -120,6 +118,9 @@ p {
     opacity: 0.8;
 }
 
+button:hover {
+    cursor: pointer;
+}
 .submit {
     margin-top: 10px;
 }
@@ -133,7 +134,7 @@ p {
     text-decoration: none;
     text-transform: uppercase;
     font-size: 12px;
-    font-weight: var(--fontWeight1);
+    font-weight: var(--medium);
 }
 
 .fa-circle-arrow-right {
@@ -169,7 +170,7 @@ label {
     cursor: pointer;
     border-radius: 50%;
     background-color: var(--color1);
-    z-index: 1;
+    z-index: 200;
 }
 
 .btn-scroll-to-top i {
@@ -182,84 +183,137 @@ label {
     align-items: center;
 }
 
-.fa-solid {
-    color: var(--color3);
-}
-
-.fa-solid:hover {
-    color: var(--color6);
-}
 
 /* ********************************************** NAVBAR PAGE D'ACCUEIL ********************************************** */
+
 header {
     position: relative;
-    /* min-height: 80vh; */
+    min-height: 100vh;
 }
 
-.videoContaint {
-    
-}
-#videoHome {
+.videoHome {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%; 
-    z-index: -1;
+    z-index: 1;
     object-fit: cover;
 }
 
-#videoHome::after {
+.videoContent::before{
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 255, 0, 0.5); /* Couleur verte avec opacité */
-    z-index: 1; /* Positionné au-dessus de la vidéo */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+    z-index: 2; 
 }
 
 
-/* ********************************************** NAVBAR ********************************************** */
+/* ********************************************** NAVBAR PAGE D'ACCUEIL ********************************************** */
 
-#header {
-    background-color: var(--color1);
+.navbar {
+    position: relative;
+    z-index: 2;
+    margin: 0 150px;
 }
 
 .navLogo {
-    height: 90px;
+    height: 110px;
 }
+
 .nav-items {
     list-style: none;
     display: flex;
     align-items: center;
-
+    justify-content: space-between;
 }
 
 .nav-item {
-    text-transform: uppercase;
-    padding-left: 60px;
-    
+    text-transform: uppercase;  
 }
 
 .nav-item a {
     color: var(--color4);
     text-decoration: none;
-    font-family: var(--font1);
+    font-size: 18px;
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+.nav-item a:hover {
+    opacity: 0.8;
+}
+
+.nav-item a:before, .nav-item a:after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 1px;
+    bottom: -1px;
+}
+
+.nav-item a:before {
+    left: 0;
+}
+
+.nav-item a:after {
+    right: 0;
+    background: #fff;
+    transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+    opacity: 0.8;
+}
+
+.nav-item a:hover:before {
+    background: #fff;
+    width: 100%;
+    transition: width 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    opacity: 0.8;
+  }
+  
+  .nav-item a:hover:after {
+    background: transparent;
+    width: 100%;
+    transition: 0s;
+  }
+
+/* ********************************************** NAVBAR PAGE INTERNE ********************************************** */
+#header-interne {
+    min-height: 0;
+}
+
+.base {
+    background-color: var(--color1);
+    margin: 0;
 }
 
 /* ********************************************** RECHERCHE RESERVATION ********************************************** */
 
 #search {
-    background-color: #a9b4a4;
-    height: 200px;
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.33);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.2px);
+    -webkit-backdrop-filter: blur(5.2px);
+    border: 1px solid rgba(255, 255, 255, 0.29);
+
+    width: 70%;
+    height: 250px;
+    position: absolute;
+    bottom: 180px;
+    top: auto;
+    right: 50%;
+    transform: translate(50%, 50%);
+    z-index: 100;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--color1);
-    width: 100%;
-     
+    font-size: 20px;
 }
 
 #reservationForm {
@@ -268,24 +322,13 @@ header {
     justify-content: center;
     align-items: center;
 }
+
 .start-containt, .end-containt, .person-containt, .submit-containt {
     display: flex;
     flex-direction: column;
     margin: 30px;
     align-items: flex-start
 }
-
-/* .start-containt {
-    position: relative;
-}
-
-.end-containt {
-    position: relative;
-}
-
-.person-containt {
-    position: relative;
-} */
 
 #openCalendarModal {
     cursor: pointer;
@@ -336,7 +379,7 @@ header {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
-    font-weight: bold;
+    font-weight: var(--bold);
 }
 
 .adult, .kid {
@@ -353,15 +396,19 @@ header {
     border-radius: 50%;
     width: 25px;
     height: 25px;
-    text-align: center ;  
+    text-align: center;  
     line-height: 25px;
     padding: 0;
-  
-
+    border: 1px solid #ccc;
 
 }
-.numberPerson, .numberAdult, .numberKid, .start, .end {
+
+.numberPerson, .numberAdult, .numberKid, .start, .end, .labelPerson {
     margin: 0 10px;
+}
+
+.kid > .action, .adult > .action {
+    margin-left: 13px;
 }
 .person {
     display: flex;
@@ -468,7 +515,7 @@ header {
     background-color: var(--color4);
     border-radius: 30px;
     width: 50%;
-    margin: auto;
+    margin: 70px auto;
     padding: 50px;
     display: flex;
     flex-direction: column;
@@ -485,29 +532,32 @@ header {
     width: 30px !important;
     margin: 20px;
 }
+
 .btn-register {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center; 
 }
 
 .register {
     margin: 30px;
 }
 
+.p-link > a {
+    color: var(--color3);
+}
 /* ********************************************** SECTION GÎTE ********************************************** */
 
 .gite-title {
-    margin: 80px 0 0 80px;
+    align-self: flex-start;
 }
 
 .gite-contain {
     position: relative;
-    height: 80vh;
     width: 100%;
     overflow: hidden; 
+    padding: 100px 100px 100px 250px;
 }
 
 .background-image {
@@ -532,7 +582,6 @@ header {
 .gite-description {
     width: 33%;
     text-align: center; 
-    margin: 80px;
 }
 
 .giteFigure {
@@ -540,17 +589,18 @@ header {
 }
 
 .picture01 {
-    width: 400px;
+    width: 450px;
     height: auto;
     border-radius: 80px 180px 80px 180px;
     box-shadow: var(--boxShadow1);
-    margin-left: 140px;
+    margin-left: 150px;
 }
 
 .banner {
     background-color: var(--color2);
     height: 300px;
     width: 100%;
+    padding: 0 250px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -578,19 +628,8 @@ header {
     font-family: 'Corinthia';
     color: var(--color4);
     font-size: 40px;
-    font-weight: 300;
+    font-weight: var(--light);
 }
-
-/* .banner2 {
-    background-image: url('../img/banniere.jpg');
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 400px;
-} */
 
 .banner2 {
     position: relative;
@@ -629,6 +668,7 @@ header {
     display: flex;
     margin: 100px 250px;
 }
+
 
 .caracteristique-right  {
     display: flex;
@@ -678,6 +718,10 @@ header {
 }
 /* ********************************************** SECTION GALERIE ********************************************** */
 
+#galerie {
+    margin: 100px 250px;
+}
+
 .categories {
     display: flex;
     justify-content: center;
@@ -690,21 +734,21 @@ header {
     align-items: center;
 }
 
-.categoryImg {
-    width: 300px;
-    height: 300px;
-   
-    transition-duration: 0.6s; 
-    object-fit: cover; 
-    position: relative;    
-}
-
 .categoryFigure {
     width: 300px;
     height: 300px; 
     overflow: hidden; 
     border: 15px solid white;
     box-shadow: var(--boxShadow1);
+    position: relative;
+}
+
+.categoryImg {
+    width: 300px;
+    height: 300px;
+    transition-duration: 0.6s; 
+    object-fit: cover; 
+    position: relative;    
 }
 
 .category-1:hover .categoryImg,
@@ -765,49 +809,58 @@ header {
 .voirPlus {
     position: absolute;
     top: 50%;
-    right: 50%;
-    margin: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
     opacity: 0;
     font-size: 18px;
     color: white;
-    font-weight: 100;
+    font-weight: var(--thin);
     background-color: var(--color3);
     border-radius: 10px;
     padding: 8px;
     text-transform: uppercase;
-    /* width: 150px; */
+    transition: opacity 0.3s ease;
+
 }
 
 .categoryFigure:hover .voirPlus {
     opacity: 1;
-}
+} 
 
 /* ********************************************** SECTION AUX ALENTOURS ********************************************** */
 
 #alentours {
+    padding: 100px 250px;
     background-color: var(--color4);
     height: 80vh;
+}
+
+/* ********************************************** SECTION ACTUALITÉS ********************************************** */
+
+#actualites {
+    margin: 100px 250px;
+    height: 80vh;
+
+
 }
 
 
 /* ********************************************** DÉTAILS RÉSERVATION ********************************************** */
 .confirmReservation {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-around;
+   margin-left: 300px;
 }
+
 .confirm {
-    height: 300px;
-    width: 400px;
+    height: 400px;
+    width: 450px;
     background-color: var(--color4);
     border-radius: 20px;
     box-shadow: var(--boxShadow2);
-    padding: 15px;
-    /* position: fixed;
-    right: 0;
-    top: 50; */
-    z-index: 5;
+    position: fixed;
+    right: 50px;
+    z-index: 100;
     text-align: center;
+    font-size: 22px;
 }
 
 .confirmLine {
@@ -818,14 +871,18 @@ header {
 .total-p {
     display: inline-block;
     padding: 5px;
+    font-size: 30px;
 }
 
 .btnReservation {
-    width: auto;
+    width: 200px;
+    height: 60px;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 15px;
     margin: auto;
+    font-size: 25px;
 }
 
 .btnReservation a {
@@ -845,13 +902,17 @@ button > a {
     flex-direction: row-reverse;
     justify-content: space-around;
     align-items: center;
+    margin: 0 500px 0 300px;
+}
+
+.descriptionLeft {
+    margin-left: 100px;
 }
 
 .descriptionIcon {
     font-size: 18px;
-    font-weight: var(--fontWeight1);
+    font-weight: var(--medium);
     letter-spacing: 1.3px;
-  
 }
 
 .descriptionRight {
@@ -866,8 +927,12 @@ button > a {
 
 .titleDescription {
     text-transform: uppercase;
-    font-weight: var(--fontWeight1);
+    font-weight: var(--medium);
     text-align: center;
+}
+
+.description02 {
+    margin: 0 400px 0 250px;
 }
 
 .info {
@@ -878,7 +943,7 @@ button > a {
 }
 
 .bold {
-    font-weight: 800;
+    font-weight: var(--bold);
 }
 
 .paraCenter {
@@ -888,8 +953,8 @@ button > a {
 .titleH5 {
     text-align: center;
     margin: 100px;
-    font-size: 20px;
-    font-weight: 700;
+    font-size: 25px;
+    font-weight: var(--bold);
     color: var(--color2);
     letter-spacing: 1px;
 }
@@ -903,9 +968,10 @@ button > a {
 }
 .descriptionList {
     font-size: 20px;
-    font-weight: 500;
+    font-weight: var(--medium);
     color: var(--color1);
 }
+
 li {
     color: var(--color1);
     font-size: 15px;
@@ -925,36 +991,49 @@ li {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    margin: 0 400px 50px 250px;
 }
 
 .situationFigure img {
     height: 600px;
     box-shadow: var(--boxShadow2);
-
 }
 
 .paragrapheSituation {
 margin: 0;
 }
+
 /* ********************************************** CONFIRMATION RESERVATION ********************************************** */
+.sectionLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titlecenter {
+    align-self: center;
+}
+
+.titlecenter:after {
+    display: none;
+}
 
 .recap {
     background-color: var(--color4);
     width: 70%;
-    margin: auto;
+    margin: 70px auto;
     border-radius: 20px;
     padding: 40px;
-    margin-bottom: 70px;
-    margin-top: 70px;
+    font-size: 22px;
+    padding: 50px 200px;
 }
 
 .recapTop, .recapBottom {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    
-    
 }
+
 .recapTop {
     margin-bottom: 30px;
 }
@@ -977,12 +1056,13 @@ margin: 0;
     border: 1px solid var(--color1);
     margin: auto;
 }
+
 .inline {
     display: inline;
 }
 
 .resaForm {
-    margin: auto;
+    margin: 70px auto;
     margin-top: 70px;
     background-color: var(--color4);
     width: 70%;
@@ -1030,10 +1110,16 @@ input {
     display: flex;
     align-items: center;
 }
+
 .actionButton {
     display: flex;
     justify-content: flex-end;
     padding: 0px;
+}
+
+.actionButton a {
+    text-decoration: none;
+    text-align: center;
 }
 
 .download {
@@ -1120,10 +1206,29 @@ th, td {
 }
 
 .titleSlidebar {
-    font-weight: 600;
+    font-weight: var(--bold);
     font-size: 15px;
+    text-decoration: none;
+    color: var(--color1);
 }
 
+.circleResa {
+    background-color: var(--color6);
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    float: inline-end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: var(--boxShadow2);
+}
+
+.circleResa > p {
+    text-transform: uppercase;
+    color: white;
+}
 .linkAdmin {
     padding-left: 20px;
     font-size: 12px;
@@ -1135,8 +1240,101 @@ th, td {
 }
 
 .tableReservation {
-    margin-top: 50px;
+    margin: 50px auto;
 }
+
+/* Bouton checkbox pour la vue de l'admin */
+
+.submit-checkbox {
+    background-color: var(--color3);
+    width: 50px;
+    height: 20px;
+    border-radius: 10px;
+    color: white;
+    font-size: 11px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.submit-checkbox:hover {
+    opacity: 0.8;
+}
+
+.checkbox-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.custom-checkbox {
+    position: relative;
+    width: 80px;
+    height: 35px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--Red);
+    outline: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgb(0 0 0 / 50%);
+    transition: background 0.5s;
+}
+
+.custom-checkbox::before {
+    content: "";
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.5s;
+}
+
+.custom-checkbox:checked::before {
+    transform: translateX(150%);
+    background: #fff;
+}
+
+.custom-checkbox:checked {
+    background: var(--Green);
+}
+
+.vue {
+    background: var(--green);
+    border: 2px solid var(--green);
+}
+
+.nonvue {
+    background: var(--red);
+    border: 2px solid var(--red);
+}
+
+.vue:checked {
+    background: var(--red);
+}
+
+.nonvue:checked {
+    background: var(--green);
+}
+
+.checkbox-label {
+    font-size: 11px;
+    display: block;
+    margin: 0 10px; /* Ajustez la marge en fonction de vos besoins */
+}
+
+.td-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fa-circle-info {
+    color: var(--color6);
+}
+
 /* PERIODES */
 
 /* PHOTOS */
@@ -1173,12 +1371,14 @@ th, td {
 .btnRight {
     display: flex;
     justify-content: flex-end;
-    margin-right: 100px;
-    
+    margin: 0 100px 100px 0;
 }
+
 .categoryBtnAdd {
-    height: 70px;
+    padding: 5px;
+    width: 200px;
 }
+
 .pictureInput {
     width: 300px;
 }
@@ -1193,16 +1393,34 @@ th, td {
     justify-content: center;
 }
 
-.categoryInput {
-    margin: 0 !important;
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 10px;
+    margin: 0 250px;
 }
 
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
 
 /* ********************************************** MON PROFIL ********************************************** */
 
 .profilEmail {
     font-size: 25px;
-    font-weight: 700;
+    font-weight: var(--bold);
     display: inline;
 }
 
@@ -1239,6 +1457,7 @@ th, td {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 100px;
 }
 
 /* ********************************************** FENETRE D'ALERTE ********************************************** */

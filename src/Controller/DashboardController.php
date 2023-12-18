@@ -62,7 +62,7 @@ class DashboardController extends AbstractController
         $reservations = $this->reservationRepository->findBy([], ['reservationDate' => 'ASC'], 5);
 
 
- // Créez un formulaire pour le bouton "Enregistrer" unique
+        // Créez un formulaire pour le bouton "Enregistrer" unique
         $form = $this->createFormBuilder()
             ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
             ->getForm();
@@ -92,6 +92,38 @@ class DashboardController extends AbstractController
     }
 
 
+
+    /**
+    * Fonction pour afficher les réservations passées
+    */
+
+    #[Route('admin/dashboard/previous-reservations', name: 'app_previous_reservations')]
+    public function previousReservations(): Response
+    {
+        $previousReservations = $this->reservationRepository->findPreviousReservations();
+    
+        return $this->render('dashboard/previous-reservations.html.twig', [
+            'previousReservations' => $previousReservations,
+        ]);
+    }
+    
+
+
+    /**
+    * Fonction pour afficher les réservations à venir
+    */
+
+    #[Route('admin/dashboard/upcoming-reservations', name: 'app_upcoming_reservations')]
+    public function upcomingReservations(): Response
+    {
+        $upcomingReservations = $this->reservationRepository->findUpcomingReservations();
+    
+        return $this->render('dashboard/upcoming-reservations.html.twig', [
+            'upcomingReservations' => $upcomingReservations,
+        ]);
+    }
+
+    
 
     /**
     * Fonction pour afficher les détails d'un profil
