@@ -145,6 +145,34 @@ btn.addEventListener('click', () => {
             }
         });
         
+// JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const modal = document.getElementById('imageModal');
+    const modalContent = document.getElementById('modalImage');
+    const closeModalButton = document.getElementById('closeModal');
+
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const imageUrl = item.querySelector('img').src;
+            modalContent.src = imageUrl;
+            modal.style.display = 'block';
+        });
+    });
+
+    closeModalButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+
+
+
 
 
     /* Affichage dynamique du formulaire de modification de l'email de l'user */ 

@@ -31,7 +31,6 @@
                 <td>{{ period.startDate|date('d-m-Y') }}</td>
                 <td>{{ period.endDate|date('d-m-Y') }}</td>
                 <td>{{ period.supplement }} € </td>
-
                 <td>      
                     {# <a href="{{ path ('edit_gite', {'id': gite.id}) }}" class="btn edit"><i class="fa-solid fa-pen-to-square"></i></a>
                     <a href="{{ path ('delete_gite', {'id': gite.id}) }}" class="btn delete"><i class="fa-solid fa-trash-can"></i></a> #}
@@ -52,9 +51,6 @@
             <h2>Ajouter une période</h2>
     </div>
 
-
-
-
     <div id="addPeriodForm">
   
     {{ form_start(form) }} 
@@ -62,11 +58,7 @@
             {{ form_row(form.startDate) }} 
             {{ form_row(form.endDate) }} 
             {{ form_row(form.supplement) }} 
-
-             {{ form_row(form.ajouter) }} 
-
-
-        {# <button class="btn add"><a href="{{ path('app_period') }}">Ajouter </a></button> #}
+            {{ form_row(form.ajouter) }} 
 
   {{ form_end(form) }}
 

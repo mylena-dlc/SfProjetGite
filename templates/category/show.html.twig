@@ -19,21 +19,49 @@
         {% endfor %}
     </div>
 
+
+
+    <div id="imageModal" class="modal">
+        <span id="closeModal" class="close">&times;</span>
+        <img id="modalImage" class="modal-content">
+    </div>
+
+    <div class="gallery">
+        {% for picture in pictures %}
+            <div class="gallery-item">
+                <img src="{{ asset(picture.url) }}" alt="{{ picture.description }}">
+            </div>
+        {% endfor %}
+    </div>
+
+
+
+
+{#     
+
 <div class="gallery">
 
     {% for picture in pictures %}
             <div class="gallery-item">
 
-        <img src="{{ asset(picture.url )}}" alt=" {{ picture.description }}"><br>
-        <p><a href="{{ path ('edit_picture', {'id': picture.id, 'category_id': category.id}) }}" class="btn edit"><i class="fa-regular fa-pen-to-square"></i></a></p>
-            {# <p><a href="{{ path ('delete_picture', {'id': picture.id}) }}" class="btn delete">Supprimer une photo</a></p> #}
+            <img src="{{ asset(picture.url )}}" alt=" {{ picture.description }}"><br>
+                
+            {% if is_granted('ROLE_ADMIN') %}
+                <p><a href="{{ path ('edit_picture', {'id': picture.id, 'category_id': category.id}) }}" class="btn edit"><i class="fa-regular fa-pen-to-square"></i></a></p>
+                {# <p><a href="{{ path ('delete_picture', {'id': picture.id}) }}" class="btn delete">Supprimer une photo</a></p> 
+            {% endif %}
       </div>
-   
+    
 
  
- {% endfor %}
+ {% endfor %}#}
+
 </div>
-     <div class="btnRight">
-        <button class="btn add categoryBtnAdd"><a href="{{ path ('new_picture') }}" class="btn add">Ajouter une image</a></button>
-    </div>
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="btnRight">
+            <button class="btn add categoryBtnAdd"><a href="{{ path ('new_picture') }}" class="btn add">Ajouter une image</a></button>
+        </div>
+
+        
+    {% endif %}
 {% endblock %}

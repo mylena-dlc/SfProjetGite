@@ -12,54 +12,49 @@
     </div>
 
     <div class="confirmReservation">
-<div class="confirm">
+        <div class="confirm">
 
-    <h2>Détails du prix</h2><br>
-    <p class="total-p"> {{ nightPrice }} € x {{ numberNight }} nuit(s)</p><p class="total-p"> {{ nightPrice * numberNight }} €</p><br>
-    <p class="total-p">Forfait ménage : </p><p class="total-p"> {{ cleaningCharge }}€</p><br>
-    <hr class="confirmLine">
-    <p class="total-p pBold">Total : </p><p class="total-p pBold">{{ totalPrice }} €</p><br><br>
+            <h2>Détails du prix</h2><br>
+            <p class="total-p"> {{ nightPrice }} € x {{ numberNight }} nuit(s)</p><p class="total-p"> {{ nightPrice * numberNight }} €</p><br>
+            <p class="total-p">Forfait ménage : </p><p class="total-p"> {{ cleaningCharge }}€</p><br>
+            <hr class="confirmLine">
+            <p class="total-p pBold">Total : </p><p class="total-p pBold">{{ totalPrice }} €</p><br><br>
+            <button class="btn btnReservation"><a href="{{ path ('new_reservation')}}">Réserver</a></button>
+        </div>
 
+
+        <div class="detail">
+
+            <h3>Vos dates</h3>
+            <p>Date d'arrivée : {{ startDate|date('d-m-Y') }}</p>
+            <p>Date de départ : {{ endDate|date('d-m-Y') }}</p>
+
+            <p class="update"><a href="">Modifier</a></p>
+
+            <h3>Nombre de personnes (s)</h3>
+            <p> {{ numberAdult }} adulte(s)</p>
+            <p> {{ numberKid }} enfant(s)</p>
+
+            <p class="update"><a href="">Modifier</a></p>
     
-    <button class="btn btnReservation"><a href="{{ path ('new_reservation')}}">Réserver</a></button>
-</div>
-
-
-<div class="detail">
-
-    <h3>Vos dates</h3>
-
-    <p>Date d'arrivée : {{ startDate|date('d-m-Y') }}</p>
-    <p>Date de départ : {{ endDate|date('d-m-Y') }}</p>
-
-    <p class="update"><a href="">Modifier</a></p>
-
-    <h3>Nombre de personnes (s)</h3>
-    <p> {{ numberAdult }} adulte(s)</p>
-    <p> {{ numberKid }} enfant(s)</p>
-
-    <p class="update"><a href="">Modifier</a></p>
-    
-</div>
-</div>
- 
-
-    <div class="title gite-title center">
-        <h2>Description</h2>
+        </div>
     </div>
+        <div class="title gite-title center">
+            <h2>Description</h2>
+        </div>
 
-<div class="description01">
-    <div class="descriptionLeft">
+    <div class="description01">
+        <div class="descriptionLeft">
 
-        <p class="descriptionIcon"><i class="ri-bard-line"></i> Bain nordique en extérieur</p>
-<br>
-        <p class="descriptionIcon"><i class="ri-key-2-line"></i> Arrivée Autonome</p>
-<br>
-        <p class="descriptionIcon"><i class="ri-hotel-bed-line"></i> 2 chambres</p>
-<br>
-        <p class="descriptionIcon"><i class="fa-solid fa-shower"></i> 2 salles d'eau</p>
-<br>
-        <p class="descriptionIcon"><i class="ri-landscape-line"></i> Jolie vue sur les montagnes</p>
+            <p class="descriptionIcon"><i class="ri-bard-line"></i> Bain nordique en extérieur</p>
+    <br>
+            <p class="descriptionIcon"><i class="ri-key-2-line"></i> Arrivée Autonome</p>
+    <br>
+            <p class="descriptionIcon"><i class="ri-hotel-bed-line"></i> 2 chambres</p>
+    <br>
+            <p class="descriptionIcon"><i class="fa-solid fa-shower"></i> 2 salles d'eau</p>
+    <br>
+            <p class="descriptionIcon"><i class="ri-landscape-line"></i> Jolie vue sur les montagnes</p>
 
     </div>
 
@@ -78,10 +73,9 @@
 
 <div class="description02">
     <h5 class="titleH5">Bienvenue au Gîte du Rain du Pair sur les hauteurs d’Orbey !<br>
-Venez profiter d’un logement aménagé et décoré avec soin.</h5>
+        Venez profiter d’un logement aménagé et décoré avec soin.</h5>
 
     <div class="descriptionLists">
-       
         <ul>
          <li class="titleList"><h4 class="descriptionList">Équipement extérieur</h4></li>
             <li><i class="ri-arrow-drop-right-line"></i> Bain nordique privé et ilimité</li>
@@ -89,9 +83,7 @@ Venez profiter d’un logement aménagé et décoré avec soin.</h5>
             <li><i class="ri-arrow-drop-right-line"></i> Plancha à gaz</li>
             <li><i class="ri-arrow-drop-right-line"></i> Parking privé</li>
         </ul>
-        
-        
-        
+
         <ul>
         <li class="titleList"><h4 class="descriptionList">Équipement intérieur</h4></li>
             <li><i class="ri-arrow-drop-right-line"></i> Chauffage au sol au RDC</li>
@@ -125,37 +117,31 @@ Venez profiter d’un logement aménagé et décoré avec soin.</h5>
 
     <div class="situation">
 
-<div class="title gite-title center">
-        <h2>Situation</h2>
+        <div class="title gite-title center">
+                <h2>Situation</h2>
+        </div>
+
+        <h5 class="titleH5">Le logement se trouve à Orbey,<br> village alsacien de moyenne montagne niché 
+        à 550 m d’altitude,<br> à proximité du magnifique massif vosgien.</h5>
+
+    <div class="sectionSituations">
+        <div class="sectionSituation">
+            <p class="paragrapheSituation">Tout près :</p>
+            <ul>
+                <li><i class="ri-arrow-drop-right-line"></i> Station du Lac Blanc</li>
+                <li><i class="ri-arrow-drop-right-line"></i> Kaysersberg (13 km)</li>
+                <li><i class="ri-arrow-drop-right-line"></i> Colmar (25 km)</li>
+                <li><i class="ri-arrow-drop-right-line"></i> Eguisheim (26km)</li>
+                <li><i class="ri-arrow-drop-right-line"></i> Gérardmer (36 km)</li>
+                <li><i class="ri-arrow-drop-right-line"></i> La Bresse (36 km)</li>
+                <li><i class="ri-arrow-drop-right-line"></i> Strasbourg (90 km)</li>
+            </ul>
+
+        </div>
+        <figure class="situationFigure">
+            <img src="{{ asset( 'img/carte-alsace.jpg' )}}" alt="Carte touristique d'Alsace"/>
+        </figure>
     </div>
-
-    <h5 class="titleH5">Le logement se trouve à Orbey,<br> village alsacien de moyenne montagne niché 
-à 550 m d’altitude,<br> à proximité du magnifique massif vosgien.</h5>
-
-<div class="sectionSituations">
-<div class="sectionSituation">
-<p class="paragrapheSituation">Tout près :</p>
-        <ul>
-            <li><i class="ri-arrow-drop-right-line"></i> Station du Lac Blanc</li>
-            <li><i class="ri-arrow-drop-right-line"></i> Kaysersberg (13 km)</li>
-            <li><i class="ri-arrow-drop-right-line"></i> Colmar (25 km)</li>
-            <li><i class="ri-arrow-drop-right-line"></i> Eguisheim (26km)</li>
-            <li><i class="ri-arrow-drop-right-line"></i> Gérardmer (36 km)</li>
-            <li><i class="ri-arrow-drop-right-line"></i> La Bresse (36 km)</li>
-            <li><i class="ri-arrow-drop-right-line"></i> Strasbourg (90 km)</li>
-        </ul>
-
 </div>
-<figure class="situationFigure">
-<img src="{{ asset( 'img/carte-alsace.jpg' )}}" alt="Carte touristique d'Alsace"/>
-
-</figure>
-
-
-  </div>
-    </div>
-
-
-
 
 {% endblock %}
