@@ -48,7 +48,6 @@
 .title {
    position: relative;
    display: inline-block;
-   /* margin: 80px 0 0 80px; */
 }
 
 /* Ligne sous le titre */
@@ -1478,6 +1477,18 @@ th, td {
 .resaContaint {
     margin: 100px;
 }
+
+.deleteAccount {
+    width: 250px;
+    height: 60px;
+    display: block;
+    margin: 50px auto;
+}
+
+.deleteAccount a {
+    text-decoration: none;
+    color: white;
+}
 /* ********************************************** VUE CONFIRMATION RESERVATION ********************************************** */
 
 .messageConfirm {
@@ -1517,6 +1528,11 @@ th, td {
 .swal2-styled.swal2-confirm, div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm  {
     background-color: var(--color1) !important;
     outline: none !important;
+}
+.swal2-confirm:active {
+    background-color: var(--color1) !important;
+    border-color: var(--color6) !important;
+
 }
 /* ********************************************** FOOTER ********************************************** */
 

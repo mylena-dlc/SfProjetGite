@@ -14,7 +14,6 @@ use App\Repository\PeriodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\Request;
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -302,7 +301,7 @@ class ReservationController extends AbstractController
 
 
     /**
-    * Fonction pour télécharger une facture d'une réservation
+    * Fonction pour télécharger la facture d'une réservation
     */
 
     #[Route('/reservation/{id}/show/download-invoice', name: 'download_invoice')]

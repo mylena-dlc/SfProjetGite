@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class DashboardController extends AbstractController
 {
@@ -46,12 +47,13 @@ class DashboardController extends AbstractController
 
 
 
-    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, PeriodRepository $periodRepository)
+    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, PeriodRepository $periodRepository, TokenStorageInterface $tokenStorage)
     {
         $this->giteRepository = $giteRepository;
         $this->em = $em;
         $this->pictureRepository = $pictureRepository;
         $this->reservationRepository = $reservationRepository;
+        $this->tokenStorage = $tokenStorage;
     }
 
     #[Route('admin/dashboard', name: 'app_dashboard')]
@@ -160,6 +162,47 @@ class DashboardController extends AbstractController
         ]);    
     }
 
+
+    /**
+    * Fonction de suppresion d'un compte
+    */
+
+    #[Route(path: '/delete-account', name: 'app_delete_account')]
+    public function deleteAccount(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Récupérer l'utilisateur actuellement connecté
+        $user = $this->getUser();
+
+        // Gérer la suppression du compte 
+        if ($user) {
+            // Générer un token unique pour identifier de manière unique chaque compte supprimé
+            $deleteToken = md5(uniqid());
+
+            // Mettre à jour les champs de l'utilisateur
+            $user->setemail('utilisateur_supprime_' . $deleteToken);
+            
+            // Récupérer le mot de passe haché
+            $password = $user->getPassword();
+            $passwordHash = md5($password);
+
+            $user->setpassword($passwordHash);
+
+            // Déconnection de l'utilisateur
+            $this->tokenStorage->setToken(null);
+
+            // Mettre à jour l'entité dans la base de données
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
+
+        } else {
+            $this->addFlash('danger', 'Impossible de supprimer le compte. Utilisateur non trouvé.');
+        }
+
+        // Rediriger l'utilisateur vers la page d'accueil ou une page de confirmation
+        return $this->redirectToRoute('app_home');
+    }
 
     /**
     * Fonction pour modifier l'email d'un user

@@ -87,17 +87,18 @@
                     {% endif %}
 
                     {# Si je suis connecté: #}
-                    {% if app.user %}
-                        <li class="nav-item">
-                            <a aria-current="page" href="{{ path('app_logout') }}">
-                                Se déconnecter
-                            </a>
-                        </li>
+                    {% if app.user %}           
                         <li class="nav-item">
                             <a aria-current="page" href="{{ path('app_profil', {'id': app.user.id}) }}">
                                 Mon profil
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a aria-current="page" href="{{ path('app_logout') }}">
+                                Se déconnecter
+                            </a>
+                        </li>
+            
                     {% else %}
                         <li class="nav-item">
                             <a aria-current="page" href="{{ path('app_login') }}">
@@ -132,7 +133,7 @@
                 <div class="footer-background"></div>
                 <div class="footerTop">
                     <figure>
-                        <img src="img/logook2.png" alt="logo" class="footerLogo">
+                        <img src="img/logook2.png" alt="logo" class="footerLogo"/>
                     </figure>
                     <div class="address">
                         <p class="footerP">
@@ -187,7 +188,8 @@
             <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
             <!-- Include SweetAlert CDN -->
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+            // <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
             <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.9/index.global.min.js" integrity="sha256-9zSfnftul7UU4/TQ7fbXdZfHiB4xKjHMLRunC35rglc=" crossorigin="anonymous"></script>
 

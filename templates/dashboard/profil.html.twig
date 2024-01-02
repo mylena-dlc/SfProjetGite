@@ -4,6 +4,27 @@
 
 {% block body %}
 
+{% for flash_message in app.flashes('error') %}
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Erreur",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
+
+{% for flash_message in app.flashes('success') %}
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Succès",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
+
+
     <div class="title gite-title center">
          <h1>Mon compte</h1>
     </div>
@@ -11,13 +32,15 @@
 
     <div class="containt">
         <div class="profilContaint">
-            <p class="profilEmail">Email</p> <p class="profilEmailAddress">{{ user.email }}</p> <p class="profilEmailAddress"><a href="{{ path('app_update_email', {'id': app.user.id}) }}" id="updateEmailLink" >Modifier l'adresse mail</a></p>
+            <p class="profilEmail">Email</p> <p class="profilEmailAddress">{{ user.email }}</p> 
+        
+        {# <p class="profilEmailAddress"><a href="{{ path('app_update_email', {'id': app.user.id}) }}" id="updateEmailLink" >Modifier l'adresse mail</a></p> #}
         
         {# <div id="updateEmailForm">
             {% include 'dashboard/updateMail.html.twig' %}
         </div>  #}
 
-            <button>Supprimer mon compte</button>
+            <button class="btn deleteAccount" onclick="confirmDeleteAccount()">Supprimer mon compte</button>
         
         </div>
 
@@ -71,13 +94,24 @@
             {% endif %}
         </div>
 
-
-
+    </div>
 
     </div>
 
-
-
-    </div>
-
+        <script>
+        function confirmDeleteAccount() {
+            Swal.fire({
+                title: 'Voulez-vous supprimer votre compte?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Oui',
+                cancelButtonText: 'Non',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si l'utilisateur clique sur "Oui", redirigez vers la suppression du compte
+                    window.location.href = "{{ path('app_delete_account') }}";
+                }
+            });
+        }
+    </script>
 {% endblock %}
