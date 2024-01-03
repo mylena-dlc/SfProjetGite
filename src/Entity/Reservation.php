@@ -57,7 +57,7 @@ class Reservation
     private ?Gite $gite = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -71,6 +71,9 @@ class Reservation
 
     #[ORM\Column(length: 255)]
     private ?string $paymentMethod = null;
+
+    #[ORM\Column(length: 180)]
+    private ?string $email = null;
 
     public function getId(): ?int
     {
@@ -292,6 +295,18 @@ class Reservation
     public function setPaymentMethod(string $paymentMethod): static
     {
         $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
 
         return $this;
     }

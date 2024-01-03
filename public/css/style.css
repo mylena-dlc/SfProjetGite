@@ -2,7 +2,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: 'Catamaran', 'Ruthie', 'Corinthia', "Rochester";
+    font-family: 'Catamaran', 'Ruthie', 'Corinthia', 'Rochester';
 }
 
 /* Déclaration des variables */
@@ -54,7 +54,7 @@
 .title::after {
     content: "";
     position: absolute;
-    width: 30%; 
+    width: 150px; 
     height: 1px; 
     background-color: var(--color1); 
     bottom: -3px; 
@@ -228,7 +228,7 @@ header {
     list-style: none;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .nav-item {
@@ -1457,6 +1457,7 @@ th, td {
     font-size: 25px;
     font-weight: var(--bold);
     display: inline;
+    padding-right: 20px;
 }
 
 .profilEmailAddress {
@@ -1479,8 +1480,8 @@ th, td {
 }
 
 .deleteAccount {
-    width: 250px;
-    height: 60px;
+    width: 240px;
+    height: 40px;
     display: block;
     margin: 50px auto;
 }
@@ -1537,7 +1538,8 @@ th, td {
 /* ********************************************** FOOTER ********************************************** */
 
 #map {
-    height: 180px;
+    height: 230px;
+    width: 400px;
     z-index: 5;
 }
 
@@ -1583,7 +1585,16 @@ th, td {
 
 .footerP {
     color: var(--color4);
-    font-size: 20px;
+    font-size: 18px;
+}
+
+.footerLink {
+    padding: 5px;
+}
+
+.footerLink:hover {
+    cursor: pointer;
+    
 }
 
 .footer-line {

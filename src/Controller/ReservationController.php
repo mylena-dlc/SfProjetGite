@@ -181,9 +181,12 @@ class ReservationController extends AbstractController
     // Associez le gîte à la réservation
     $reservation->setGite($gite);
 
-    // on récupère l'id de l'utilisateur connecté
+    // on récupère l'id de l'utilisateur connecté et son email
     $user = $this->getUser();
+    $email = $user->getEmail();
+
     $reservation->setUser($user);
+    $reservation->setEmail($email);
 
 
    $form = $this->createForm(ReservationType::class, $reservation);
@@ -202,7 +205,6 @@ class ReservationController extends AbstractController
             // execute PDO
             $this->em->flush();
 
-      
 
         // En fonction de $paymentMethod, redirigez l'utilisateur vers la page de paiement appropriée
         if ($paymentMethod === 'stripe') {
