@@ -146,43 +146,45 @@ btn.addEventListener('click', () => {
         });
         
 // JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const modal = document.getElementById('imageModal');
-    const modalContent = document.getElementById('modalImage');
-    const closeModalButton = document.getElementById('closeModal');
+// document.addEventListener('DOMContentLoaded', function() {
+//     const galleryItems = document.querySelectorAll('.gallery-item');
+//     const modal = document.getElementById('imageModal');
+//     const modalContent = document.getElementById('modalImage');
+//     const closeModalButton = document.getElementById('closeModal');
 
-    galleryItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const imageUrl = item.querySelector('img').src;
-            modalContent.src = imageUrl;
-            modal.style.display = 'block';
-        });
-    });
+//     galleryItems.forEach(item => {
+//         item.addEventListener('click', () => {
+//             const imageUrl = item.querySelector('img').src;
+//             modalContent.src = imageUrl;
+//             modal.style.display = 'block';
+//         });
+//     });
 
-    closeModalButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
+    // closeModalButton.addEventListener('click', () => {
+    //     modal.style.display = 'none';
+    // });
 
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.style.display = 'none';
+//     window.addEventListener('click', (event) => {
+//         if (event.target === modal) {
+//             modal.style.display = 'none';
+//         }
+//     });
+// });
+
+
+
+// Plugin Rate Yo pour l'affichage des étoiles de la notation des avis
+
+$(document).ready(function () {
+    $("#rating").rateYo({
+        rating: 0, // la valeur initiale
+        starWidth: "20px",
+        precision: 0, // Désactive les demi-étoiles
+
+        onChange: function (rating, rateYoInstance) {
+            // Mettre à jour la valeur du champ caché avec la note sélectionnée
+            $("input[name='review[rating]']").val(rating);
         }
     });
 });
-
-
-
-
-
-    /* Affichage dynamique du formulaire de modification de l'email de l'user */ 
-
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     var updateEmailLink = document.getElementById('updateEmailLink');
-    //     var updateEmailForm = document.getElementById('updateEmailForm');
-
-    //     updateEmailLink.addEventListener('click', function(event) {
-    //         event.preventDefault();
-    //         updateEmailForm.style.display = 'block';
-    //     });
-    // });
+  

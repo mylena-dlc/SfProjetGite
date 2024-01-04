@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Écrire un avis{% endblock %}
+
+{% block body %}
+
+<h1>Écrire un avis</h1>
+
+    {{ form_start(form) }}
+    {{ form_row(form.comment) }}
+    <div id="rating"></div>
+    {{ form_row(form.rating) }}
+    {{ form_row(form.Ajouter) }}
+    {{ form_end(form) }}    
+
+
+
+
+    
+{% endblock %}

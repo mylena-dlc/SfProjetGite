@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Review;
 use App\Form\UserType;
+use App\Form\ReviewType;
 use App\Form\ReservationViewType;
 use App\Repository\GiteRepository;
 use App\Repository\PeriodRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\PictureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
@@ -44,14 +47,18 @@ class DashboardController extends AbstractController
      */
     private $reservationRepository;
 
+    /**
+     * @var ReviewRepository
+     */
+    private $reviewRepository;
 
-
-    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, PeriodRepository $periodRepository)
+    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, PeriodRepository $periodRepository, ReviewRepository $reviewRepository)
     {
         $this->giteRepository = $giteRepository;
         $this->em = $em;
         $this->pictureRepository = $pictureRepository;
         $this->reservationRepository = $reservationRepository;
+        $this->reviewRepository = $reviewRepository;
     }
 
     #[Route('admin/dashboard', name: 'app_dashboard')]
@@ -123,8 +130,63 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    
 
+    /**
+    * Fonction pour ajouter un avis
+    */
+
+    #[Route('security/whriteReview{reservation_id}', name: 'app_write_review')]
+    public function writeReview(Request $request, $reservation_id): Response
+    {
+            $review = new Review();
+
+            $form = $this->createForm(ReviewType::class, $review);
+            $form->handleRequest($request);
+
+             // On récupère l'id de l'utilisateur connecté
+            $user = $this->getUser();
+            $review->setUser($user);
+
+            // On récupère l'id de la réservation concernée
+            $reservation = $this->reservationRepository->find($reservation_id);
+            $review->setReservation($reservation);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+            
+                $review = $form->getData();
+                $this->em->persist($review);
+                $this->em->flush();
+                $this->addFlash('success', 'Avis ajouté avec succès.');
+
+                $userId = $user->getId();
+                return $this->redirectToRoute('app_profil', ['id' => $userId]); 
+            }
+
+        return $this->render('security/writeReview.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    
+    }
+
+
+    /**
+    * Fonction pour afficher les commentaires 
+    */
+
+    #[Route('admin/dashboard/review', name: 'app_review')]
+    public function showReview(): Response
+    {
+        // Recherche de tous les commentaires non vérifiés par l'admin
+        $unverifiedReviews = $this->reviewRepository->findBy(['is_verified' => 0]);
+
+        // Recherche de tous les commentaires déjà vérifiés
+        $reviews = $this->reviewRepository->findBy(['is_verified' => 1]);
+    
+        return $this->render('dashboard/review.html.twig', [
+            'unverifiedReviews' => $unverifiedReviews,
+            'reviews' => $reviews,
+        ]);
+    }
   
 
     /**

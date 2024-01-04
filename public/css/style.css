@@ -2,7 +2,11 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: 'Catamaran', 'Ruthie', 'Corinthia', 'Rochester';
+    /* font-family: 'Catamaran', 'Ruthie', 'Corinthia', 'Rochester'; */
+    /* font-family: system-ui, sans-serif; */
+    font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;;
+    font-weight: normal;
+    
 }
 
 /* Déclaration des variables */
@@ -20,6 +24,8 @@
     --green: #22773d;
     --red: #712424;
 
+    /* Police des titres */
+    --title: 'Segoe Print', 'Bradley Hand', Chilanka, TSCu_Comic, casual, cursive;
 
     /* Taille de police */
     --size1: 1rem;
@@ -63,8 +69,8 @@
 h1, h2 {
     color: var(--color1);
     text-transform: uppercase;
-    font-family: var(--font1);
-    font-weight: var(--black);
+    /* font-family: var(--font1); */
+    /* font-weight: var(--black); */
     letter-spacing: 3px;
     margin-top: 20px;
 }
@@ -83,15 +89,15 @@ h2 {
 h3 {
     color: var(--color1);
     letter-spacing: 2px;
-    font-family: var(--font1);
-    font-weight: var(--medium);
+    /* font-family: var(--font1); */
+    /* font-weight: var(--medium); */
     margin: 20px 40px;
     font-size: 18px;
 }
 
 p {
     color: var(--color1);
-    font-family: var(--font1);
+    /* font-family: var(--font1); */
 }
 
 .pBold {
@@ -107,7 +113,7 @@ p {
     color: var(--color4);
     font-size: 1rem;
     text-transform: uppercase;
-    font-weight: var(--medium);
+    /* font-weight: var(--medium); */
     box-shadow: var(--boxShadow2);
     transition-duration: 500ms;
 }
@@ -133,7 +139,7 @@ button:hover {
     text-decoration: none;
     text-transform: uppercase;
     font-size: 12px;
-    font-weight: var(--medium);
+    /* font-weight: var(--medium); */
 }
 
 .fa-circle-arrow-right {
@@ -378,7 +384,7 @@ header {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
-    font-weight: var(--bold);
+    /* font-weight: var(--bold); */
 }
 
 .adult, .kid {
@@ -624,10 +630,10 @@ header {
 }
 
 .banner-p {
-    font-family: 'Corinthia';
+    font-family: var(--title);
     color: var(--color4);
     font-size: 40px;
-    font-weight: var(--light);
+    /* font-weight: var(--light); */
 }
 
 .banner2 {
@@ -657,7 +663,8 @@ header {
 .banner2-p {
     color: white;
     font-size: 43px;
-    font-family: 'Corinthia';
+    /* font-family: 'Corinthia'; */
+    font-family: var(--title);
     width: 70%;
     text-align: center;
     z-index: 5;
@@ -759,7 +766,8 @@ header {
 }
 
 .titleGalerie {
-    font-family: 'Corinthia';
+    /* font-family: 'Corinthia'; */
+    font-family: var(--title);
     color: var(--color3);
     font-size: 50px;
     text-align: center;
@@ -813,7 +821,7 @@ header {
     opacity: 0;
     font-size: 18px;
     color: white;
-    font-weight: var(--thin);
+    /* font-weight: var(--thin); */
     background-color: var(--color3);
     border-radius: 10px;
     padding: 8px;
@@ -910,7 +918,7 @@ button > a {
 
 .descriptionIcon {
     font-size: 18px;
-    font-weight: var(--medium);
+    /* font-weight: var(--medium); */
     letter-spacing: 1.3px;
 }
 
@@ -926,7 +934,7 @@ button > a {
 
 .titleDescription {
     text-transform: uppercase;
-    font-weight: var(--medium);
+    /* font-weight: var(--medium); */
     text-align: center;
 }
 
@@ -942,7 +950,7 @@ button > a {
 }
 
 .bold {
-    font-weight: var(--bold);
+    /* font-weight: var(--bold); */
 }
 
 .paraCenter {
@@ -953,7 +961,7 @@ button > a {
     text-align: center;
     margin: 100px;
     font-size: 25px;
-    font-weight: var(--bold);
+    /* font-weight: var(--bold); */
     color: var(--color2);
     letter-spacing: 1px;
 }
@@ -967,7 +975,7 @@ button > a {
 }
 .descriptionList {
     font-size: 20px;
-    font-weight: var(--medium);
+    /* font-weight: var(--medium); */
     color: var(--color1);
 }
 
@@ -1205,7 +1213,7 @@ th, td {
 }
 
 .titleSlidebar {
-    font-weight: var(--bold);
+    /* font-weight: var(--bold); */
     font-size: 15px;
     text-decoration: none;
     color: var(--color1);
@@ -1445,7 +1453,7 @@ th, td {
     right: 35px;
     color: #f1f1f1;
     font-size: 40px;
-    font-weight: bold;
+    /* font-weight: bold; */
     cursor: pointer;
 }
 
@@ -1455,7 +1463,7 @@ th, td {
 
 .profilEmail {
     font-size: 25px;
-    font-weight: var(--bold);
+    /* font-weight: var(--bold); */
     display: inline;
     padding-right: 20px;
 }

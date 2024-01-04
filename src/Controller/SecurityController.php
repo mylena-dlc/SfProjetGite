@@ -90,32 +90,15 @@ class SecurityController extends AbstractController
     */
     
     #[Route(path: '/profil/{id}', name: 'app_profil')]
-    // #[Route(path: '/profil/{id}/update-email', name: 'app_update_email')]
 
     public function profil(User $user, Request $request): Response
     {
-
         // Récupérez les réservations de l'utilisateur
-        $reservations = $this->reservationRepository->findBy(['user' => $user]);
+        $reservations = $this->reservationRepository->findBy(['user' => $user], ['departureDate' => 'DESC']  );
 
-         // Créez et gérez le formulaire
-        //  $form = $this->createForm(UserType::class, $user);
-        //  $form->handleRequest($request);
- 
-        //  if ($form->isSubmitted() && $form->isValid()) {
-        //      $em->persist($user);
-        //      $em->flush();
- 
-        //      $this->addFlash('success', 'Adresse e-mail mise à jour avec succès.');
- 
-        //      return $this->redirectToRoute('app_profil');
-        //  }
-
-        
         return $this->render('security/profil.html.twig', [
             'user' => $user,
             'reservations' => $reservations,
-            // 'form' => $form->createView(),
         ]);    
     }
 

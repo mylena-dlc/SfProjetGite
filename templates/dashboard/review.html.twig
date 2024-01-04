@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Avis des voyageurs{% endblock %}
+
+{% block body %}
+
+
+<div class="containerDashboard">
+<div class="slidebar">
+    <ul>
+        <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="titleSlidebar"><i class="fa-solid fa-angles-right"></i> Accueil tableau de board</a></li>
+        <li class="titleSlidebar">gestion des réservations</li>
+        <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations à venir</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations passées</a></li>
+        <li class="titleSlidebar">gestion du calendrier</li>
+        <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les périodes</a></li>
+        <li class="titleSlidebar">gestion du gîte</li>
+        <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Le gîte</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les photos</a></li>
+    </ul>
+</div>
+
+<div class="content">
+
+    <div class="title gite-title center">
+         <h1>Avis des voyageurs</h1>
+    </div> 
+
+<section class="unverifiedReview">
+    <h2>Avis non validé(s)</h2>
+
+    {% for unverifiedReview in unverifiedReviews %}
+    <div class="cardReviews">
+        <p>{{ unverifiedReview.reservation.LastName }}</p>
+        <p>Note : {{ unverifiedReview.rating }}</p>
+        <p>{{ unverifiedReview.comment }}</p>
+        {# <a href="{{ path('admin_verify_review', {'id': review.id}) }}" class="btn btn-success">Valider</a> #}
+    </div>
+    {% endfor %}
+</section>
+
+<section class="verifiedReview">
+    <h2>Tous les avis</h2>
+
+    {% for review in reviews %}
+    <div class="cardReviews">
+        <p>Note : {{ review.rating }}</p>
+        <p>{{ review.comment }}</p>
+    </div>
+{% endfor %}
+</section>
+
+
+
+
+
+</div> 
+
+{% endblock %}
