@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -49,14 +50,21 @@ class ReservationController extends AbstractController
      */
     private $em;
 
+    protected $stripeSecretKey;
+    protected $stripePublishableKey;
+
+
     
-    public function __construct(ReservationRepository $reservationRepository, GiteRepository $giteRepository, EntityManagerInterface $em, UserRepository $userRepository, PeriodRepository $periodRepository)
+    public function __construct(ReservationRepository $reservationRepository, GiteRepository $giteRepository, EntityManagerInterface $em, UserRepository $userRepository, PeriodRepository $periodRepository, string $stripeSecretKey, string $stripePublishableKey )
     {
         $this->reservationRepository = $reservationRepository;
         $this->giteRepository = $giteRepository;
         $this->userRepository = $userRepository;
         $this->periodRepository = $periodRepository;
         $this->em = $em;
+        $this->stripeSecretKey = $stripeSecretKey;
+        $this->stripePublishableKey = $stripePublishableKey;
+       
     }
     
     #[Route('/reservation', name: 'app_reservation')]
@@ -209,7 +217,7 @@ class ReservationController extends AbstractController
         // En fonction de $paymentMethod, redirigez l'utilisateur vers la page de paiement appropriée
         if ($paymentMethod === 'stripe') {
             return $this->redirectToRoute('paiement', ['id' => $reservation->getId()]);
-        } elseif ($paymentMethod === 'paypal') {
+        } else if ($paymentMethod === 'paypal') {
             return $this->redirectToRoute('page_paiement_paypal');
         }
         }
@@ -225,24 +233,24 @@ class ReservationController extends AbstractController
             'numberNight' => $numberNight,
             'nightPrice' => $nightPrice,
             'totalPrice' => $totalPrice,
-            
         ]);
     }   
 
 
     /**
-    * Fonction de paiement
+    * Fonction de paiement Stripe
     */
 
     #[Route('/reservation/{id}/paiement', name: 'paiement')]
-    public function paiement(Request $request, Reservation $reservation): Response {
+    public function paiement( int $id): Response {
+
+    $reservation = $this->reservationRepository->findOneBy(['id' => $id]);
 
     // Récupérez les détails de la réservation
-    $totalPrice = $reservation->getTotalPrice() * 100; // Convertissez le prix en centimes
+    $totalPrice = $reservation->getTotalPrice() * 100; // Conversion du prix en centimes
 
     // Configurez Stripe
-    Stripe::setApiKey('sk_test_51OL5DQAbkgcVVGZDKN6MS8EVZOGCJSGM5gXA53MGhMwtUV2RYQGjoaR7HHs5i7OFXuKBTlbIamEk0Hkb7DDDZg5P00IXHHv8tj');
-
+    Stripe::setApiKey($this->stripeSecretKey);
     
     // Créez une session de paiement avec Stripe Checkout
     $session = Session::create([
@@ -258,8 +266,8 @@ class ReservationController extends AbstractController
             'quantity' => 1,
         ]],
         'mode' => 'payment',
-        'success_url' => $this->generateUrl('confirm_reservation', [], UrlGeneratorInterface::ABSOLUTE_URL),
-        'cancel_url' => $this->generateUrl('new_reservation', ['id' => $reservation->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+        'success_url' => $this->generateUrl('confirm_reservation', ['id' => $reservation->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+        'cancel_url' => $this->generateUrl('payment_error', ['id' => $reservation->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
     ]);
 
     // Redirigez l'utilisateur vers la page de paiement de Stripe
@@ -267,13 +275,14 @@ class ReservationController extends AbstractController
 }
 
 
-
     /**
     * Fonction pour afficher la vue de confirmation d'une réservation
     */
 
-    #[Route('/reservation/confirm', name: 'confirm_reservation')]
-    public function confirm(): Response {
+    #[Route('/reservation/{id}/confirm', name: 'confirm_reservation')]
+    public function confirm(int $id): Response {
+        
+        $reservation = $this->reservationRepository->findOneBy(['id' => $id]);
 
         $data = [
             'message' => 'La réservation a été enregistrée avec succès.',
@@ -282,8 +291,30 @@ class ReservationController extends AbstractController
         return $this->render('reservation/confirm.html.twig', [
             'data' => $data
         ]);
-
 }
+
+
+    /**
+    * Fonction pour afficher une page d'erreur si le paiement échoue
+    */
+
+    #[Route('/reservation/{id}/error', name: 'payment_error')]
+    public function stripeError(EntityManagerInterface $entityManager, int $id, SessionInterface $session)
+    {
+        // Recherche de la réservation en cours
+        $reservation = $this->reservationRepository->findOneBy(['id' => $id]);
+        
+        // Suppression de la réservation en BDD
+        $entityManager->remove($reservation);
+        $entityManager->flush();
+        
+        // Suppression de la session
+        $session->remove('reservation_details');
+
+        $this->addFlash('error', 'Le paiement a échoué, veuilliez recommencer votre réservation.');
+        return $this->redirectToRoute('app_home');
+    }
+
 
     /**
     * Fonction pour afficher les détails d'une réservation
@@ -332,6 +363,7 @@ class ReservationController extends AbstractController
             'numberNight' => $numberNight,
             'gite' => $gite,
             'priceHt' => $priceHt,
+            'logo' => $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/img/logook2.png'),
             
         ]);
 
@@ -346,6 +378,16 @@ class ReservationController extends AbstractController
         return $response;
     }
 
+    // Fonction pour encoder le logo
 
+    private function imageToBase64($path) {
+        $path = $path;
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $base64;
+    }
 
 }
+
+

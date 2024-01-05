@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReviewRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -30,6 +31,17 @@ class Review
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Reservation $Reservation = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $response = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $creationDate = null;
+
+    public function __construct()
+    {
+        $this->creationDate = new DateTime('now');
+    }
 
     public function getId(): ?int
     {
@@ -93,6 +105,30 @@ class Review
     {
         $this->Reservation = $Reservation;
 
+        return $this;
+    }
+
+    public function getResponse(): ?string
+    {
+        return $this->response;
+    }
+
+    public function setResponse(?string $response): static
+    {
+        $this->response = $response;
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creationDate;
+    }
+
+ 
+    public function setCreationDate(?\DateTimeInterface $creationDate): static
+    {
+        $this->creationDate = $creationDate;
         return $this;
     }
 }

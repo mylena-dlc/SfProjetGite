@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ReviewRepository;
 use App\Repository\PictureRepository;
 use App\Repository\CalendarRepository;
 use App\Repository\CategoryRepository;
@@ -27,12 +28,18 @@ class HomeController extends AbstractController
      * @var CategoryRepository
      */
     private $categoryRepository;
+
+    /**
+     * @var ReviewRepository
+     */
+    private $reviewRepository;
     
-    public function __construct(PictureRepository $pictureRepository, ReservationRepository $reservationRepository, CategoryRepository $categoryRepository)
+    public function __construct(PictureRepository $pictureRepository, ReservationRepository $reservationRepository, CategoryRepository $categoryRepository, ReviewRepository $reviewRepository)
     {
         $this->pictureRepository = $pictureRepository;
         $this->reservationRepository = $reservationRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->reviewRepository = $reviewRepository;
 
     }
 
@@ -40,6 +47,8 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+
+        // Affichage de la galerie d'images
 
         // on récupère toutes les catégories
         $categories = $this->categoryRepository->findAll();
@@ -55,6 +64,7 @@ class HomeController extends AbstractController
             }
         }
 
+        // Affichage des dates déjà réservées
         $reservations = $this->reservationRepository->findAll();
 
         $reservedDates = [];
@@ -68,11 +78,19 @@ class HomeController extends AbstractController
         }
 
          $data = json_encode($reservedDates);
+
+         // Affichage des avis
+         $reviews = $this->reviewRepository->findVerifiedReviews();
+
+         // Affichage de la moyenne des notes
+         $averageRating = $this->reviewRepository->averageRating();
          
         return $this->render('home/index.html.twig', [
             'reservedDates' => $data,
             'categoryFirstPictures' => $categoryFirstPictures,
-            'categories' => $categories
+            'categories' => $categories,
+            'reviews' => $reviews,
+            'averageRating' => $averageRating,
         ]);
 }
 

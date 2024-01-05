@@ -10,6 +10,12 @@
 
 
         {% block stylesheets %}
+        
+        <!-- Affichage des étoiles pour les avis -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 
 
@@ -141,7 +147,7 @@
                 <div class="footer-background"></div>
                 <div class="footerTop">
                     <figure>
-                        <img src="img/logook2.png" alt="logo" class="footerLogo"/>
+                        <img src="{{ asset( 'img/logook2.png' ) }}" alt="logo" class="footerLogo"/>
                     </figure>
                     <div class="address">            
                     

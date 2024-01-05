@@ -170,16 +170,16 @@ class DashboardController extends AbstractController
 
 
     /**
-    * Fonction pour afficher les commentaires 
+    * Fonction pour afficher les avis
     */
 
     #[Route('admin/dashboard/review', name: 'app_review')]
     public function showReview(): Response
     {
-        // Recherche de tous les commentaires non vérifiés par l'admin
+        // Recherche de tous les avis non vérifiés par l'admin
         $unverifiedReviews = $this->reviewRepository->findBy(['is_verified' => 0]);
 
-        // Recherche de tous les commentaires déjà vérifiés
+        // Recherche de tous les avis déjà vérifiés
         $reviews = $this->reviewRepository->findBy(['is_verified' => 1]);
     
         return $this->render('dashboard/review.html.twig', [
@@ -188,6 +188,31 @@ class DashboardController extends AbstractController
         ]);
     }
   
+
+    /**
+    * Fonction pour valider un avis par l'administrateur
+    */
+
+    #[Route('admin/dashboard/review/verify/{id}', name: 'app_verify_review')]
+    public function verifyReview(Request $request, int $id): Response
+    {
+        $review = $this->reviewRepository->find($id);
+
+        // Mettre à jour le champ is_verified à 1
+        $review->setIsVerified(1);
+
+        // Récupération de la réponse de l'admin depuis el formulaire
+        $response = $request->request->get('response');
+        $review->setResponse($response);
+    
+        
+        $this->em->flush();
+
+        $this->addFlash('success', 'Avis validé avec succès.');
+
+        // Rediriger vers la page des avis à vérifier
+        return $this->redirectToRoute('app_review');
+    }
 
     /**
     * Fonction pour modifier l'email d'un user

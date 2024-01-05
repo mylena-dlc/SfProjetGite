@@ -68,10 +68,9 @@
 
 <div class="header">
     <figure>
-        {# <img src="{{ asset('img/logook2.png') }}" alt="logo" class="invoiceLogo"> #}
-    <img src="{{ absolute_url(asset('img/logook2.png')) }}" alt="logo" class="invoiceLogo">
-
+        <img src="{{ logo }}" alt="logo" class="invoiceLogo"> 
     </figure>
+
     <div class="giteInfo">
         <p>{{ gite.name }}</p>
         <p>{{ gite.address }}</p>

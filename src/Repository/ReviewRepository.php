@@ -21,6 +21,29 @@ class ReviewRepository extends ServiceEntityRepository
         parent::__construct($registry, Review::class);
     }
 
+    // Fonction pour rechercher tous les avis validés par l'admin
+
+    public function findVerifiedReviews() {
+
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.is_verified = :isVerified')
+            ->setParameter('isVerified', 1)
+            ->orderBy('r.creationDate', 'ASC')  
+            ->getQuery()
+            ->getResult();
+    }
+
+    // Fonction pour calculer la moyenne des notes des avis validés par l'admin
+
+    public function averageRating() {
+
+        return $this->createQueryBuilder('r')
+            ->select('AVG(r.rating) as averageRating')
+            ->andWhere('r.is_verified = :isVerified')
+            ->setParameter('isVerified', 1)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 //    /**
 //     * @return Review[] Returns an array of Review objects
 //     */

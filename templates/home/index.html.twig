@@ -193,6 +193,7 @@
         </div>
 
 </section>
+
     <section id="alentours">
         <div class="alentours-containt">
             <div class="title">
@@ -209,7 +210,40 @@
     </section>
 
 
+    <section id="review">
+            <div class="title">
+                <h2>Avis</h2>
+            </div>
 
+            <div class="reviews">
+                  {% for review in reviews %}
+                    <div class="cardReviews">
+                        <p class="reviewName">{{ review.reservation.lastName }} {{ review.reservation.firstName }}</p>
+                        <p class="reviewComment">posté le {{ review.creationDate|date('d-m-Y') }}</p>
+                        {# <p class="reviewRating">Note : {{ review.rating }}</p> #}
+
+                        {# Utilisation de RateYo pour afficher les étoiles #}
+                        <div id="rating-{{ review.id }}"></div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#rating-{{ review.id }}").rateYo({
+                                    rating: {{ review.rating }},
+                                    readOnly: true, // Pour rendre les étoiles en lecture seule
+                                    starWidth: "20px",
+                                    precision: 0,
+                                });
+                            });
+                        </script>
+
+                        <p class="reviewComment">{{ review.comment }}</p>
+                        <p class="reviewName"> Réponse du propriétaire : </p>
+                        <p class="reviewComment">{{ review.response }}</p>
+
+                    </div>
+                    
+                    {% endfor %}
+            </div> 
+    </section>
 
 
 {% block javascript %}
